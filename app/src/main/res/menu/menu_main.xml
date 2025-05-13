@@ -3,8 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.ecoexplorer.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_home"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/home_page"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@id/action_identify"
+        android:orderInCategory="100"
+        android:title="@string/identify_page"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_explore"
+        android:orderInCategory="100"
+        android:title="@string/explore_page"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_games"
+        android:orderInCategory="100"
+        android:title="@string/games_page"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_profile"
+        android:orderInCategory="100"
+        android:title="@string/profile_page"
         app:showAsAction="never" />
 </menu>
