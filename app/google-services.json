@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "879807686946",
+    "project_id": "ecoexplorer-u2001264",
+    "storage_bucket": "ecoexplorer-u2001264.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:879807686946:android:465633d455c1a36e4e1d7b",
+        "android_client_info": {
+          "package_name": "com.example.ecoexplorer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5OQUpYMvGasbTuPGOLddb_FzD3GQ8zqk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

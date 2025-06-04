@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--  WELCOME / ACTION BAR-->
+    <style name="heading1" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/poppins_semibold</item>"
+        <item name="android:textSize">26sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- ACTION BAR USERNAME -->
+    <style name="actionBar_username" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/yellow_primary</item>
+    </style>
+
+    <style name="actionBar_title" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/yellow_primary</item>
+    </style>
+
+    <!-- TITLE IN FRAGMENT -->
+    <style name="heading2" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/green_primary</item>
+    </style>
+
+    <!-- CONTENT 1 -->
+    <style name="content1" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- CONTENT 2 -->
+    <style name="content2" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/green_primary</item>
+    </style>
+
+    <!-- DESCRIPTION 1 -->
+    <style name="description_green" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/green_primary</item>
+    </style>
+
+    <!-- DESCRIPTION 1 -->
+    <style name="description_white" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+    <style name="OtpBox">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:background">@drawable/otp_box_background</item>
+    </style>
+
+
+</resources>
