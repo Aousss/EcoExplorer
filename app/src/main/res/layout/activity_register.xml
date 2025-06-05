@@ -89,6 +89,66 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- USERNAME -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                app:endIconMode="clear_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- AGE AND ROLES -->
+            <LinearLayout android:id="@+id/age_role_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- AGE -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Age"
+                    app:endIconMode="clear_text">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/user_age"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- ROLE -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:hint="Role"
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@drawable/ic_arrow_drop_down">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/user_role"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="none"
+                        android:paddingStart="10dp"
+                        android:importantForAccessibility="yes"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
             <!-- PASSWORD -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -130,7 +190,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="100dp"
                 android:text="Sign Up"
                 android:textAllCaps="false"
                 android:textSize="18sp"

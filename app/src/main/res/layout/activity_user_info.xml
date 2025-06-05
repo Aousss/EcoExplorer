@@ -100,7 +100,7 @@
                         android:id="@+id/user_role"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:inputType="none"
+                        android:inputType="text"
                         android:paddingStart="10dp"
                         android:importantForAccessibility="yes"/>
 
