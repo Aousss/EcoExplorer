@@ -1,6 +1,10 @@
 package com.example.ecoexplorer.ui.profile;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkCapabilities;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -17,6 +21,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -26,6 +35,7 @@ import java.util.UUID;
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     private TextInputEditText email;
     private TextInputEditText password;
@@ -42,27 +52,25 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        // REMOVE THE TOP ACTION BAR
+        /*--------------------------
+        * REMOVE THE TOP ACTION BAR
+        * -------------------------*/
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
 
-        // Login Button Logic
+        /* Login Button */
         loginBtn = findViewById(R.id.btn_login);
         loginBtn.setOnClickListener(v -> loginUser());
 
-        /* Login as Guest Button Logic */
-        loginAsGuest = findViewById(R.id.login_as_guest);
-        loginAsGuest.setOnClickListener(v -> guestUser());
-
-        // Forgot Password Button Logic
+        /* Forgot Password Button */
         loginForgotPassword = findViewById(R.id.forgotPassword);
         loginForgotPassword.setOnClickListener(view -> {
             Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
             startActivity(intent);
         });
 
-        /* Register Button Logic */
+        /* Register Button */
         registerBtn = findViewById(R.id.goto_register);
         registerBtn.setOnClickListener(v2 -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
@@ -70,50 +78,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void guestUser() {
-        mAuth.signInAnonymously()
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
+    private boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null) return false;
 
-                        // Generate a random username
-                        String guestUsername = "username_guest";
-                        if(!isValidUsername(guestUsername)) {
-                            guestUsername = "user_" + UUID.randomUUID().toString().substring(0, 6);
-                        }
-
-                        // Optionally save to Firestore or Realtime DB
-                        Toast.makeText(LoginActivity.this, "Logged in as " + guestUsername, Toast.LENGTH_SHORT).show();
-
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-                        Map<String, Object> guestData = new HashMap<>();
-                        guestData.put("username", guestUsername);
-                        guestData.put("guest", true);
-
-                        db.collection("users").document(user.getUid())
-                                .set(guestData)
-                                .addOnSuccessListener(aVoid -> {
-                                    Log.d("FIREBASE", "Guest username saved.");
-                                })
-                                .addOnFailureListener(e -> {
-                                    Log.w("FIREBASE", "Error saving guest username", e);
-                                });
-
-                        if (user != null) {
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            intent.putExtra("username", guestUsername); // optional
-                            startActivity(intent);
-                            finish(); // Close login screen
-
-                            // Navigate to main/home screen
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            finish();
-
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Guest login failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+        NetworkCapabilities capabilities = cm.getNetworkCapabilities(cm.getActiveNetwork());
+        return capabilities != null &&
+                (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
     }
 
     public void loginUser() {
@@ -127,27 +99,45 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Authenticate user with Firebase
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
+                .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
-                        Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
 
-                        // Navigate to main/home screen
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
+                        if (user != null) {
+                            String userId = user.getUid();
+
+                            // Fetch username from Realtime Database
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId);
+                            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists() && dataSnapshot.hasChild("username")) {
+                                        String username = dataSnapshot.child("username").getValue(String.class);
+
+                                        // Save username in SharedPreferences
+                                        SharedPreferences prefs = getSharedPreferences("EcoPrefs", MODE_PRIVATE);
+                                        prefs.edit().putString("username", username).apply();
+
+                                        // Go to MainActivity
+                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        finish();
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Username not found in database", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    Toast.makeText(LoginActivity.this, "Database error", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
 
                     } else {
-                        Toast.makeText(this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Authentication failed: " +
+                                task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-    }
-
-    public boolean isValidUsername(String username) {
-        if(username == null) return false;
-
-        if(username.length() < 3 || username.length() > 10) return false;
-        return username.matches("[a-zA-Z0-9_]+");
     }
 }

@@ -5,15 +5,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class HomeViewModel extends ViewModel {
+    private final MutableLiveData<String> username = new MutableLiveData<>();
 
-    private final MutableLiveData<String> mText;
-
-    public HomeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+    public LiveData<String> getUsername() {
+        return username;
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public void setUsername(String newUsername) {
+        username.setValue(newUsername);
     }
 }

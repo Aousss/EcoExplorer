@@ -12,8 +12,9 @@
         android:title="@string/explore_page" />
 
     <item
-        android:id="@+id/placeholder"
-        android:enabled="false"
+        android:id="@+id/navigation_identify"
+        android:enabled="true"
+        android:checkable="false"
         android:title="" />
 
     <item

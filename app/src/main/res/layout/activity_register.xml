@@ -38,22 +38,22 @@
             android:paddingVertical="20dp">
 
             <LinearLayout android:id="@+id/back_to_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:src="@drawable/ic_arrow_back"
                     app:tint="@color/green_primary"/>
 
                 <!-- BACK TO LOGIN -->
                 <TextView
-                    android:id="@+id/text_back_to_login"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:clickable="true"
+                    android:gravity="center_vertical"
                     android:fontFamily="@font/poppins_medium"
                     android:text="Back to login"
                     android:textColor="@color/green_primary"
@@ -131,19 +131,19 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:hint="Role"
                     app:endIconMode="custom"
                     app:endIconDrawable="@drawable/ic_arrow_drop_down">
 
-                    <AutoCompleteTextView
-                        android:id="@+id/user_role"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:inputType="none"
-                        android:paddingStart="10dp"
-                        android:importantForAccessibility="yes"/>
+<!--                    <AutoCompleteTextView-->
+<!--                        android:id="@+id/user_role"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:inputType="none"-->
+<!--                        android:paddingStart="10dp"-->
+<!--                        android:importantForAccessibility="yes"/>-->
 
                 </com.google.android.material.textfield.TextInputLayout>
 

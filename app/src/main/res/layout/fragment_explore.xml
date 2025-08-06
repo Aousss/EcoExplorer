@@ -56,6 +56,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:elevation="10dp"
             android:orientation="vertical">
 
             <!-- GUIDELINE -->
@@ -107,9 +110,14 @@
                 android:id="@+id/ar_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
+                android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="20dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:paddingHorizontal="5dp"
+                android:paddingBottom="5dp"
+                android:elevation="10dp">
 
                 <TextView
                     android:id="@+id/ar1_title"
@@ -139,6 +147,10 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:clipChildren="false"
+                            android:clipToPadding="false"
+                            android:elevation="5dp"
+                            android:paddingHorizontal="3dp"
                             android:orientation="vertical">
 
                             <TextView

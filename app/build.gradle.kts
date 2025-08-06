@@ -26,6 +26,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -43,16 +44,23 @@ dependencies {
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
 
+    // Add the dependency for the Firebase ML model downloader library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-ml-modeldownloader")
+
+    // Also add the dependency for the TensorFlow Lite library and specify its version
+    implementation("org.tensorflow:tensorflow-lite:2.3.0")
+
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation("com.google.firebase:firebase-analytics")
 
     // Firebase Services
-    implementation(libs.firebase.analytics)
-    implementation(libs.firebase.auth) // Firebase Authentication
-    implementation(libs.firebase.database) // Firebase Realtime Database
-    implementation (libs.firebase.firestore)// Use the latest stable version
-    implementation(libs.firebase.storage)
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-storage")
 
     /* FIREBASE */
     implementation("com.firebaseui:firebase-ui-auth:9.0.0")

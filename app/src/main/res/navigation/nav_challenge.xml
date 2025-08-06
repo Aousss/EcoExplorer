@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_challenge"
+    app:startDestination="@id/navigation_challenge">
+
+    <fragment
+        android:id="@+id/navigation_challenge"
+        android:name="com.example.ecoexplorer.ui.challenge.ChallengeFragment"
+        android:label="@string/challenge_page"
+        tools:layout="@layout/fragment_challenge">
+        <action
+            android:id="@+id/action_navigation_challenge_to_navigation_plants"
+            app:destination="@id/navigation_plants" />
+        <action
+            android:id="@+id/action_navigation_challenge_to_navigation_animals"
+            app:destination="@id/navigation_animals" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_plants"
+        android:name="com.example.ecoexplorer.ui.challenge.PlantFragment"
+        android:label="Challenge Plants"
+        tools:layout="@layout/challenge_plants"/>
+
+    <fragment
+        android:id="@+id/navigation_animals"
+        android:name="com.example.ecoexplorer.ui.challenge.AnimalFragment"
+        android:label="Challenge Animals"
+        tools:layout="@layout/challenge_animals"/>
+
+
+</navigation>

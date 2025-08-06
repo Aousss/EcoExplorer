@@ -9,6 +9,8 @@
     <string name="challenge_page" translatable="false">Challenge</string>
     <string name="profile_page" translatable="false">Profile</string>
 
+    <string name="login" translatable="false">Login</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="username">\@username</string>
 

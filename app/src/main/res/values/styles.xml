@@ -6,6 +6,7 @@
         <item name="fontFamily">@font/poppins_semibold</item>"
         <item name="android:textSize">26sp</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
 
     <!-- ACTION BAR USERNAME -->
@@ -25,6 +26,13 @@
     <style name="heading2" parent="TextAppearance.AppCompat">
         <item name="fontFamily">@font/poppins_semibold</item>
         <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/green_primary</item>
+    </style>
+
+    <!-- TITLE IN FRAGMENT-2 -->
+    <style name="heading3" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">@font/poppins_semibold</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/green_primary</item>
     </style>
 

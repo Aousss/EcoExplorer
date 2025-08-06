@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.ecoexplorer.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -23,7 +25,7 @@ import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    FirebaseFirestore db;
+    DatabaseReference db;
     FirebaseAuth mAuth;
 
     private Button registerBtn;
@@ -40,7 +42,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
 
         registerBtn = findViewById(R.id.btn_register);
         loginBtn = findViewById(R.id.back_to_login);
@@ -61,17 +62,6 @@ public class RegisterActivity extends AppCompatActivity {
         String confirmPassword = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.register_confirm_password)).getText()).toString().trim();
         String username = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.register_username)).getText()).toString().trim();
         int age = Integer.parseInt(Objects.requireNonNull(((TextInputEditText) findViewById(R.id.user_age)).getText()).toString().trim());
-        String role = Objects.requireNonNull(((AutoCompleteTextView) findViewById(R.id.user_role)).getText()).toString().trim();
-
-        AutoCompleteTextView roleDown = findViewById(R.id.user_role);
-        String[] roles = new String[] {"Student", "Teacher", "Tutor", "Parent"};
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_dropdown_item_1line,
-                roles
-        );
-        roleDown.setAdapter(adapter);
 
         if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "Enter all the blank fields.", Toast.LENGTH_SHORT).show();
@@ -84,60 +74,51 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        db = FirebaseDatabase.getInstance().getReference("users");
 
         // Check if username already exists
-        db.collection("users")
-                .whereEqualTo("username", username)
-                .get()
-                .addOnCompleteListener(task -> {
+        db.child(username).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-
-                // Check if the query result is empty
-                if (!task.getResult().isEmpty()) {
-
+                if (task.getResult().exists()) {
                     // Username already exists
                     Toast.makeText(RegisterActivity.this, "Username already taken", Toast.LENGTH_SHORT).show();
                 } else {
-
                     // Username is available, proceed with registration
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(authTask -> {
-
                                 // Check if registration was successful
                                 if (authTask.isSuccessful()) {
                                     String uid = mAuth.getCurrentUser().getUid();
 
-                                    // Save user data to Firestore
+                                    // Create user data map
                                     Map<String, Object> user = new HashMap<>();
                                     user.put("email", email);
                                     user.put("password", password);
                                     user.put("username", username);
                                     user.put("age", age);
-                                    user.put("role", role);
                                     user.put("uid", uid);
                                     user.put("createdAt", System.currentTimeMillis());
 
-                                    db.collection("users")
-                                            .document(username)
-                                            .set(user)
+                                    // Save to Realtime Database
+                                    db.child(uid).setValue(user)
                                             .addOnSuccessListener(unused -> {
                                                 Toast.makeText(RegisterActivity.this, "Register Successful", Toast.LENGTH_SHORT).show();
                                                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                                                 finish();
                                             })
                                             .addOnFailureListener(e -> {
-                                                // Registration failed
-                                                Log.e("FirestoreSave", "Failed to save user: ", e);
+                                                Log.e("DBSave", "Failed to save user: ", e);
                                                 Toast.makeText(RegisterActivity.this, "Error saving user: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                             });
-
                                 } else {
                                     // Registration failed
                                     Toast.makeText(RegisterActivity.this, "Register failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                 }
                             });
                 }
+            } else {
+                // Error checking username
+                Toast.makeText(RegisterActivity.this, "Error checking username: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

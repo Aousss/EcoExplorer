@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.ecoexplorer.MainActivity;
 import com.example.ecoexplorer.R;
 import com.example.ecoexplorer.databinding.FragmentHomeBinding;
 import com.example.ecoexplorer.databinding.FragmentIdentifyBinding;
@@ -50,12 +51,6 @@ public class IdentifyFragment extends Fragment {
         binding.identifyNow.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.action_navigation_identify_to_navigation_camera_identify);
-        });
-
-        /* NAVIGATE BACK TO HOME */
-        binding.navigationBackHome.setOnClickListener(v -> {
-            NavController navController = Navigation.findNavController(v);
-            navController.navigate(R.id.action_navigation_identify_to_navigation_home);
         });
 
         return root;

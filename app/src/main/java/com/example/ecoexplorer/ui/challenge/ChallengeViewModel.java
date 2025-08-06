@@ -1,19 +1,89 @@
 package com.example.ecoexplorer.ui.challenge;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChallengeViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
 
-    private MutableLiveData<String> mText;
+    /*--------------
+    * CATEGORIES
+    * --------------*/
+    private MutableLiveData<List<Category>> categories = new MutableLiveData<>();
 
-    public ChallengeViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is challenge fragment");
+    public LiveData<List<Category>> getCategories() {
+        if (categories.getValue() == null) {
+            loadCategories();
+        }
+        return categories;
     }
 
-    public MutableLiveData<String> getText() {
-        return mText;
+    private void loadCategories() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("categories");
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<Category> categoryList = new ArrayList<>();
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    // Use your custom Category.class here
+                    Category category = snap.getValue(Category.class);
+                    if (category != null) {
+                        categoryList.add(category);
+                    }
+                }
+                categories.setValue(categoryList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // handle error, e.g., Log.e("ChallengeViewModel", "Failed to load categories", error.toException());
+            }
+        });
+    }
+
+    /*----------------
+    * RESULTS
+    * ----------------*/
+    private MutableLiveData<List<Results>> results = new MutableLiveData<>();
+
+    public LiveData<List<Results>> getResults() {
+        if (results.getValue() == null) {
+            loadResults();
+        }
+        return results;
+    }
+
+    private void loadResults() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("results");
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<Results> resultsList = new ArrayList<>();
+                for (DataSnapshot snap : snapshot.getChildren()) {
+                    Results result = snap.getValue(Results.class);
+                    if (result != null) {
+                        resultsList.add(result);
+                    }
+                }
+                results.setValue(resultsList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // handle error, e.g., Log.e("ChallengeViewModel", "Failed to load results", error.toException());
+            }
+        });
     }
 }

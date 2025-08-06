@@ -1,23 +1,262 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.challenge.ChallengeFragment">
 
-    <TextView
-        android:id="@+id/text_challenge"
+    <!-- ACTION BAR -->
+    <ImageView
+        android:id="@+id/customActionBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="120dp"
+        android:background="@color/green_primary"
+        tools:ignore="MissingConstraints" />
+
+    <!-- ACTION BAR TEXT -->
+    <LinearLayout
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/logo_ecoexplorer"
+            android:layout_width="190dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ecoecplorer_full_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/actionbar_arexplore"
+            style="@style/actionBar_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:gravity="center"
+            android:text="CHALLENGE"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/actionBar"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- INFORMATION -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/challenge_guide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/green_primary"
+                app:cardCornerRadius="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/customActionBar">
+
+                    <!-- GUIDELINE TITLE -->
+                    <TextView
+                        android:id="@+id/title_challenge_guide"
+                        style="@style/heading2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="Let's Play"
+                        android:textColor="@color/white" />
+
+                    <!-- Guideline - contents -->
+                    <TextView
+                        android:id="@+id/guideline_contents"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginVertical="10dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Lets play some interesting games to test your memory."
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- CHALLENGE - CATEGORIES -->
+            <LinearLayout
+                android:id="@+id/cl_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/cl_categories_title"
+                    style="@style/heading3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="Features Categories" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="2">
+
+                    <!-- PLANTS -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cl_plants_categories"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/green_primary"
+                        app:cardCornerRadius="12dp"
+                        android:layout_marginEnd="5dp"
+                        android:clickable="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_gravity="center">
+
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="35dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/plants_icon"
+                                android:scaleType="centerInside"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="10dp"
+                                android:text="Plants"
+                                style="@style/content1"
+                                android:gravity="center_vertical"/>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- ANIMALS -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cl_animals_categories"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/green_primary"
+                        app:cardCornerRadius="12dp"
+                        android:layout_marginEnd="5dp"
+                        android:clickable="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:layout_gravity="center">
+
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="35dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/bugs_icon"
+                                android:scaleType="centerInside"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="10dp"
+                                android:text="Animals"
+                                style="@style/content1"
+                                android:gravity="center_vertical"/>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- CHALLENGE - RESULTS -->
+            <LinearLayout
+                android:id="@+id/cl_results"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/cl_results_title"
+                        style="@style/heading3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="Resent Results" />
+
+                    <TextView
+                        android:id="@+id/cl_results_seeAll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/green_primary"
+                        android:textStyle="italic"
+                        android:gravity="right"
+                        android:text="see all"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/none_results"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="No results yet. Be the first to take a challenge!"
+                    android:gravity="center"
+                    android:textStyle="italic"
+                    style="@style/description_green" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_results"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:scrollbars="none"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

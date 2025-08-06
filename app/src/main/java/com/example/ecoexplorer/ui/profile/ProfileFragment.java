@@ -1,5 +1,6 @@
 package com.example.ecoexplorer.ui.profile;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -20,6 +21,7 @@ import com.example.ecoexplorer.R;
 import com.example.ecoexplorer.UserViewModel;
 import com.example.ecoexplorer.databinding.FragmentHomeBinding;
 import com.example.ecoexplorer.databinding.FragmentProfileBinding;
+import com.example.ecoexplorer.ui.home.UserUtils;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileFragment extends Fragment {
@@ -27,6 +29,8 @@ public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private UserViewModel userViewModel;
     private FirebaseAuth mAuth;
+
+    ConstraintLayout noUserAccount, LoginedUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,9 +41,12 @@ public class ProfileFragment extends Fragment {
         View root = binding.getRoot();
 
         /* GET THE USERNAME & DISPLAY */
+        binding.username.setText(UserUtils.getCachedUsername(requireContext()));
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        UserUtils.loadUsername(requireContext(), userViewModel); // Pass ViewModel!
+
         userViewModel.getUsername().observe(getViewLifecycleOwner(), username -> {
-            binding.username.setText(username);
+            binding.username.setText("@"+username);
         });
 
         /* LOGOUT FUNCTIONS */
@@ -63,6 +70,18 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        noUserAccount = view.findViewById(R.id.noUserAccount);
+        LoginedUser = view.findViewById(R.id.LoginedUser);
+
+        // Check if the user is logged in
+        if (mAuth.getCurrentUser() !=null) {
+            noUserAccount.setVisibility(View.GONE);
+            LoginedUser.setVisibility(View.VISIBLE);
+        } else {
+            noUserAccount.setVisibility(View.VISIBLE);
+            LoginedUser.setVisibility(View.GONE);
+        }
 
         Button openLogin;
         openLogin = view.findViewById(R.id.btn_to_login);
