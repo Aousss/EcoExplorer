@@ -1,22 +1,22 @@
 package com.example.ecoexplorer.ui.challenge;
 
-public class Category {
+public class AnimalCategory implements BaseCategory {
     private String name;
     private String imageUrl;
 
-    public Category() {
-        // Required for Firebase
-    }
+    public AnimalCategory() {}
 
-    public Category(String name, String imageUrl) {
+    public AnimalCategory(String name, String imageUrl) {
         this.name = name;
         this.imageUrl = imageUrl;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public String getImageUrl() {
         return imageUrl;
     }
