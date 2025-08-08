@@ -1,4 +1,4 @@
-package com.example.ecoexplorer.ui.challenge;
+package com.example.ecoexplorer.ui.challenge.animals;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -150,6 +150,7 @@ public class ChallengeQuizAnimal extends Fragment {
         resultData.put("score", score);
         resultData.put("total", questionList.size());
         resultData.put("date", new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
+        resultData.put("time", new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
 
         userRef.child(uid).child("quizResults").child(quizId).setValue(resultData)
                 .addOnSuccessListener(aVoid ->

@@ -20,15 +20,55 @@
 
     <fragment
         android:id="@+id/navigation_plants"
-        android:name="com.example.ecoexplorer.ui.challenge.PlantFragment"
+        android:name="com.example.ecoexplorer.ui.challenge.plants.PlantFragment"
         android:label="Challenge Plants"
-        tools:layout="@layout/challenge_plants"/>
+        tools:layout="@layout/challenge_plants" >
+        <action
+            android:id="@+id/action_navigation_plants_to_quiz_plants"
+            app:destination="@id/quiz_plants" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_animals"
-        android:name="com.example.ecoexplorer.ui.challenge.AnimalFragment"
+        android:name="com.example.ecoexplorer.ui.challenge.animals.AnimalFragment"
         android:label="Challenge Animals"
-        tools:layout="@layout/challenge_animals"/>
+        tools:layout="@layout/challenge_animals" >
+        <action
+            android:id="@+id/action_navigation_animals_to_quiz_animal"
+            app:destination="@id/quiz_animal" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/quiz_animal"
+        android:name="com.example.ecoexplorer.ui.challenge.animals.ChallengeQuiz"
+        android:label="Quiz Challenge"
+        tools:layout="@layout/challenge_quiz" >
+        <action
+            android:id="@+id/action_quiz_animal_to_quiz_start_animal"
+            app:destination="@id/quiz_start_animal" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/quiz_start_animal"
+        android:name="com.example.ecoexplorer.ui.challenge.animals.ChallengeQuizAnimal"
+        android:label="Quiz Questions"
+        tools:layout="@layout/challenge_quiz_questions" />
+
+    <!-- PLANTS QUIZ -->
+    <fragment
+        android:id="@+id/quiz_plants"
+        android:name="com.example.ecoexplorer.ui.challenge.animals.ChallengeQuiz"
+        android:label="Quiz Challenge"
+        tools:layout="@layout/challenge_quiz" >
+        <action
+            android:id="@+id/action_quiz_plants_to_quiz_start_plants"
+            app:destination="@id/quiz_start_plants" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/quiz_start_plants"
+        android:name="com.example.ecoexplorer.ui.challenge.animals.ChallengeQuizAnimal"
+        android:label="Quiz Questions"
+        tools:layout="@layout/challenge_quiz_questions" />
 
 </navigation>

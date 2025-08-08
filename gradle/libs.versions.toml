@@ -1,5 +1,5 @@
 [versions]
-agp = "8.10.0"
+agp = "8.10.1"
 firebaseFirestore = "25.1.4"
 firebaseStorage = "21.0.2"
 junit = "4.13.2"
@@ -15,6 +15,8 @@ navigationUi = "2.9.0"
 cameraView = "1.4.2"
 cameraLifecycle = "1.4.2"
 playServicesAuth = "21.3.0"
+litertSupportApi = "1.4.0"
+visionCommon = "17.3.0"
 
 [libraries]
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
@@ -35,6 +37,8 @@ navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version
 camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraView" }
 camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraLifecycle" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
+litert-support-api = { group = "com.google.ai.edge.litert", name = "litert-support-api", version.ref = "litertSupportApi" }
+vision-common = { group = "com.google.mlkit", name = "vision-common", version.ref = "visionCommon" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

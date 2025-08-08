@@ -13,14 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.ecoexplorer.R;
+import com.example.ecoexplorer.ui.challenge.plants.PlantsCategory;
 
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
-    private List<Category> categoryList;
+    private List<BaseCategory> categoryList;
 
-    public CategoryAdapter(Context context, List<Category> categoryList) {
+    public CategoryAdapter(Context context, List<BaseCategory> categoryList) {
         this.categoryList = categoryList;
     }
 
@@ -34,9 +35,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-        Category category = categoryList.get(position);
+        BaseCategory category = categoryList.get(position);
 
-        // Set category name
+        // Set plantsCategory name
         holder.categoryName.setText(category.getName());
 
         Glide.with(holder.itemView.getContext())
@@ -52,7 +53,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         return categoryList.size();
     }
 
-    public void setCategories(List<Category> newCategories) {
+    public void setCategories(List<PlantsCategory> newCategories) {
         this.categoryList.clear();
         this.categoryList.addAll(newCategories);
         notifyDataSetChanged();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -23,6 +23,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/back_to_challenge"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/logo_ecoexplorer"
@@ -52,22 +61,190 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/actionBar">
 
-        <!-- CHALLENGE - CATEGORIES -->
+        <!-- CHALLENGE - ANIMAL CATEGORIES -->
         <LinearLayout
-            android:id="@+id/plants_categories"
+            android:id="@+id/animal_categories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/plants_categories_title"
+            <TextView android:id="@+id/animals_categories_title"
                 style="@style/heading3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:text="Animals Categories" />
+
+            <!-- FIRST ROW -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- QUIZ CHALLENGE -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/quiz_challenge"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    app:cardCornerRadius="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/el_card_outlined"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_quiz"
+                            app:tint="@color/green_primary" />
+
+                        <TextView
+                            style="@style/content2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Quiz Challenge" />
+
+                        <TextView
+                            style="@style/description_green"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Guess the animals" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- IMAGE RECOGNITION -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/image_recognition"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:layout_marginStart="10dp"
+                    app:cardCornerRadius="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/el_card_outlined"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_imagematch"
+                            app:tint="@color/green_primary" />
+
+                        <TextView
+                            style="@style/content2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Image Match" />
+
+                        <TextView
+                            style="@style/description_green"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Spot the animals" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <!-- SECOND ROW -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:weightSum="2">
+
+                <!-- PUZZLE CHALLENGE -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/puzzle_challenge"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    app:cardCornerRadius="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/el_card_outlined"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_puzzle"
+                            app:tint="@color/green_primary" />
+
+                        <TextView
+                            style="@style/content2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Puzzle Challenge" />
+
+                        <TextView
+                            style="@style/description_green"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Jigsaw puzzle" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- MEMORY CARD -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/memory_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:layout_marginStart="10dp"
+                    app:cardCornerRadius="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/el_card_outlined"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_memorycard"
+                            app:tint="@color/green_primary" />
+
+                        <TextView
+                            style="@style/content2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Memory Card" />
+
+                        <TextView
+                            style="@style/description_green"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Find matching pairs of animals" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -82,10 +259,11 @@
                     android:clipToPadding="false">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_categories"
+                        android:id="@+id/recycler_animals_categories"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clipToPadding="false"
+                        android:nestedScrollingEnabled="false"
                         android:scrollbars="none"/>
 
 

@@ -1,4 +1,6 @@
-package com.example.ecoexplorer.ui.challenge;
+package com.example.ecoexplorer.ui.challenge.animals;
+
+import com.example.ecoexplorer.ui.challenge.BaseCategory;
 
 public class AnimalCategory implements BaseCategory {
     private String name;

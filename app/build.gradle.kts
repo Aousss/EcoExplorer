@@ -48,9 +48,6 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-ml-modeldownloader")
 
-    // Also add the dependency for the TensorFlow Lite library and specify its version
-    implementation("org.tensorflow:tensorflow-lite:2.3.0")
-
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation("com.google.firebase:firebase-analytics")
@@ -70,6 +67,7 @@ dependencies {
 
     // Glide for image loading
     implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation(libs.vision.common)
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1") // Optional, for custom Glide modules
 
     // Google Play Services Base
@@ -95,6 +93,13 @@ dependencies {
 
     implementation ("androidx.recyclerview:recyclerview:1.3.2") // or latest version
     implementation ("com.google.android.material:material:1.5.0")
+
+    /*-------------------
+    * TENSORFLOW LITE
+    * ------------------*/
+    implementation ("org.tensorflow:tensorflow-lite:2.13.0")
+    implementation ("org.tensorflow:tensorflow-lite-task-vision:0.4.3")
+
 
     implementation(libs.appcompat)
     implementation(libs.material)

@@ -1,4 +1,4 @@
-package com.example.ecoexplorer.ui.challenge;
+package com.example.ecoexplorer.ui.challenge.animals;
 
 import java.util.List;
 

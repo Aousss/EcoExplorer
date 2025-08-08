@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- ACTION BAR -->
+    <ImageView
+        android:id="@+id/customActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        tools:ignore="MissingConstraints" />
+
+    <!-- ACTION BAR TEXT -->
+    <LinearLayout
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginHorizontal="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/captureCloseButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/circle_white"
+            android:backgroundTint="@color/full_transparent"
+            android:paddingStart="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/green_primary"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/tvQuestionNumber"
+            style="@style/actionBar_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="45dp"
+            android:gravity="center"
+            android:paddingStart="15dp"
+            android:text="Question 1"
+            android:textColor="@color/green_primary"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <!-- QUESTIONS -->
+    <LinearLayout
+        android:id="@+id/quizes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/actionBar">
+
+        <!-- QUIZ QUESTIONS -->
+        <TextView
+            android:id="@+id/quiz_questions"
+            style="@style/heading2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quiz Questions"
+            android:textSize="27sp" />
+
+        <!-- QUIZ DESCRIPTION -->
+        <TextView
+            android:id="@+id/quiz_description"
+            style="@style/description_green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Answer and get points"
+            android:textColor="@color/gray"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/answer_choice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toBottomOf="@id/quizes">
+
+        <!-- ANSWER CHOICES -->
+        <RadioGroup
+            android:id="@+id/radioGroupChoices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rbChoice1"
+                style="@style/content1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:text="Choice 1"
+                android:textColor="@color/green_primary"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rbChoice2"
+                style="@style/content1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:text="Choice 2"
+                android:textColor="@color/green_primary"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rbChoice3"
+                style="@style/content1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:text="Choice 3"
+                android:textColor="@color/green_primary"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rbChoice4"
+                style="@style/content1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:text="Choice 4"
+                android:textColor="@color/green_primary"
+                android:textSize="16sp" />
+        </RadioGroup>
+
+    </ScrollView>
+
+    <!-- NAVIGATION BUTTON -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="30dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/btnPrevious"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Previous" />
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Next" />
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Submit"
+            android:visibility="gone" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

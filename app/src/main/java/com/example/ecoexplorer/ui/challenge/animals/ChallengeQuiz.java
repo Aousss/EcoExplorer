@@ -1,12 +1,10 @@
-package com.example.ecoexplorer.ui.challenge;
+package com.example.ecoexplorer.ui.challenge.animals;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ChallengeQuiz extends Fragment {
 
-    private TextView recentScore_quiz;
+    private TextView recentScore_quiz, Plants_recentScore_quiz;
 
     private FirebaseAuth mAuth;
     private DatabaseReference userRef;
@@ -39,27 +37,28 @@ public class ChallengeQuiz extends Fragment {
 
         View view = inflater.inflate(R.layout.challenge_quiz, container, false);
 
+        /* SET PLANTS RECENT SCORE VISIBILITY - GONE */
+        Plants_recentScore_quiz = view.findViewById(R.id.Plants_recentScore_quiz);
+        Plants_recentScore_quiz.setVisibility(getView().GONE);
+        CardView startQuizPlants = view.findViewById(R.id.Plants_btnStart_quiz);
+        startQuizPlants.setVisibility(getView().GONE);
+
         // Back to Challenge Fragment - Animals
-        ImageButton backToChallengeAnimals = view.findViewById(R.id.back_to_animalQuiz);
+        ImageButton backToChallengeAnimals = view.findViewById(R.id.back_to_quiz);
         backToChallengeAnimals.setOnClickListener(v -> {
             NavController navController = NavHostFragment.findNavController(ChallengeQuiz.this);
             navController.popBackStack(); // Goes back to previous fragment in nav graph
         });
 
-        ImageButton backToChallengePlants = view.findViewById(R.id.back_to_animalQuiz);
-        backToChallengePlants.setOnClickListener(v -> {
-            NavController navController = NavHostFragment.findNavController(ChallengeQuiz.this);
-            navController.popBackStack(); // Goes back to previous fragment in nav graph
-        });
-
         // Start Quiz Button
-        CardView startQuiz = view.findViewById(R.id.btnStart_quiz);
+        CardView startQuiz = view.findViewById(R.id.Animals_btnStart_quiz);
         startQuiz.setOnClickListener(v -> {
             NavController navController = NavHostFragment.findNavController(ChallengeQuiz.this);
-            navController.navigate(R.id.action_navigation_quiz_to_quiz);
+            navController.navigate(R.id.action_quiz_animal_to_quiz_start_animal);
         });
 
-        recentScore_quiz = view.findViewById(R.id.recentScore_quiz);
+        // Set Animal Recent Score
+        recentScore_quiz = view.findViewById(R.id.Animal_recentScore_quiz);
         mAuth = FirebaseAuth.getInstance();
         userRef = FirebaseDatabase.getInstance().getReference("users");
 

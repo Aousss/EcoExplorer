@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- ACTION BAR -->
+    <ImageView
+        android:id="@+id/customActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        tools:ignore="MissingConstraints" />
+
+    <!-- ACTION BAR TEXT -->
+    <LinearLayout
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginHorizontal="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/back_to_quiz"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/circle_white"
+            android:backgroundTint="@color/green_primary"
+            android:paddingVertical="5dp"
+            android:paddingStart="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/challenge_quiz_title"
+            style="@style/actionBar_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginVertical="10dp"
+            android:layout_marginEnd="45dp"
+            android:gravity="center"
+            android:paddingStart="15dp"
+            android:text="QUIZ"
+            android:textColor="@color/green_primary"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/actionBar">
+
+        <!-- CHALLENGE - QUIZ CATEGORIES -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <!-- QUIZ DESCRIPTION -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/description_quiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/gray_light"
+                app:cardCornerRadius="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:textStyle="normal|italic"
+                    android:textSize="15sp"
+                    android:textColor="@color/green_primary"
+                    android:text="This is the description of the quiz"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- RECENT SCORE -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="Recent Score:"
+                style="@style/heading1"
+                android:textColor="@color/green_primary"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/Animal_recentScore_quiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="0%"
+                android:textSize="40sp"
+                style="@style/heading2"/>
+
+            <TextView
+                android:id="@+id/Plants_recentScore_quiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="0%"
+                android:textSize="40sp"
+                style="@style/heading2" />
+
+            <!-- START BUTTON -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/Animals_btnStart_quiz"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="15dp"
+                android:backgroundTint="@color/green_primary">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="START"
+                    style="@style/content1"
+                    android:textSize="20sp"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- START BUTTON -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/Plants_btnStart_quiz"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="15dp"
+                android:backgroundTint="@color/green_primary">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="START"
+                    style="@style/content1"
+                    android:textSize="20sp"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

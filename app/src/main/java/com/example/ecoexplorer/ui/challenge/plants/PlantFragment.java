@@ -1,4 +1,4 @@
-package com.example.ecoexplorer.ui.challenge;
+package com.example.ecoexplorer.ui.challenge.plants;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoexplorer.R;
+import com.example.ecoexplorer.ui.challenge.BaseCategory;
+import com.example.ecoexplorer.ui.challenge.CategoryAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

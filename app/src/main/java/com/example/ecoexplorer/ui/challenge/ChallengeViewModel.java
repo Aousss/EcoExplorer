@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.ecoexplorer.ui.challenge.plants.PlantsCategory;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,9 +20,9 @@ public class ChallengeViewModel extends ViewModel {
     /*--------------
     * CATEGORIES
     * --------------*/
-    private MutableLiveData<List<Category>> categories = new MutableLiveData<>();
+    private MutableLiveData<List<PlantsCategory>> categories = new MutableLiveData<>();
 
-    public LiveData<List<Category>> getCategories() {
+    public LiveData<List<PlantsCategory>> getCategories() {
         if (categories.getValue() == null) {
             loadCategories();
         }
@@ -34,15 +35,15 @@ public class ChallengeViewModel extends ViewModel {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<Category> categoryList = new ArrayList<>();
+                List<PlantsCategory> plantsCategoryList = new ArrayList<>();
                 for (DataSnapshot snap : snapshot.getChildren()) {
-                    // Use your custom Category.class here
-                    Category category = snap.getValue(Category.class);
-                    if (category != null) {
-                        categoryList.add(category);
+                    // Use your custom PlantsCategory.class here
+                    PlantsCategory plantsCategory = snap.getValue(PlantsCategory.class);
+                    if (plantsCategory != null) {
+                        plantsCategoryList.add(plantsCategory);
                     }
                 }
-                categories.setValue(categoryList);
+                categories.setValue(plantsCategoryList);
             }
 
             @Override
