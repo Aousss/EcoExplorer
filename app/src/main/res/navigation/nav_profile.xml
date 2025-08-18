@@ -9,12 +9,33 @@
         android:id="@+id/navigation_profile"
         android:name="com.example.ecoexplorer.ui.profile.ProfileFragment"
         android:label="@string/profile_page"
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_navigation_profile_to_login"
+            app:destination="@id/login" />
+        <action
+            android:id="@+id/action_navigation_profile_to_helpAndFeedback"
+            app:destination="@id/helpAndFeedback" />
+        <action
+            android:id="@+id/action_navigation_profile_to_devInfo"
+            app:destination="@id/devInfo" />
+    </fragment>
 
-    <fragment
+    <activity
         android:id="@+id/login"
         android:name="com.example.ecoexplorer.ui.profile.LoginActivity"
         android:label="@string/login"
         tools:layout="@layout/activity_login"/>
+
+    <fragment
+        android:id="@+id/helpAndFeedback"
+        android:name="com.example.ecoexplorer.ui.profile.HelpAndFeedback"
+        android:label="helpAndFeedback"
+        tools:layout="@layout/profile_help_and_feedback"/>
+
+    <fragment
+        android:id="@+id/devInfo"
+        android:label="devInfo"
+        tools:layout="@layout/profile_developers_info"/>
 
 </navigation>

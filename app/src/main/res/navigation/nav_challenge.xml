@@ -18,16 +18,7 @@
             app:destination="@id/navigation_animals" />
     </fragment>
 
-    <fragment
-        android:id="@+id/navigation_plants"
-        android:name="com.example.ecoexplorer.ui.challenge.plants.PlantFragment"
-        android:label="Challenge Plants"
-        tools:layout="@layout/challenge_plants" >
-        <action
-            android:id="@+id/action_navigation_plants_to_quiz_plants"
-            app:destination="@id/quiz_plants" />
-    </fragment>
-
+    <!-- ANIMALS QUIZ -->
     <fragment
         android:id="@+id/navigation_animals"
         android:name="com.example.ecoexplorer.ui.challenge.animals.AnimalFragment"
@@ -40,7 +31,7 @@
 
     <fragment
         android:id="@+id/quiz_animal"
-        android:name="com.example.ecoexplorer.ui.challenge.animals.ChallengeQuiz"
+        android:name="com.example.ecoexplorer.ui.challenge.animals.AnimalsChallengeQuiz"
         android:label="Quiz Challenge"
         tools:layout="@layout/challenge_quiz" >
         <action
@@ -50,14 +41,24 @@
 
     <fragment
         android:id="@+id/quiz_start_animal"
-        android:name="com.example.ecoexplorer.ui.challenge.animals.ChallengeQuizAnimal"
+        android:name="com.example.ecoexplorer.ui.challenge.animals.AnimalsQuizQuestions"
         android:label="Quiz Questions"
         tools:layout="@layout/challenge_quiz_questions" />
 
     <!-- PLANTS QUIZ -->
     <fragment
+        android:id="@+id/navigation_plants"
+        android:name="com.example.ecoexplorer.ui.challenge.plants.PlantFragment"
+        android:label="Challenge Plants"
+        tools:layout="@layout/challenge_plants" >
+        <action
+            android:id="@+id/action_navigation_plants_to_quiz_plants"
+            app:destination="@id/quiz_plants" />
+    </fragment>
+
+    <fragment
         android:id="@+id/quiz_plants"
-        android:name="com.example.ecoexplorer.ui.challenge.animals.ChallengeQuiz"
+        android:name="com.example.ecoexplorer.ui.challenge.plants.PlantsChallengeQuiz"
         android:label="Quiz Challenge"
         tools:layout="@layout/challenge_quiz" >
         <action
@@ -67,7 +68,7 @@
 
     <fragment
         android:id="@+id/quiz_start_plants"
-        android:name="com.example.ecoexplorer.ui.challenge.animals.ChallengeQuizAnimal"
+        android:name="com.example.ecoexplorer.ui.challenge.plants.PlantsQuizQuestions"
         android:label="Quiz Questions"
         tools:layout="@layout/challenge_quiz_questions" />
 
