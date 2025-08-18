@@ -1,0 +1,10 @@
+aphids
+butterflies
+cicadas
+damselflies
+dragonflies
+leafhopper
+longhorn beetles
+moths
+rhinoceros beetles
+weevil
