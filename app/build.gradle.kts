@@ -35,6 +35,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        mlModelBinding = true
     }
 }
 
@@ -42,64 +43,65 @@ dependencies {
 
     /* FIREBASE FUNCTIONS */
     // Import the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
+    implementation(platform(libs.firebase.bom))
 
     // Add the dependency for the Firebase ML model downloader library
     // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation("com.google.firebase:firebase-ml-modeldownloader")
+    implementation(libs.firebase.ml.modeldownloader)
 
-    // TODO: Add the dependencies for Firebase products you want to use
-    // When using the BoM, don't specify versions in Firebase dependencies
-    implementation("com.google.firebase:firebase-analytics")
+    implementation(libs.google.firebase.analytics)
 
     // Firebase Services
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-database")
-    implementation("com.google.firebase:firebase-firestore")
-    implementation("com.google.firebase:firebase-storage")
+    implementation(libs.com.google.firebase.firebase.analytics)
+    implementation(libs.google.firebase.auth)
+    implementation(libs.google.firebase.database)
+    implementation(libs.google.firebase.firestore)
+    implementation(libs.google.firebase.storage)
 
     /* FIREBASE */
-    implementation("com.firebaseui:firebase-ui-auth:9.0.0")
+    implementation(libs.firebase.ui.auth)
 
     // Google Sign-In
     implementation(libs.play.services.auth)
 
     // Glide for image loading
-    implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation(libs.glide)
     implementation(libs.vision.common)
-    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1") // Optional, for custom Glide modules
+    implementation(libs.image.labeling.common)
+    annotationProcessor(libs.compiler) // Optional, for custom Glide modules
 
     // Google Play Services Base
-    implementation("com.google.android.gms:play-services-base:18.2.0")
+    implementation(libs.play.services.base)
 
     // Logging and utilities
-    implementation("androidx.core:core-ktx:1.10.1") // For logging and extensions
-
+    implementation(libs.core.ktx) // For logging and extensions
 
     /* FOR CAMERA FUNCTIONS */
     // Required CameraX core library
-    implementation ("androidx.camera:camera-core:1.3.0")
+    implementation (libs.camera.core)
 
     // CameraX Camera2 implementation (most common backend)
-    implementation ("androidx.camera:camera-camera2:1.3.0")
+    implementation (libs.camera.camera2)
 
     // Optional: For lifecycle binding
-    implementation ("androidx.camera:camera-lifecycle:1.3.0")
+    implementation (libs.camera.lifecycle)
 
     // Optional: For PreviewView and image capture
-    implementation ("androidx.camera:camera-view:1.3.0")
-    implementation ("androidx.camera:camera-extensions:1.3.0")
+    implementation (libs.camera.view)
+    implementation (libs.camera.extensions)
 
-    implementation ("androidx.recyclerview:recyclerview:1.3.2") // or latest version
-    implementation ("com.google.android.material:material:1.5.0")
+    implementation (libs.recyclerview) // or latest version
+    implementation (libs.material.v150)
 
     /*-------------------
     * TENSORFLOW LITE
     * ------------------*/
-    implementation ("org.tensorflow:tensorflow-lite:2.13.0")
-    implementation ("org.tensorflow:tensorflow-lite-task-vision:0.4.3")
+//    implementation (libs.tensorflow.lite)
+    implementation (libs.tensorflow.lite.task.vision)
 
+    implementation ("org.tensorflow:tensorflow-lite:2.12.0")
+//    implementation (libs.tensorflow.lite.support)
+//    implementation (libs.tensorflow.lite.metadata)
 
     implementation(libs.appcompat)
     implementation(libs.material)
