@@ -1,7 +1,13 @@
 [versions]
 agp = "8.10.1"
+cameraCore = "1.4.2"
+compiler = "4.15.1"
+coreKtx = "1.16.0"
+firebaseBom = "34.1.0"
 firebaseFirestore = "25.1.4"
 firebaseStorage = "21.0.2"
+firebaseUiAuth = "9.0.0"
+glide = "4.15.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -10,20 +16,46 @@ material = "1.12.0"
 constraintlayout = "2.2.1"
 lifecycleLivedataKtx = "2.9.0"
 lifecycleViewmodelKtx = "2.9.0"
+materialVersion = "1.5.0"
 navigationFragment = "2.9.0"
 navigationUi = "2.9.0"
 cameraView = "1.4.2"
 cameraLifecycle = "1.4.2"
 playServicesAuth = "21.3.0"
 litertSupportApi = "1.4.0"
+playServicesBase = "18.7.2"
+recyclerview = "1.4.0"
+tensorflowLite = "2.15.0"
+tensorflowLiteMetadata = "0.4.3"
+tensorflowLiteSupport = "0.4.3"
+tensorflowLiteTaskVision = "0.4.4"
+tensorflowLiteVersion = "2.19.0"
 visionCommon = "17.3.0"
+rendering = "1.17.1"
+sceneformUx = "1.17.1"
+imageLabelingCommon = "18.1.0"
 
 [libraries]
+camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCore" }
+camera-core = { module = "androidx.camera:camera-core", version.ref = "cameraCore" }
+camera-extensions = { module = "androidx.camera:camera-extensions", version.ref = "cameraCore" }
+com-google-firebase-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
+core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-database = { module = "com.google.firebase:firebase-database" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
+firebase-ml-modeldownloader = { module = "com.google.firebase:firebase-ml-modeldownloader" }
 firebase-storage = { module = "com.google.firebase:firebase-storage", version.ref = "firebaseStorage" }
+firebase-ui-auth = { module = "com.firebaseui:firebase-ui-auth", version.ref = "firebaseUiAuth" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+google-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
+google-firebase-database = { module = "com.google.firebase:firebase-database" }
+google-firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+google-firebase-storage = { module = "com.google.firebase:firebase-storage" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -32,13 +64,24 @@ material = { group = "com.google.android.material", name = "material", version.r
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+material-v150 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
 camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraView" }
 camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraLifecycle" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 litert-support-api = { group = "com.google.ai.edge.litert", name = "litert-support-api", version.ref = "litertSupportApi" }
+play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "playServicesBase" }
+recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+tensorflow-lite = { module = "org.tensorflow:tensorflow-lite", version.ref = "tensorflowLite" }
+tensorflow-lite-metadata = { module = "org.tensorflow:tensorflow-lite-metadata", version.ref = "tensorflowLiteMetadata" }
+tensorflow-lite-support = { module = "org.tensorflow:tensorflow-lite-support", version.ref = "tensorflowLiteSupport" }
+tensorflow-lite-task-vision = { module = "org.tensorflow:tensorflow-lite-task-vision", version.ref = "tensorflowLiteTaskVision" }
+tensorflow-lite-v2190 = { module = "org.tensorflow:tensorflow-lite", version.ref = "tensorflowLiteVersion" }
 vision-common = { group = "com.google.mlkit", name = "vision-common", version.ref = "visionCommon" }
+rendering = { group = "com.google.ar.sceneform", name = "rendering", version.ref = "rendering" }
+sceneform-ux = { group = "com.google.ar.sceneform.ux", name = "sceneform-ux", version.ref = "sceneformUx" }
+image-labeling-common = { group = "com.google.mlkit", name = "image-labeling-common", version.ref = "imageLabelingCommon" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
