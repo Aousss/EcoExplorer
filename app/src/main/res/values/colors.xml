@@ -24,4 +24,17 @@
     <color name="half_transparent">#80000000</color>
     <color name="quarter_transparent">#40000000</color>
 
+    <!-- NIGHT COLORS -->
+
+    <color name="green_night_primary">#1B5E20</color>   <!-- dark green -->
+    <color name="green_night_secondary">#2E7D32</color> <!-- medium-dark green -->
+
+    <color name="yellow_night_primary">#FBC02D</color> <!-- golden yellow -->
+    <color name="yellow_night_secondary">#F9A825</color> <!-- deeper golden -->
+
+    <color name="dark_background">#121212</color> <!-- standard dark mode bg -->
+    <color name="dark_surface">#1E1E1E</color>   <!-- surface cards -->
+
+
+
 </resources>

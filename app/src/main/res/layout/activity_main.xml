@@ -12,15 +12,13 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        android:layout_marginBottom="90dp"
-        app:navGraph="@navigation/nav_home"/>
+        android:layout_marginBottom="140dp"
+        app:defaultNavHost="true" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:fabCradleMargin="10dp"
         app:fabCradleRoundedCornerRadius="10dp"
         android:backgroundTint="@color/green_primary"
         android:layout_gravity="bottom">

@@ -6,543 +6,393 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.ProfileFragment">
 
-    <!-- USER LOGIN - NO ACCOUNT -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/noUserAccount"
+    <!-- ACTION BAR -->
+    <ImageView
+        android:id="@id/customActionBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_height="120dp"
+        android:background="@color/green_primary"
+        tools:ignore="MissingConstraints" />
 
-        <!-- ACTION BAR -->
-        <ImageView
-            android:id="@id/customActionBar"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:background="@color/green_primary"
-            tools:ignore="MissingConstraints" />
+    <LinearLayout
+        android:id="@+id/ActionBar_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@id/ActionBar_TextView"
+            android:id="@+id/ActionBar_TextView"
             style="@style/actionBar_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
-            android:text="PROFILE"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="PROFILE" />
 
-        <ImageView
-            android:id="@id/profile_pic_bg"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/el_profile_pic"
-            android:backgroundTint="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ActionBar_TextView" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_weight="1" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@id/profile_pic"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginStart="33dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ActionBar_TextView"
-            android:src="@drawable/ic_person"
-            app:shapeAppearance="@style/CircleImageStyle"/>
-<!--        <ImageView-->
-<!--            android:id="@id/profile_pic"-->
-<!--            android:layout_width="90dp"-->
-<!--            android:layout_height="90dp"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_marginStart="33dp"-->
-<!--            android:layout_marginTop="23dp"-->
-<!--            android:background="@drawable/el_profile_pic"-->
-<!--            android:backgroundTint="@color/green_primary"-->
-<!--            android:padding="10dp"-->
-<!--            android:scaleType="center"-->
-<!--            android:src="@mipmap/ecoexplorer_foreground"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/ActionBar_TextView"-->
-<!--            app:tint="@color/white" />-->
-
-        <TextView
-            android:id="@id/username"
-            style="@style/content2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginEnd="30dp"
-            android:text="Guest"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ActionBar_TextView" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView_to_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="20dp"
-            android:backgroundTint="@color/gray_light"
-            app:cardCornerRadius="100dp"
-            app:layout_constraintTop_toBottomOf="@id/username">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/btn_login"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:layout_marginStart="10dp"
-                    android:gravity="center"
-                    android:text="Sign in "
-                    android:textColor="@color/green_secondary"
-                    android:textSize="12dp"
-                    android:textStyle="bold|italic" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:gravity="center"
-                    android:text=" to your account!"
-                    android:textColor="@color/green_secondary"
-                    android:textSize="12dp" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <!-- FEEDBACK AND DEVELOPER INFO -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="30dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/cardView_to_login">
-
-            <LinearLayout
-                android:id="@id/help_and_feedback_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_reviews"
-                    app:tint="@color/green_primary" />
-
-                <TextView
-                    style="@style/content2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="Help and Feedback" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="right|center_vertical"
-                    android:src="@drawable/ic_arrow_right"
-                    app:tint="@color/green_primary" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@id/dev_info_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_developer"
-                    app:tint="@color/gray" />
-
-                <TextView
-                    android:id="@id/dev_info"
-                    style="@style/content2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="Developer Info"
-                    android:textColor="@color/gray" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- USER LOGIN - HAVE ACCOUNT -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/LoginedUser"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible">
-
-        <!-- ACTION BAR -->
-        <ImageView
-            android:id="@+id/customActionBar"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:background="@color/green_primary"
-            tools:ignore="MissingConstraints" />
-
-        <LinearLayout
-            android:id="@+id/ActionBar_title"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout android:id="@+id/btn_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/ActionBar_TextView"
-                style="@style/actionBar_title"
+                style="@style/content2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="30dp"
-                android:text="PROFILE" />
+                android:gravity="center"
+                android:text="LOGOUT"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="10dp"
-                android:layout_weight="1" />
-
-            <LinearLayout
-                android:id="@+id/btn_logout"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/content2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="LOGOUT"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="30dp"
-                    android:padding="5dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_logout" />
-
-            </LinearLayout>
+                android:layout_gravity="center"
+                android:layout_marginEnd="30dp"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_logout" />
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/profile_pic_bg"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/el_profile_pic"
-            android:backgroundTint="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ActionBar_title" />
+    </LinearLayout>
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/profile_pic"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginStart="33dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ActionBar_title"
-            android:src="@drawable/ic_person"
-            app:shapeAppearance="@style/CircleImageStyle"/>
+    <TextView android:id="@id/username"
+        style="@style/content2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="30dp"
+        android:text="Guest"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ActionBar_title" />
 
-        <TextView
-            android:id="@+id/usernameProfile"
-            style="@style/content2"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="120dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginEnd="30dp"
-            android:text="@string/username"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ActionBar_title" />
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/user_profile_info_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/green_primary"
-            app:cardCornerRadius="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profile_pic_bg">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/profile_username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/content2"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="Username"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:id="@+id/profile_username_text"
-                        style="@style/content2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/username"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/gray" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/profile_fullname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/content2"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="Full Name"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:id="@+id/profile_fullname_text"
-                        style="@style/content2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Full Name"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/gray" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/profile_age"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/content2"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="Age"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:id="@+id/profile_age_text"
-                        style="@style/content2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="26 years old"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/gray" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/profile_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/content2"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="Email"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:id="@+id/profile_email_text"
-                        style="@style/content2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:breakStrategy="simple"
-                        android:inputType="textEmailAddress"
-                        android:lineSpacingMultiplier="1"
-                        android:lines="2"
-                        android:maxLines="2"
-                        android:scrollHorizontally="true"
-                        android:scrollbars="none"
-                        android:text="email"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/gray" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/profile_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/content2"
-                        android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-                        android:text="Password"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:id="@+id/profile_password_text"
-                        style="@style/content2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="password"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/gray" />
-
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/upload_profile_pic"
-                    style="@style/content2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:backgroundTint="@color/yellow_primary"
-                    android:text="Upload Image"
-                    android:textColor="@color/black" />
-
-                <TextView android:id="@+id/ProfileImageLink"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="imageLink"
-                    style="@style/content1"/>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <!-- FEEDBACK AND DEVELOPER INFO -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="30dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/user_profile_info_container">
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="35dp">
 
-            <LinearLayout
-                android:id="@+id/help_and_feedback_container"
+            <androidx.cardview.widget.CardView android:id="@+id/cardView_to_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_marginStart="140dp"
+                android:layout_marginTop="15dp"
+                android:paddingTop="100dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/gray_light"
+                app:cardCornerRadius="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/username"
+                tools:ignore="NotSibling">
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_reviews"
-                    app:tint="@color/green_primary" />
-
-                <TextView
-                    style="@style/content2"
+                <!-- USER GOTO LOGIN - NEW ACCOUNT -->
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="Help and Feedback" />
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    <TextView
+                        android:id="@+id/btn_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center"
+                        android:text="Sign in "
+                        android:textColor="@color/green_secondary"
+                        android:textSize="12dp"
+                        android:textStyle="bold|italic" />
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="right|center_vertical"
-                    android:src="@drawable/ic_arrow_right"
-                    app:tint="@color/green_primary" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:gravity="center"
+                        android:text=" to your account!"
+                        android:textColor="@color/green_secondary"
+                        android:textSize="12dp" />
 
-            </LinearLayout>
+                </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/dev_info_container"
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView android:id="@+id/user_profile_info_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/green_primary"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardView_to_login"
+                app:layout_goneMarginTop="80dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="20dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/profile_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/content2"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="Username"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/profile_username_text"
+                            style="@style/content2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/username"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/gray" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/profile_fullname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/content2"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="Full Name"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/profile_fullname_text"
+                            style="@style/content2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Full Name"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/gray" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/profile_age"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/content2"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="Age"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/profile_age_text"
+                            style="@style/content2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="26 years old"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/gray" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/profile_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="50dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/content2"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="Email"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/profile_email_text"
+                            style="@style/content2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:breakStrategy="simple"
+                            android:inputType="textEmailAddress"
+                            android:lineSpacingMultiplier="1"
+                            android:lines="2"
+                            android:maxLines="2"
+                            android:scrollHorizontally="true"
+                            android:scrollbars="none"
+                            android:text="email"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/gray" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/profile_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/content2"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="Password"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:id="@+id/profile_password_text"
+                            style="@style/content2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="password"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/gray" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/upload_profile_pic"
+                        style="@style/content2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:backgroundTint="@color/yellow_primary"
+                        android:text="Upload Image"
+                        android:textColor="@color/black" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- FEEDBACK AND DEVELOPER INFO -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="30dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/user_profile_info_container"
+                app:layout_goneMarginTop="100dp">
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_developer"
-                    app:tint="@color/gray" />
-
-                <TextView
-                    android:id="@+id/dev_info"
-                    style="@style/content2"
-                    android:layout_width="wrap_content"
+                <LinearLayout android:id="@+id/help_and_feedback_container"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="Developer Info"
-                    android:textColor="@color/gray" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_reviews"
+                        app:tint="@color/green_primary" />
+
+                    <TextView
+                        style="@style/content2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="Help and Feedback" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="right|center_vertical"
+                        android:src="@drawable/ic_arrow_right"
+                        app:tint="@color/green_primary" />
+
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/dev_info_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_developer"
+                        app:tint="@color/gray" />
+
+                    <TextView
+                        android:id="@+id/dev_info"
+                        style="@style/content2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="Developer Info"
+                        android:textColor="@color/gray" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <!-- THIS PUT BELOW BECAUSE I WANT IT TO STAY ON TOP WHEN SCROLL -->
+    <ImageView
+        android:id="@+id/profile_pic_bg"
+        android:layout_width="94dp"
+        android:layout_height="94dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/el_profile_pic"
+        android:backgroundTint="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ActionBar_title" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profile_pic"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="22dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ActionBar_title"
+        android:src="@drawable/ic_person"
+        android:scaleType="centerCrop"
+        app:shapeAppearance="@style/CircleImageStyle"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

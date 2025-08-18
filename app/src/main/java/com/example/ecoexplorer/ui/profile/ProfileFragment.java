@@ -1,5 +1,6 @@
 package com.example.ecoexplorer.ui.profile;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -42,6 +43,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
 
@@ -53,9 +55,7 @@ public class ProfileFragment extends Fragment {
     private ShapeableImageView profileImage;
     private Button uploadProfilePic;
 
-    ConstraintLayout noUserAccount, LoginedUser;
-
-    TextView usernameText, fullnameText, ageText, emailText, passwordText, profileImageLink;
+    TextView usernameText, fullnameText, ageText, emailText, passwordText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,12 +66,12 @@ public class ProfileFragment extends Fragment {
         View root = binding.getRoot();
 
         /* GET THE USERNAME & DISPLAY */
-        binding.usernameProfile.setText(UserUtils.getCachedUsername(requireContext()));
+        binding.username.setText(UserUtils.getCachedUsername(requireContext()));
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         UserUtils.loadUsername(requireContext(), userViewModel); // Pass ViewModel!
 
         userViewModel.getUsername().observe(getViewLifecycleOwner(), username -> {
-            binding.usernameProfile.setText("@"+username);
+            binding.username.setText("@"+username);
         });
 
         /* LOGOUT FUNCTIONS */
@@ -105,22 +105,34 @@ public class ProfileFragment extends Fragment {
         profileImage = view.findViewById(R.id.profile_pic);
         uploadProfilePic = view.findViewById(R.id.upload_profile_pic);
 
-        noUserAccount = view.findViewById(R.id.noUserAccount);
-        LoginedUser = view.findViewById(R.id.LoginedUser);
+        CardView cardViewLogin = view.findViewById(R.id.cardView_to_login);
+        CardView profileInfoContainer = view.findViewById(R.id.user_profile_info_container);
+        LinearLayout logoutLayout = view.findViewById(R.id.btn_logout);
 
-        profileImageLink = view.findViewById(R.id.ProfileImageLink);
-
-        // Check if the user is logged in
+        /* CHECKING USER ACCOUNT */
+        // If login user
         if (mAuth.getCurrentUser() !=null) {
-            noUserAccount.setVisibility(View.GONE);
-            LoginedUser.setVisibility(View.VISIBLE);
+            // Set the cardView to login gone
+            cardViewLogin.setVisibility(View.GONE);
+
+            // Set the logout button to visible
+            logoutLayout.setVisibility(View.VISIBLE);
 
             uploadProfilePic.setOnClickListener( v -> openFileChooser());
             loadUserInfo();
 
         } else {
-            noUserAccount.setVisibility(View.VISIBLE);
-            LoginedUser.setVisibility(View.GONE);
+            // if guests
+            // Set the cardView to login visible
+            cardViewLogin.setVisibility(View.VISIBLE);
+
+            // Set the logout button to gone
+            logoutLayout.setVisibility(View.GONE);
+
+            // Set the profile info container to gone
+            profileInfoContainer.setVisibility(View.GONE);
+
+            usernameText.setText("Guest");
         }
 
         TextView openLogin = view.findViewById(R.id.btn_login);
@@ -180,8 +192,12 @@ public class ProfileFragment extends Fragment {
                     }
 
                     String profileImageUrl = snapshot.child("profileImageUrl").getValue(String.class);
-                    profileImageLink.setText(profileImageUrl);
-                    Glide.with(requireContext()).load(profileImageUrl).placeholder(R.drawable.ic_person).into(profileImage);
+                    Glide.with(requireContext())
+                            .load(profileImageUrl)
+                            .placeholder(R.drawable.ic_person) // default icon
+                            .error(R.drawable.ic_close)       // fallback if failed
+                            .into(profileImage);
+
                 }
             }
 
