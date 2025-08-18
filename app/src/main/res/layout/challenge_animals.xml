@@ -246,31 +246,6 @@
 
             </LinearLayout>
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:clipChildren="false"
-                    android:clipToPadding="false">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_animals_categories"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="false"
-                        android:nestedScrollingEnabled="false"
-                        android:scrollbars="none"/>
-
-
-                </LinearLayout>
-
-            </HorizontalScrollView>
-
         </LinearLayout>
 
     </ScrollView>

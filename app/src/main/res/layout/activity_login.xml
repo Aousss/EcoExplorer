@@ -136,14 +136,49 @@
 
             </LinearLayout>
 
-            <ImageView android:id="@+id/login_with_Google"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="50dp"
-                android:paddingVertical="10dp"
-                android:src="@drawable/ic_google"
-                android:clickable="true"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <ImageView android:id="@+id/login_with_Google"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="50dp"
+                    android:paddingVertical="10dp"
+                    android:src="@drawable/ic_google"
+                    android:clickable="true"/>
+
+                <LinearLayout android:id="@+id/login_as_guest"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:clickable="true"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:paddingVertical="10dp"
+                        android:src="@drawable/ic_person_guest"
+                        android:scaleType="center"
+                        app:tint="@color/green_primary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        style="@style/content2"
+                        android:text="Login as Guest"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
 
             <TextView
                 android:layout_width="match_parent"

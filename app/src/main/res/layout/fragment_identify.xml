@@ -104,27 +104,57 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/identify_now"
-            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/green_primary"
-            android:fontFamily="@font/poppins_semibold"
-            android:gravity="center"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp"
-            android:text="Identify Now"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:cornerRadius="10dp"
-            app:icon="@drawable/ic_camera"
-            app:iconGravity="textEnd"
-            app:iconSize="40dp"
-            app:iconTint="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/animals_container" />
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/animals_container">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="10dp"
+                android:layout_weight="2">
+
+                <Button
+                    android:id="@+id/btnGallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="2.5dp"
+                    android:text="Select from Gallery"/>
+
+                <Button
+                    android:id="@+id/btnCamera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="2.5dp"
+                    android:text="Take Photo" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/textResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:text="Result will appear here"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
