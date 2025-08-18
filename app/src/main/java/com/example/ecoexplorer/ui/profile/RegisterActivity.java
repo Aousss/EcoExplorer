@@ -61,6 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
         String password = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.register_password)).getText()).toString().trim();
         String confirmPassword = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.register_confirm_password)).getText()).toString().trim();
         String username = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.register_username)).getText()).toString().trim();
+        String fullname = Objects.requireNonNull(((TextInputEditText) findViewById(R.id.register_fullname)).getText()).toString().trim();
         int age = Integer.parseInt(Objects.requireNonNull(((TextInputEditText) findViewById(R.id.user_age)).getText()).toString().trim());
 
         if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
@@ -95,6 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     user.put("email", email);
                                     user.put("password", password);
                                     user.put("username", username);
+                                    user.put("fullname", fullname);
                                     user.put("age", age);
                                     user.put("uid", uid);
                                     user.put("createdAt", System.currentTimeMillis());
@@ -122,7 +124,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
 
     // User data model
     public static class User {

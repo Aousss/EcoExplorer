@@ -1,31 +1,34 @@
 package com.example.ecoexplorer.ui.challenge;
 
 public class Results {
-    private String subject;
-    private String description;
+    private String quizName;
+    private int score;
+    private int total;
+    private String date;
 
-    public Results() {
-        // Required for Firebase
+    public Results() {} // Firebase needs empty constructor
+
+    public Results(String quizName, int score, int total, String date) {
+        this.quizName = quizName;
+        this.score = score;
+        this.total = total;
+        this.date = date;
     }
 
-    public Results(String subject, String description) {
-        this.subject = subject;
-        this.description = description;
+    public String getQuizName() {
+        return quizName;
     }
 
-    public String getSubject() {
-        return subject;
+    public int getScore() {
+        return score;
     }
 
-    public String getDescription() {
-        return getDescription();
+    public int getTotal() {
+        return total;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public String getDate() {
+        return date;
     }
 }
+

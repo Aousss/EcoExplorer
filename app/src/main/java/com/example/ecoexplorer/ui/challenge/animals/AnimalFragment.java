@@ -18,8 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoexplorer.R;
-import com.example.ecoexplorer.ui.challenge.BaseCategory;
-import com.example.ecoexplorer.ui.challenge.CategoryAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,31 +29,10 @@ import java.util.List;
 
 public class AnimalFragment extends Fragment {
 
-    RecyclerView animalsRecyclerView;
-    List<BaseCategory> animalsCategoryList;
-    CategoryAdapter categoryAdapter;
-    DatabaseReference databaseReference;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.challenge_animals, container, false);
-
-        // Initialize RecyclerView
-        animalsRecyclerView = view.findViewById(R.id.recycler_animals_categories);
-        animalsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        // Initialize list and adapter
-        animalsCategoryList = new ArrayList<>();
-        categoryAdapter = new CategoryAdapter(getContext(), animalsCategoryList);
-        animalsRecyclerView.setAdapter(categoryAdapter);
-
-
-        // Connect to Realtime Database
-        databaseReference = FirebaseDatabase.getInstance().getReference("animals_categories");
-
-        // Load plants categories from Firebase
-        loadAnimalsCategories();
 
         // BACK TO CHALLENGE FRAGMENT
         ImageView backToChallenge = view.findViewById(R.id.back_to_challenge);
@@ -72,28 +49,5 @@ public class AnimalFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private void loadAnimalsCategories() {
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                animalsCategoryList.clear();
-
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    AnimalCategory category = dataSnapshot.getValue(AnimalCategory.class);
-                    if (category != null) {
-                        animalsCategoryList.add(category); // AnimalCategory implements BaseCategory
-                    }
-                }
-                categoryAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

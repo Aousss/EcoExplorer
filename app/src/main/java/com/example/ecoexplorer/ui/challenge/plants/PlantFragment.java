@@ -18,8 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoexplorer.R;
-import com.example.ecoexplorer.ui.challenge.BaseCategory;
-import com.example.ecoexplorer.ui.challenge.CategoryAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,31 +28,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlantFragment extends Fragment {
-
-    RecyclerView plantsRecyclerView;
-    List<BaseCategory> plantsCategoryList;
-    CategoryAdapter categoryAdapter;
     DatabaseReference databaseReference;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.challenge_plants, container, false);
-
-        // Initialize RecyclerView
-        plantsRecyclerView = view.findViewById(R.id.recycler_plants_categories);
-        plantsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        // Initialize list and adapter
-        plantsCategoryList = new ArrayList<>();
-        categoryAdapter = new CategoryAdapter(getContext(), plantsCategoryList);
-        plantsRecyclerView.setAdapter(categoryAdapter);
-
-        // Connect to Realtime Database
-        databaseReference = FirebaseDatabase.getInstance().getReference("plants_categories");
-
-        // Load plants categories from Firebase
-        loadPlantsCategories();
 
         // Back to Challenge Fragment
         ImageView backToChallenge = view.findViewById(R.id.back_to_challenge);
@@ -71,28 +50,5 @@ public class PlantFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private void loadPlantsCategories() {
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                plantsCategoryList.clear();
-
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    PlantsCategory category = dataSnapshot.getValue(PlantsCategory.class);
-                    if (category != null) {
-                        plantsCategoryList.add(category); // PlantsCategory implements BaseCategory
-                    }
-                }
-                categoryAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

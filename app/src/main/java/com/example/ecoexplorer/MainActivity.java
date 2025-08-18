@@ -28,6 +28,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.ecoexplorer.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         FirebaseApp.initializeApp(this);
         ActivityMainBinding binding;
@@ -145,15 +148,5 @@ public class MainActivity extends AppCompatActivity {
     public void switchToTab(int tabID) {
         bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setSelectedItemId(tabID);
-    }
-
-    private boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm == null) return false;
-
-        NetworkCapabilities capabilities = cm.getNetworkCapabilities(cm.getActiveNetwork());
-        return capabilities != null &&
-                (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-                        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
     }
 }

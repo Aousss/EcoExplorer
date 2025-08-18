@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,19 @@ import com.example.ecoexplorer.R;
 import com.example.ecoexplorer.UserViewModel;
 import com.example.ecoexplorer.databinding.FragmentHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 
 public class HomeFragment extends Fragment {
 
@@ -31,6 +45,10 @@ public class HomeFragment extends Fragment {
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseAuth.AuthStateListener authListener;
+
+    private TextView funFacts;
+    private List<String> funFactsList = new ArrayList<>();
+    private Random random = new Random();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,6 +76,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        /*------------------
+        NAVIGATE TO CHALLENGE PAGE
+        --------------------*/
         binding.challengeCard.setOnClickListener(view -> {
             if (getActivity() instanceof MainActivity) {
                 ((MainActivity) getActivity()).switchToTab(R.id.navigation_challenge); // or navigation_challenge etc.
@@ -75,10 +96,8 @@ public class HomeFragment extends Fragment {
             binding.username.setText(username);
         });
 
-
         return root;
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -100,6 +119,9 @@ public class HomeFragment extends Fragment {
         };
 
         mAuth.addAuthStateListener(authListener);
+
+        funFacts = view.findViewById(R.id.content_funfacts);
+        loadFunFacts();
 
         // Initialize the connection status
         updateConnectionStatus();
@@ -171,5 +193,34 @@ public class HomeFragment extends Fragment {
             mAuth.removeAuthStateListener(authListener);
         }
         binding = null;
+    }
+
+    private void loadFunFacts() {
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("fun_facts");
+        databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                funFactsList.clear();
+
+                for (DataSnapshot factSnapshot : snapshot.getChildren()) {
+                    String fact = factSnapshot.child("text").getValue(String.class);
+                    if (fact != null) {
+                        funFactsList.add(fact);
+                    }
+                }
+
+                if (!funFactsList.isEmpty()) {
+                    String randomFact = funFactsList.get(random.nextInt(funFactsList.size()));
+                    funFacts.setText(randomFact);
+                } else {
+                    funFacts.setText("No fun facts found.");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                funFacts.setText("Failed to load fun facts.");
+            }
+        });
     }
 }

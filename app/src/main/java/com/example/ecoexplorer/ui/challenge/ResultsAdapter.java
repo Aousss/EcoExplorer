@@ -11,48 +11,58 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoexplorer.R;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsViewHolder> {
 
-    private List<Results> resultsList;
+    private Context context;
+    private ArrayList<Results> resultsList;
 
-    public ResultsAdapter(Context context, List<Results> resultsList) {
+    public ResultsAdapter(Context context, ArrayList<Results> resultsList) {
+        this.context = context;
         this.resultsList = resultsList;
+    }
+
+    public void setResults(ArrayList<Results> newResults) {
+        this.resultsList = newResults;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ResultsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recycler_recent_results, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.recycler_recent_results, parent, false);
         return new ResultsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ResultsViewHolder holder, int position) {
-        Results results = resultsList.get(position);
+        Results result = resultsList.get(position);
+
+        holder.quizName.setText(formatQuizName(result.getQuizName()));
+        holder.score.setText(result.getScore() + " / " + result.getTotal());
+        holder.date.setText(result.getDate());
     }
 
     @Override
     public int getItemCount() {
-        return resultsList.size();
+        return resultsList != null ? resultsList.size() : 0;
     }
 
-    public void setResults(List<Results> newResults) {
-        this.resultsList.clear();
-        this.resultsList.addAll(newResults);
-        notifyDataSetChanged();
-    }
-
-    static class ResultsViewHolder extends RecyclerView.ViewHolder {
-        private TextView subjectTextView;
-        private TextView descriptionTextView;
+    public static class ResultsViewHolder extends RecyclerView.ViewHolder {
+        TextView quizName, score, date;
 
         public ResultsViewHolder(@NonNull View itemView) {
             super(itemView);
-            subjectTextView = itemView.findViewById(R.id.result_subjects);
-            descriptionTextView = itemView.findViewById(R.id.result_description);
+            quizName = itemView.findViewById(R.id.tv_quiz_name);
+            score = itemView.findViewById(R.id.tv_score);
+            date = itemView.findViewById(R.id.tv_date);
         }
+    }
+
+    // Optional: make quiz name more readable
+    private String formatQuizName(String rawName) {
+        if (rawName == null) return "";
+        return rawName.replace("_", " ").toUpperCase(); // e.g. "animal_quiz" → "ANIMAL QUIZ"
     }
 }

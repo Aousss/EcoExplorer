@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ecoexplorer.R;
 // Import your custom PlantsCategory model
 import com.example.ecoexplorer.databinding.FragmentChallengeBinding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,9 +40,11 @@ public class ChallengeFragment extends Fragment {
     RecyclerView recyclerView_results;
     ResultsAdapter resultAdapter;
     ArrayList<Results> resultLists;
-    DatabaseReference databaseReference;
     TextView none_results, seeResult;
     CardView animalCategory, plantCategory;
+
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private DatabaseReference databaseReference;
 
     public static ChallengeFragment newInstance() {
         return new ChallengeFragment();
@@ -76,32 +79,54 @@ public class ChallengeFragment extends Fragment {
         seeResult = view.findViewById(R.id.cl_results_seeAll);
         recyclerView_results.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        displayRecentResultS();
+
+        return view;
+    }
+
+    private void displayRecentResultS() {
         resultLists = new ArrayList<>();
         resultAdapter = new ResultsAdapter(getContext(), resultLists);
         recyclerView_results.setAdapter(resultAdapter);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("results");
+        String userID = mAuth.getCurrentUser().getUid();
+        String gameType = "quiz";
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                .getReference("results")
+                .child(gameType);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 resultLists.clear();
 
-                if (!snapshot.exists() || snapshot.getChildrenCount() == 0) {
+                if (!snapshot.exists()) {
                     none_results.setVisibility(View.VISIBLE);
                     recyclerView_results.setVisibility(View.GONE);
                     seeResult.setVisibility(View.GONE);
                     return;
                 }
 
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Results result = dataSnapshot.getValue(Results.class);
-                    if (result != null) {
-                        resultLists.add(result);
+                // Loop through each category
+                for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
+                    String categoryName = categorySnapshot.getKey();
+
+                    // Check if current user has results in this category
+                    DataSnapshot userResultSnapshot = categorySnapshot.child(userID);
+                    if (userResultSnapshot.exists()) {
+                        Integer score = userResultSnapshot.child("score").getValue(Integer.class);
+                        Integer total = userResultSnapshot.child("total").getValue(Integer.class);
+                        String date = userResultSnapshot.child("date").getValue(String.class);
+
+                        if (score != null && total != null && date != null) {
+                            Results result = new Results(categoryName, score, total, date);
+                            resultLists.add(result);
+                        }
                     }
                 }
 
-                // If results found, show the RecyclerView and hide the message
+                resultAdapter.notifyDataSetChanged();
                 none_results.setVisibility(View.GONE);
                 recyclerView_results.setVisibility(View.VISIBLE);
             }
@@ -111,21 +136,16 @@ public class ChallengeFragment extends Fragment {
                 Toast.makeText(getContext(), "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        return view;
     }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ChallengeViewModel.class);
 
         /*--------
         * RESULTS
         * -------*/
-        mViewModel.getResults().observe(getViewLifecycleOwner(), results -> {
-            if (results != null) {
-                resultAdapter.setResults(results);
-            }
-        });
+        resultAdapter.notifyDataSetChanged(); // already inside onDataChange()
     }
 }
