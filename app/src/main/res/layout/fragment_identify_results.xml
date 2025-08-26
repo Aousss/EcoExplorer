@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- ACTION BAR -->
+    <ImageView
+        android:id="@id/customActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@color/green_primary"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/foundImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backButton"
+        app:shapeAppearance="@style/CircleImageStyle" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/originalImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="32dp"
+        android:background="@color/gray"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backButton"
+        app:shapeAppearance="@style/CircleImageStyle" />
+
+    <ScrollView
+        android:id="@+id/contentIdentify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@id/originalImage">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="vertical"
+            android:paddingBottom="35dp">
+
+            <TextView
+                android:id="@+id/error_identify"
+                style="@style/heading2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingHorizontal="30dp"
+                android:text="WE ARE SORRY! \n THIS SPECIES ARE CANNOT BE IDENTIFY."
+                android:textColor="@color/yellow_primary"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/success_identify"
+                style="@style/heading2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingHorizontal="30dp"
+                android:text="ANIMALS SPECIES DETECTED!"
+                android:textColor="@color/yellow_primary"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/species_nonSciName"
+                style="@style/heading2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="Species Name"
+                android:textColor="@color/green_primary"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/species_sciName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="italic"
+                android:text="Species Name"
+                android:textColor="@color/green_primary"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/scanIdentify_again"
+                style="@style/content1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="20dp"
+                android:text="Take Another Photo" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
