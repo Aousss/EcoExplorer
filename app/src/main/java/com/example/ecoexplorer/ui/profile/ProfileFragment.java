@@ -70,10 +70,6 @@ public class ProfileFragment extends Fragment {
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         UserUtils.loadUsername(requireContext(), userViewModel); // Pass ViewModel!
 
-        userViewModel.getUsername().observe(getViewLifecycleOwner(), username -> {
-            binding.username.setText("@"+username);
-        });
-
         /* LOGOUT FUNCTIONS */
         mAuth = FirebaseAuth.getInstance();
         LinearLayout logout = binding.btnLogout;
@@ -119,6 +115,9 @@ public class ProfileFragment extends Fragment {
             logoutLayout.setVisibility(View.VISIBLE);
 
             uploadProfilePic.setOnClickListener( v -> openFileChooser());
+            userViewModel.getUsername().observe(getViewLifecycleOwner(), username -> {
+                binding.username.setText("@"+username);
+            });
             loadUserInfo();
 
         } else {
@@ -132,7 +131,9 @@ public class ProfileFragment extends Fragment {
             // Set the profile info container to gone
             profileInfoContainer.setVisibility(View.GONE);
 
-            usernameText.setText("Guest");
+            userViewModel.getUsername().observe(getViewLifecycleOwner(), username -> {
+                binding.username.setText("Guest");
+            });
         }
 
         TextView openLogin = view.findViewById(R.id.btn_login);

@@ -104,8 +104,8 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Initialize the layouts
-        noAccount = view.findViewById(R.id.noAccount);
-        loginAccount = view.findViewById(R.id.loginAccount);
+        noAccount = view.findViewById(R.id.noAccountGreet);
+        loginAccount = view.findViewById(R.id.registeredAccountGreet);
 
         authListener = firebaseAuth -> {
             // Check if the user is logged in
@@ -197,6 +197,7 @@ public class HomeFragment extends Fragment {
 
     private void loadFunFacts() {
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("fun_facts");
+        databaseRef.keepSynced(true); // keep the database synced
         databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
