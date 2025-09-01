@@ -1,5 +1,7 @@
 [versions]
 agp = "8.10.1"
+arcoreSceneview = "1.1.0"
+arsceneview = "2.3.0"
 cameraCore = "1.4.2"
 compiler = "4.15.1"
 coreKtx = "1.16.0"
@@ -27,6 +29,7 @@ playServicesBase = "18.7.2"
 recyclerview = "1.4.0"
 tensorflowLite = "2.15.0"
 tensorflowLiteMetadata = "0.4.3"
+tensorflowLiteSelectTfOps = "2.14.0"
 tensorflowLiteSupport = "0.4.3"
 tensorflowLiteTaskVision = "0.4.4"
 tensorflowLiteVersion = "2.19.0"
@@ -34,8 +37,11 @@ visionCommon = "17.3.0"
 rendering = "1.17.1"
 sceneformUx = "1.17.1"
 imageLabelingCommon = "18.1.0"
+core = "1.17.1"
 
 [libraries]
+arcore-sceneview = { module = "io.github.sceneview:arcore-sceneview", version.ref = "arcoreSceneview" }
+arsceneview = { module = "io.github.sceneview:arsceneview", version.ref = "arsceneview" }
 camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCore" }
 camera-core = { module = "androidx.camera:camera-core", version.ref = "cameraCore" }
 camera-extensions = { module = "androidx.camera:camera-extensions", version.ref = "cameraCore" }
@@ -75,6 +81,7 @@ play-services-base = { module = "com.google.android.gms:play-services-base", ver
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 tensorflow-lite = { module = "org.tensorflow:tensorflow-lite", version.ref = "tensorflowLite" }
 tensorflow-lite-metadata = { module = "org.tensorflow:tensorflow-lite-metadata", version.ref = "tensorflowLiteMetadata" }
+tensorflow-lite-select-tf-ops = { module = "org.tensorflow:tensorflow-lite-select-tf-ops", version.ref = "tensorflowLiteSelectTfOps" }
 tensorflow-lite-support = { module = "org.tensorflow:tensorflow-lite-support", version.ref = "tensorflowLiteSupport" }
 tensorflow-lite-task-vision = { module = "org.tensorflow:tensorflow-lite-task-vision", version.ref = "tensorflowLiteTaskVision" }
 tensorflow-lite-v2190 = { module = "org.tensorflow:tensorflow-lite", version.ref = "tensorflowLiteVersion" }
@@ -82,6 +89,7 @@ vision-common = { group = "com.google.mlkit", name = "vision-common", version.re
 rendering = { group = "com.google.ar.sceneform", name = "rendering", version.ref = "rendering" }
 sceneform-ux = { group = "com.google.ar.sceneform.ux", name = "sceneform-ux", version.ref = "sceneformUx" }
 image-labeling-common = { group = "com.google.mlkit", name = "image-labeling-common", version.ref = "imageLabelingCommon" }
+core = { group = "com.google.ar.sceneform", name = "core", version.ref = "core" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -5,13 +5,11 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,24 +21,10 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageCapture;
-import androidx.camera.core.ImageCaptureException;
-import androidx.camera.core.ImageProxy;
-import androidx.camera.core.Preview;
-import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
-import com.example.ecoexplorer.MainActivity;
 import com.example.ecoexplorer.R;
-import com.example.ecoexplorer.databinding.FragmentHomeBinding;
 import com.example.ecoexplorer.databinding.FragmentIdentifyBinding;
-import com.google.common.util.concurrent.ListenableFuture;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.Interpreter;
@@ -51,17 +35,13 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class IdentifyFragment extends Fragment {
 
@@ -74,8 +54,7 @@ public class IdentifyFragment extends Fragment {
     private Uri imageUri;
     private Interpreter tflite;
 
-    // Image size axis
-    private final int IMAGE_SIZE = 224;
+    private final int IMAGE_SIZE = 32;
 
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<Intent> galleryLauncher;
@@ -96,12 +75,12 @@ public class IdentifyFragment extends Fragment {
 
         Button btnGallery = root.findViewById(R.id.btnGallery);
         Button btnCamera = root.findViewById(R.id.btnCamera);
-        imageView = root.findViewById(R.id.imageView);
+        imageView = root.findViewById(R.id.imageViewIdentify);
         textResult = root.findViewById(R.id.textResult);
 
-        // Load tflite model
+//        // Load tflite model
         try {
-            tflite = new Interpreter(loadModelFile(requireContext(), "model.tflite"));
+            tflite = new Interpreter(loadModelFile(requireContext(), "models/insects.tflite"));
             Toast.makeText(getContext(), "Model SUCCESSFULLY loaded.", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(getContext(), "Model FAILED to load.", Toast.LENGTH_SHORT).show();
@@ -155,6 +134,7 @@ public class IdentifyFragment extends Fragment {
         try (InputStream is = requireContext().getContentResolver().openInputStream(uri)) {
             Bitmap bitmap = BitmapFactory.decodeStream(is);
             imageView.setImageBitmap(bitmap);
+            imageView.setVisibility(View.VISIBLE);
 
             // 1) Ask the model what it wants
             int inputIndex = 0;
@@ -214,18 +194,37 @@ public class IdentifyFragment extends Fragment {
                 if (probs[i] > bestScore) { bestScore = probs[i]; bestIdx = i; }
             }
 
-            loadLabelsFromAssets("labels.txt");
+            // Option A: If you know your classes manually
+            String[] classes = {
+                    "butterflies",
+                    "cicadas",
+                    "damselflies",
+                    "dragonflies",
+                    "leafhopper",
+                    "longhorn beetle",
+                    "moths",
+                    "rhinoceros beetle",
+                    "weevil"
+            };
 
-            float THRESHOLD = 0.5f; // 60%
-            if (bestScore<THRESHOLD) {
-                textResult.setText("Detected: UNKNOWN");
-                return;
-            }
+//            String[] classes = {
+//                    "apple",
+//                    "banana",
+//                    "orange"
+//            };
+
+            String detected = (bestIdx < classes.length) ? classes[bestIdx] : "Class " + bestIdx;
+
+//            float THRESHOLD = 0.1f; // 60%
+//            if (bestScore<THRESHOLD) {
+//                textResult.setText("Detected: UNKNOWN");
+//                return;
+//            }
 
             // (Optional) Map to label names if you have labels.txt in assets
-            String label = (labels != null && bestIdx < labels.size()) ? labels.get(bestIdx) : ("Class " + bestIdx);
+//            String label = (labels != null && bestIdx < labels.size()) ? labels.get(bestIdx) : ("Class " + bestIdx);
 
-            textResult.setText("Detected: " + label + " (score: " + String.format("%.3f", bestScore) + ")");
+            textResult.setText("Detected: " + detected + " (score: " + String.format("%.3f", bestScore) + ")");
 
         } catch (Exception e) {
             e.printStackTrace();

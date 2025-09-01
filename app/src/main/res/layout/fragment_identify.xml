@@ -65,7 +65,7 @@
                 android:id="@+id/plants_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -76,7 +76,7 @@
                     android:text="Plants" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycleView_animals"
+                    android:id="@+id/recycleView_PlantsIdentify"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -100,7 +100,7 @@
                     android:text="Animals" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycleView_plants"
+                    android:id="@+id/recycleView_AnimalIdentify"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -138,11 +138,12 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/imageViewIdentify"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
                     android:scaleType="fitCenter"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/textResult"

@@ -330,12 +330,53 @@
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <ImageView
+                    <ImageView android:id="@+id/arrowHelpFeedback"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="right|center_vertical"
                         android:src="@drawable/ic_arrow_right"
                         app:tint="@color/green_primary" />
+
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/expand_help_and_feedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <LinearLayout android:id="@+id/help"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="70dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Help"
+                            style="@style/content2"
+                            android:textStyle="italic"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout android:id="@+id/feedback"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginStart="70dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Feedback"
+                            style="@style/content2"
+                            android:textStyle="italic"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

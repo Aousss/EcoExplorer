@@ -50,9 +50,6 @@
         <activity android:name=".ui.profile.ForgotPasswordActivity"
             android:exported="true"/>
 
-        <activity android:name=".UserInfoActivity"
-            android:exported="true"/>
-
     </application>
 
 </manifest>

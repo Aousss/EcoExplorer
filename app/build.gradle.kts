@@ -15,7 +15,6 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -35,11 +34,24 @@ android {
     }
     buildFeatures {
         viewBinding = true
-        mlModelBinding = true
+        mlModelBinding = true   
+    }
+
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+
+    aaptOptions{
+        noCompress += "tflite"
     }
 }
 
 dependencies {
+
+    // ADDED ON 26/8
+    implementation (libs.tensorflow.lite.select.tf.ops)
 
     /* FIREBASE FUNCTIONS */
     // Import the Firebase BoM
@@ -68,6 +80,7 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.vision.common)
     implementation(libs.image.labeling.common)
+    implementation(libs.core)
     annotationProcessor(libs.compiler) // Optional, for custom Glide modules
 
     // Google Play Services Base
@@ -99,7 +112,7 @@ dependencies {
 //    implementation (libs.tensorflow.lite)
     implementation (libs.tensorflow.lite.task.vision)
 
-    implementation ("org.tensorflow:tensorflow-lite:2.12.0")
+    implementation (libs.tensorflow.lite)
 //    implementation (libs.tensorflow.lite.support)
 //    implementation (libs.tensorflow.lite.metadata)
 
@@ -115,4 +128,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    // AR Sceneview for augmented reality capabilities
+    implementation ("io.github.sceneview:arsceneview:0.10.0")
 }

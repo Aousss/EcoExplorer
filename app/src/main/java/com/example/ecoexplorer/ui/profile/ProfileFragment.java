@@ -142,10 +142,17 @@ public class ProfileFragment extends Fragment {
             navController.navigate(R.id.action_navigation_profile_to_login);
         });
 
+        ImageView arrowHelpAndFeedback = view.findViewById(R.id.arrowHelpFeedback);
         LinearLayout helpAndFeedback = view.findViewById(R.id.help_and_feedback_container);
-        helpAndFeedback.setOnClickListener(view1 -> {
-            NavController navController = NavHostFragment.findNavController(ProfileFragment.this);
-            navController.navigate(R.id.action_navigation_profile_to_helpAndFeedback);
+        LinearLayout expandHelpAndFeedback = view.findViewById(R.id.expand_help_and_feedback);
+        helpAndFeedback.setOnClickListener(v-> {
+            if (expandHelpAndFeedback.getVisibility() == View.GONE) {
+                expandHelpAndFeedback.setVisibility(View.VISIBLE);
+                arrowHelpAndFeedback.setRotation(90);
+            } else {
+                expandHelpAndFeedback.setVisibility(View.GONE);
+                arrowHelpAndFeedback.setRotation(0);
+            }
         });
 
         LinearLayout devInfo = view.findViewById(R.id.dev_info_container);
