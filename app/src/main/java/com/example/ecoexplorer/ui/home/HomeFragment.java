@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.ecoexplorer.MainActivity;
 import com.example.ecoexplorer.R;
@@ -49,7 +52,11 @@ public class HomeFragment extends Fragment {
 
     private TextView funFacts;
     private List<String> funFactsList = new ArrayList<>();
+    private List<FunFacts> funFactsObjects = new ArrayList<>();
     private Random random = new Random();
+
+    private Button learntMore;
+    private FunFacts currentFact; // store the fact currently shown
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,6 +112,9 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         funFacts = view.findViewById(R.id.content_funfacts);
+        learntMore = view.findViewById(R.id.btn_ff_learn_more);
+        learntMoreButton();
+
         loadFunFacts();
 
         // Initialize the layouts
@@ -198,36 +208,51 @@ public class HomeFragment extends Fragment {
 
     private void loadFunFacts() {
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("funfacts");
-        databaseRef.keepSynced(true); // keep the database synced
+        databaseRef.keepSynced(true);
         databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                funFactsList.clear();
+                funFactsObjects.clear();
 
                 for (DataSnapshot factSnapshot : snapshot.getChildren()) {
-                    String fact = factSnapshot.child("text").getValue(String.class);
+                    FunFacts fact = factSnapshot.getValue(FunFacts.class);
                     if (fact != null) {
-                        funFactsList.add(fact);
-                        Log.d("FunFacts", "Loaded fact: " + fact);
+                        funFactsObjects.add(fact); // store full object
                     }
                 }
 
-                Log.d("FunFacts", "Fun facts list size: " + funFactsList.size());
+                Log.d("FunFacts", "Fun facts size: " + funFactsObjects.size());
                 displayFunfacts();
             }
 
             private void displayFunfacts() {
-                if (!funFactsList.isEmpty()) {
-                    String randomFact = funFactsList.get(random.nextInt(funFactsList.size()));
-                    funFacts.setText(randomFact);
+                if (!funFactsObjects.isEmpty()) {
+                    currentFact = funFactsObjects.get(random.nextInt(funFactsObjects.size())); // pick a random object
+                    funFacts.setText(currentFact.text); // show text
                 } else {
                     funFacts.setText("No fun facts found.");
+                    currentFact = null;
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 funFacts.setText("Failed to load fun facts.");
+            }
+        });
+    }
+
+    private void learntMoreButton() {
+        learntMore.setOnClickListener(v -> {
+            if (currentFact != null) {
+                Bundle bundle = new Bundle();
+                bundle.putString("fact_text", currentFact.text);
+                bundle.putString("fact_description", currentFact.description);
+                bundle.putString("fact_image", currentFact.imageUrl);
+                bundle.putString("fact_source", currentFact.source);
+
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.action_navigation_home_to_fun_facts_detail, bundle);
             }
         });
     }

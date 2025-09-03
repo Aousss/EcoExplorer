@@ -13,6 +13,15 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_identify"
             app:destination="@id/navigation_identify" />
+        <action
+            android:id="@+id/action_navigation_home_to_fun_facts_detail"
+            app:destination="@id/fun_facts_detail" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fun_facts_detail"
+        android:name="com.example.ecoexplorer.ui.home.FunFactsDetailFragment"
+        android:label="@string/identify_page"
+        tools:layout="@layout/fragment_fun_fact_details"/>
 
 </navigation>
