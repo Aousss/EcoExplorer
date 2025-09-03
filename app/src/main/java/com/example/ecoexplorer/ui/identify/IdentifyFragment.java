@@ -22,6 +22,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoexplorer.R;
 import com.example.ecoexplorer.databinding.FragmentIdentifyBinding;
@@ -54,6 +56,13 @@ public class IdentifyFragment extends Fragment {
     private Uri imageUri;
     private Interpreter tflite;
 
+    private RecyclerView recyclerViewPlants, recyclerViewAnimals;
+    private PlantsAdapter plantsAdapter;
+    private List<Plants> plantList;
+
+    private AnimalsAdapter animalsAdapter;
+    private List<Animals> animalsList;
+
     private final int IMAGE_SIZE = 32;
 
     private ActivityResultLauncher<Intent> cameraLauncher;
@@ -73,12 +82,49 @@ public class IdentifyFragment extends Fragment {
 //            navController.navigate(R.id.action_navigation_identify_to_navigation_camera_identify);
 //        });
 
+        /* --------------------
+        LISTS OF THE PLANTS
+        --------------------- */
+        recyclerViewPlants = root.findViewById(R.id.recycleView_PlantsIdentify);
+        recyclerViewPlants.setLayoutManager(new LinearLayoutManager(
+                getContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false));
+
+        // Plants Data
+        plantList = new ArrayList<>();
+        plantList.add(new Plants("Rose", R.drawable.rose));
+        plantList.add(new Plants("Sunflower", R.drawable.sunflower));
+        plantList.add(new Plants("Tulip", R.drawable.tulip));
+
+        plantsAdapter = new PlantsAdapter(plantList);
+        recyclerViewPlants.setAdapter(plantsAdapter);
+
+        /* --------------------
+        LISTS OF THE ANIMALS
+        --------------------- */
+        recyclerViewAnimals = root.findViewById(R.id.recycleView_AnimalIdentify);
+        recyclerViewAnimals.setLayoutManager(new LinearLayoutManager(
+                getContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false));
+
+        // Plants Data
+        animalsList = new ArrayList<>();
+        animalsList.add(new Animals("Rose", R.drawable.rose));
+        animalsList.add(new Animals("Sunflower", R.drawable.sunflower));
+        animalsList.add(new Animals("Tulip", R.drawable.tulip));
+
+        animalsAdapter = new AnimalsAdapter(animalsList);
+        recyclerViewAnimals.setAdapter(animalsAdapter);
+
+
         Button btnGallery = root.findViewById(R.id.btnGallery);
         Button btnCamera = root.findViewById(R.id.btnCamera);
         imageView = root.findViewById(R.id.imageViewIdentify);
         textResult = root.findViewById(R.id.textResult);
 
-//        // Load tflite model
+        // Load tflite model
         try {
             tflite = new Interpreter(loadModelFile(requireContext(), "models/insects.tflite"));
             Toast.makeText(getContext(), "Model SUCCESSFULLY loaded.", Toast.LENGTH_SHORT).show();

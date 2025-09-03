@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,6 +104,9 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        funFacts = view.findViewById(R.id.content_funfacts);
+        loadFunFacts();
+
         // Initialize the layouts
         noAccount = view.findViewById(R.id.noAccountGreet);
         loginAccount = view.findViewById(R.id.registeredAccountGreet);
@@ -119,9 +123,6 @@ public class HomeFragment extends Fragment {
         };
 
         mAuth.addAuthStateListener(authListener);
-
-        funFacts = view.findViewById(R.id.content_funfacts);
-        loadFunFacts();
 
         // Initialize the connection status
         updateConnectionStatus();
@@ -196,7 +197,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadFunFacts() {
-        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("fun_facts");
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("funfacts");
         databaseRef.keepSynced(true); // keep the database synced
         databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -207,9 +208,15 @@ public class HomeFragment extends Fragment {
                     String fact = factSnapshot.child("text").getValue(String.class);
                     if (fact != null) {
                         funFactsList.add(fact);
+                        Log.d("FunFacts", "Loaded fact: " + fact);
                     }
                 }
 
+                Log.d("FunFacts", "Fun facts list size: " + funFactsList.size());
+                displayFunfacts();
+            }
+
+            private void displayFunfacts() {
                 if (!funFactsList.isEmpty()) {
                     String randomFact = funFactsList.get(random.nextInt(funFactsList.size()));
                     funFacts.setText(randomFact);
