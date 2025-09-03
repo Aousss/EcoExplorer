@@ -9,6 +9,16 @@
         android:id="@+id/navigation_arexplore"
         android:name="com.example.ecoexplorer.ui.explore.ExploreFragment"
         android:label="@string/explore_page"
-        tools:layout="@layout/fragment_explore"/>
+        tools:layout="@layout/fragment_explore">
+        <action
+            android:id="@+id/action_navigation_arexplore_to_ARexplore"
+            app:destination="@id/ARexplore" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ARexplore"
+        android:name="com.example.ecoexplorer.ui.explore.WebARFragment"
+        android:label="@string/explore_page"
+        tools:layout="@layout/ar_scene_layout"/>
 
 </navigation>

@@ -2,6 +2,7 @@
 agp = "8.10.1"
 arcoreSceneview = "1.1.0"
 arsceneview = "2.3.0"
+arsceneviewVersion = "0.10.0"
 cameraCore = "1.4.2"
 compiler = "4.15.1"
 coreKtx = "1.16.0"
@@ -38,10 +39,13 @@ rendering = "1.17.1"
 sceneformUx = "1.17.1"
 imageLabelingCommon = "18.1.0"
 core = "1.17.1"
+assets = "1.17.1"
+filamentAndroid = "1.17.1"
 
 [libraries]
 arcore-sceneview = { module = "io.github.sceneview:arcore-sceneview", version.ref = "arcoreSceneview" }
 arsceneview = { module = "io.github.sceneview:arsceneview", version.ref = "arsceneview" }
+arsceneview-v0100 = { module = "io.github.sceneview:arsceneview", version.ref = "arsceneviewVersion" }
 camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCore" }
 camera-core = { module = "androidx.camera:camera-core", version.ref = "cameraCore" }
 camera-extensions = { module = "androidx.camera:camera-extensions", version.ref = "cameraCore" }
@@ -90,6 +94,8 @@ rendering = { group = "com.google.ar.sceneform", name = "rendering", version.ref
 sceneform-ux = { group = "com.google.ar.sceneform.ux", name = "sceneform-ux", version.ref = "sceneformUx" }
 image-labeling-common = { group = "com.google.mlkit", name = "image-labeling-common", version.ref = "imageLabelingCommon" }
 core = { group = "com.google.ar.sceneform", name = "core", version.ref = "core" }
+assets = { group = "com.google.ar.sceneform", name = "assets", version.ref = "assets" }
+filament-android = { group = "com.google.ar.sceneform", name = "filament-android", version.ref = "filamentAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
