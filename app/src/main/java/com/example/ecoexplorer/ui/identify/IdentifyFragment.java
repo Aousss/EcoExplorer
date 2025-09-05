@@ -126,7 +126,7 @@ public class IdentifyFragment extends Fragment {
 
         // Load tflite model
         try {
-            tflite = new Interpreter(loadModelFile(requireContext(), "models/insects.tflite"));
+            tflite = new Interpreter(loadModelFile(requireContext(), "insects.tflite"));
             Toast.makeText(getContext(), "Model SUCCESSFULLY loaded.", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(getContext(), "Model FAILED to load.", Toast.LENGTH_SHORT).show();

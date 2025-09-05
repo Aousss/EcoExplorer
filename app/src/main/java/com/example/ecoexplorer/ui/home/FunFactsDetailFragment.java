@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,13 @@ public class FunFactsDetailFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fun_fact_details, container, false);
 
+        ImageView backButton = view.findViewById(R.id.back_to_home);
+        backButton.setOnClickListener(v -> {
+            NavController navController = NavHostFragment.findNavController(FunFactsDetailFragment.this);
+            navController.popBackStack();
+        });
+
+        // Initialize views
         TextView factText = view.findViewById(R.id.factDetailText);
         TextView factDescription = view.findViewById(R.id.factDetailDescription);
         ImageView factImage = view.findViewById(R.id.factDetailImage);
