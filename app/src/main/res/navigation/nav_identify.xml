@@ -13,12 +13,34 @@
         <action
             android:id="@+id/action_navigation_identify_to_navigation_camera_identify"
             app:destination="@id/navigation_camera_identify" />
+        <action
+            android:id="@+id/action_navigation_identify_to_details"
+            app:destination="@id/details" />
+        <action
+            android:id="@+id/action_navigation_identify_to_identify_result"
+            app:destination="@id/identify_result" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_camera_identify"
-        android:name="com.example.ecoexplorer.ui.identify.CameraIdentifyFragment"
         android:label="@string/camera_identify"
         tools:layout="@layout/fragment_camera_identify"/>
+
+    <fragment
+        android:id="@+id/details"
+        android:name="com.example.ecoexplorer.ui.identify.DetailsFragment"
+        android:label="Identify Details"
+        tools:layout="@layout/identify_details"/>
+
+    <fragment
+        android:id="@+id/identify_result"
+        android:name="com.example.ecoexplorer.ui.identify.IdentifyResults"
+        android:label="Identify Results"
+        tools:layout="@layout/fragment_identify_results">
+        <action
+            android:id="@+id/action_identify_result_to_navigation_identify"
+            app:destination="@id/navigation_identify" />
+    </fragment>
+
 
 </navigation>

@@ -14,7 +14,7 @@
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/backButton"
+        android:id="@+id/back_to_identify"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="30dp"
@@ -34,7 +34,7 @@
         android:background="@color/gray"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/backButton"
+        app:layout_constraintTop_toBottomOf="@id/back_to_identify"
         app:shapeAppearance="@style/CircleImageStyle" />
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -46,7 +46,7 @@
         android:background="@color/gray"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/backButton"
+        app:layout_constraintTop_toBottomOf="@id/back_to_identify"
         app:shapeAppearance="@style/CircleImageStyle" />
 
     <ScrollView

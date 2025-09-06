@@ -59,6 +59,6 @@ public class WebARFragment extends Fragment {
         });
 
         // Load your 8thWall project
-        webView.loadUrl("https://8th.io/3fbrf");
+        webView.loadUrl("https://ecoexplorer.8thwall.app/exoexplorer/");
     }
 }

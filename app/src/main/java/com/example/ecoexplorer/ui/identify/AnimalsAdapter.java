@@ -16,9 +16,17 @@ import java.util.List;
 public class AnimalsAdapter extends RecyclerView.Adapter<AnimalsAdapter.AnimalsViewHolder> {
 
     private List<Animals> animalsList;
+    private OnItemClickListener listener;
 
-    public AnimalsAdapter(List<Animals> animalsList) {
+    // Custom click listener
+    public interface OnItemClickListener {
+        void onItemClick(Animals animal);
+    }
+
+    // Constructor
+    public AnimalsAdapter(List<Animals> animalsList, OnItemClickListener listener) {
         this.animalsList = animalsList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -26,14 +34,17 @@ public class AnimalsAdapter extends RecyclerView.Adapter<AnimalsAdapter.AnimalsV
     public AnimalsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.identify_lists, parent, false);
-        return new AnimalsAdapter.AnimalsViewHolder(view);
+        return new AnimalsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AnimalsAdapter.AnimalsViewHolder holder, int position) {
-        Animals animals = animalsList.get(position);
-        holder.textAnimalName.setText(animals.getName());
-        holder.imageAnimal.setImageResource(animals.getImageResId());
+    public void onBindViewHolder(@NonNull AnimalsViewHolder holder, int position) {
+        Animals animal = animalsList.get(position);
+        holder.textAnimalName.setText(animal.getName());
+        holder.imageAnimal.setImageResource(animal.getImageResId());
+
+        // Handle clicks
+        holder.itemView.setOnClickListener(v -> listener.onItemClick(animal));
     }
 
     @Override

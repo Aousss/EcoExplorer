@@ -22,6 +22,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -76,16 +78,59 @@ public class IdentifyFragment extends Fragment {
         binding = FragmentIdentifyBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        /* NAVIGATE OPEN THE CAMERA */
-//        binding.identifyNow.setOnClickListener(v -> {
-//            NavController navController = Navigation.findNavController(v);
-//            navController.navigate(R.id.action_navigation_identify_to_navigation_camera_identify);
-//        });
-
-        /* --------------------
-        LISTS OF THE PLANTS
-        --------------------- */
         recyclerViewPlants = root.findViewById(R.id.recycleView_PlantsIdentify);
+        plantsData();
+
+        recyclerViewAnimals = root.findViewById(R.id.recycleView_AnimalIdentify);
+        animalsData();
+
+        Button btnGallery = root.findViewById(R.id.btnGallery);
+        Button btnCamera = root.findViewById(R.id.btnCamera);
+        imageView = root.findViewById(R.id.imageViewIdentify);
+        textResult = root.findViewById(R.id.textResult);
+
+        // Load tflite model
+        loadModel();
+        labels = loadLabels(requireContext(), "mobilenet_label.txt");
+        btnGallery.setOnClickListener(v -> openGallery());
+        btnCamera.setOnClickListener(v -> openCamera());
+
+        // Gallery Launcher
+        galleryLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        imageUri = result.getData().getData();
+                        assert imageUri != null;
+                        processImageUri(imageUri);
+                    }
+                }
+        );
+
+        // Camera Launcher
+        cameraLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        processImageUri(imageUri);
+                    }
+                }
+        );
+
+        if (getArguments() != null) {
+            String rescanOption = getArguments().getString("rescan_option");
+            if ("camera".equals(rescanOption)) {
+                openCamera();
+            } else if ("gallery".equals(rescanOption)) {
+                openGallery();
+            }
+        }
+
+
+        return root;
+    }
+
+    private void plantsData() {
         recyclerViewPlants.setLayoutManager(new LinearLayoutManager(
                 getContext(),
                 LinearLayoutManager.HORIZONTAL,
@@ -99,65 +144,41 @@ public class IdentifyFragment extends Fragment {
 
         plantsAdapter = new PlantsAdapter(plantList);
         recyclerViewPlants.setAdapter(plantsAdapter);
+    }
 
-        /* --------------------
-        LISTS OF THE ANIMALS
-        --------------------- */
-        recyclerViewAnimals = root.findViewById(R.id.recycleView_AnimalIdentify);
+    private void animalsData() {
         recyclerViewAnimals.setLayoutManager(new LinearLayoutManager(
                 getContext(),
                 LinearLayoutManager.HORIZONTAL,
                 false));
 
-        // Plants Data
+        // Animals Data
         animalsList = new ArrayList<>();
-        animalsList.add(new Animals("Rose", R.drawable.rose));
-        animalsList.add(new Animals("Sunflower", R.drawable.sunflower));
-        animalsList.add(new Animals("Tulip", R.drawable.tulip));
+        animalsList.add(new Animals("Rose", "Rose descriptions", R.drawable.rose));
+        animalsList.add(new Animals("Sunflower","Sunflower descriptions", R.drawable.sunflower));
+        animalsList.add(new Animals("Tulip","Tulip descriptions", R.drawable.tulip));
 
-        animalsAdapter = new AnimalsAdapter(animalsList);
+        animalsAdapter = new AnimalsAdapter(animalsList, animals -> {
+           Bundle bundle = new Bundle();
+           bundle.putString("name", animals.getName());
+           bundle.putString("desc", animals.getDescription());
+           bundle.putInt("image", animals.getImageResId());
+
+            NavController navController = NavHostFragment.findNavController(IdentifyFragment.this);
+            navController.navigate(R.id.action_navigation_identify_to_details, bundle);
+        });
+
         recyclerViewAnimals.setAdapter(animalsAdapter);
+    }
 
-
-        Button btnGallery = root.findViewById(R.id.btnGallery);
-        Button btnCamera = root.findViewById(R.id.btnCamera);
-        imageView = root.findViewById(R.id.imageViewIdentify);
-        textResult = root.findViewById(R.id.textResult);
-
-        // Load tflite model
+    private void loadModel() {
         try {
-            tflite = new Interpreter(loadModelFile(requireContext(), "insects.tflite"));
+            tflite = new Interpreter(loadModelFile(requireContext(), "mobilenet.tflite"));
             Toast.makeText(getContext(), "Model SUCCESSFULLY loaded.", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(getContext(), "Model FAILED to load.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-
-        // Gallery Picker
-        galleryLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
-                        imageUri = result.getData().getData();
-                        processImageUri(imageUri);
-                    }
-                }
-        );
-
-        // Camera Capture
-        cameraLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        processImageUri(imageUri);
-                    }
-                }
-        );
-
-        btnGallery.setOnClickListener(v -> openGallery());
-        btnCamera.setOnClickListener(v -> openCamera());
-
-        return root;
     }
 
     private void openGallery() {
@@ -194,17 +215,11 @@ public class IdentifyFragment extends Fragment {
             TensorImage tensorImage = new TensorImage(inputType);
 
             // 3) Build an image processor:
-            //    - Always resize to [H, W]
-            //    - Only normalize if the model expects FLOAT32
             org.tensorflow.lite.support.image.ImageProcessor.Builder procBuilder =
                     new org.tensorflow.lite.support.image.ImageProcessor.Builder()
                             .add(new ResizeOp(height, width, ResizeOp.ResizeMethod.BILINEAR));
 
             if (inputType == DataType.FLOAT32) {
-                // Change these if your notebook used different mean/std.
-                // Common patterns:
-                //   - [0,1] scaling: mean=0.0f, std=1/255.0f
-                //   - ImageNet style: mean=127.5f, std=127.5f
                 procBuilder.add(new NormalizeOp(0.0f, 1.0f / 255.0f));
             }
             org.tensorflow.lite.support.image.ImageProcessor imageProcessor = procBuilder.build();
@@ -241,36 +256,42 @@ public class IdentifyFragment extends Fragment {
             }
 
             // Option A: If you know your classes manually
-            String[] classes = {
-                    "butterflies",
-                    "cicadas",
-                    "damselflies",
-                    "dragonflies",
-                    "leafhopper",
-                    "longhorn beetle",
-                    "moths",
-                    "rhinoceros beetle",
-                    "weevil"
-            };
-
 //            String[] classes = {
-//                    "apple",
-//                    "banana",
-//                    "orange"
+//                    "butterflies",
+//                    "cicadas",
+//                    "damselflies",
+//                    "dragonflies",
+//                    "leafhopper",
+//                    "longhorn beetle",
+//                    "moths",
+//                    "rhinoceros beetle",
+//                    "weevil"
 //            };
 
-            String detected = (bestIdx < classes.length) ? classes[bestIdx] : "Class " + bestIdx;
-
-//            float THRESHOLD = 0.1f; // 60%
-//            if (bestScore<THRESHOLD) {
-//                textResult.setText("Detected: UNKNOWN");
-//                return;
-//            }
+            // Use labels.txt if available
+            String detected;
+            if (labels != null && bestIdx < labels.size()) {
+                detected = labels.get(bestIdx);
+            } else {
+                detected = "Class " + bestIdx;
+            }
 
             // (Optional) Map to label names if you have labels.txt in assets
-//            String label = (labels != null && bestIdx < labels.size()) ? labels.get(bestIdx) : ("Class " + bestIdx);
+            String label = (labels != null && bestIdx < labels.size()) ? labels.get(bestIdx) : ("Class " + bestIdx);
 
-            textResult.setText("Detected: " + detected + " (score: " + String.format("%.3f", bestScore) + ")");
+            // After finishing detection
+//            String detected = (bestIdx < classes.length) ? classes[bestIdx] : "Class " + bestIdx;
+            String scoreStr = String.format("%.3f", bestScore);
+
+            // Create bundle
+            Bundle bundle = new Bundle();
+            bundle.putString("detected_name", detected);
+            bundle.putString("detected_score", scoreStr);
+            bundle.putString("image_uri", uri.toString()); // send image path
+
+            // Navigate
+            NavController navController = NavHostFragment.findNavController(IdentifyFragment.this);
+            navController.navigate(R.id.action_navigation_identify_to_identify_result, bundle);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -286,19 +307,20 @@ public class IdentifyFragment extends Fragment {
         return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
     }
 
-    private void loadLabelsFromAssets(String filename) {
-        labels = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(requireContext().getAssets().open(filename)))) {
+    private List<String> loadLabels(Context context, String fileName) {
+        List<String> labelList = new ArrayList<>();
+        try (InputStream is = context.getAssets().open(fileName)) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line;
-            while ((line = br.readLine()) != null) {
-                labels.add(line.trim());
+            while ((line = reader.readLine()) != null) {
+                labelList.add(line);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
-            labels = null;
         }
+        return labelList;
     }
+
 
     @Override
     public void onDestroyView() {
