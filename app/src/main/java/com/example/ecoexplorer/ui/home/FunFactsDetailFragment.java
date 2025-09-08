@@ -26,7 +26,7 @@ public class FunFactsDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_fun_fact_details, container, false);
+        View view = inflater.inflate(R.layout.home_fun_fact_details, container, false);
 
         ImageView backButton = view.findViewById(R.id.back_to_home);
         backButton.setOnClickListener(v -> {

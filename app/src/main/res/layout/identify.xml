@@ -111,53 +111,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:layout_weight="2"
+                android:layout_marginTop="20dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <Button android:id="@+id/btnGallery"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_weight="2">
+                    android:layout_weight="1"
+                    android:layout_marginEnd="2.5dp"
+                    android:text="Select from Gallery"/>
 
-                    <Button android:id="@+id/btnGallery"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="2.5dp"
-                        android:text="Select from Gallery"/>
-
-                    <Button android:id="@+id/btnCamera"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="2.5dp"
-                        android:text="Take Photo" />
-
-                </LinearLayout>
-
-                <Button android:id="@+id/btnPredict"
-                    android:layout_width="match_parent"
+                <Button android:id="@+id/btnCamera"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Predict Image"/>
-
-                <ImageView
-                    android:id="@+id/imageViewIdentify"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:scaleType="fitCenter"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:id="@+id/textResult"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Image Results"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:textSize="16sp" />
+                    android:layout_weight="1"
+                    android:layout_marginStart="2.5dp"
+                    android:text="Take Photo" />
 
             </LinearLayout>
+
+            <Button android:id="@+id/btnPredict"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Predict Image"/>
 
         </LinearLayout>
 

@@ -9,7 +9,7 @@
         android:id="@+id/navigation_identify"
         android:name="com.example.ecoexplorer.ui.identify.IdentifyFragment"
         android:label="@string/identify_page"
-        tools:layout="@layout/fragment_identify">
+        tools:layout="@layout/identify">
         <action
             android:id="@+id/action_navigation_identify_to_navigation_camera_identify"
             app:destination="@id/navigation_camera_identify" />
@@ -36,7 +36,7 @@
         android:id="@+id/identify_result"
         android:name="com.example.ecoexplorer.ui.identify.IdentifyResults"
         android:label="Identify Results"
-        tools:layout="@layout/fragment_identify_results">
+        tools:layout="@layout/identify_results">
         <action
             android:id="@+id/action_identify_result_to_navigation_identify"
             app:destination="@id/navigation_identify" />

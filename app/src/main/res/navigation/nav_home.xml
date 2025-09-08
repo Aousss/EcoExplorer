@@ -9,7 +9,7 @@
         android:id="@+id/navigation_home"
         android:name="com.example.ecoexplorer.ui.home.HomeFragment"
         android:label="@string/home_page"
-        tools:layout="@layout/fragment_home">
+        tools:layout="@layout/home">
         <action
             android:id="@+id/action_navigation_home_to_navigation_identify"
             app:destination="@id/navigation_identify" />
@@ -22,6 +22,6 @@
         android:id="@+id/fun_facts_detail"
         android:name="com.example.ecoexplorer.ui.home.FunFactsDetailFragment"
         android:label="@string/identify_page"
-        tools:layout="@layout/fragment_fun_fact_details"/>
+        tools:layout="@layout/home_fun_fact_details"/>
 
 </navigation>

@@ -33,7 +33,7 @@ public class IdentifyResults extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_identify_results, container, false);
+        View view = inflater.inflate(R.layout.identify_results, container, false);
 
         imageFound = view.findViewById(R.id.foundImage);
         imageOriginal = view.findViewById(R.id.originalImage);

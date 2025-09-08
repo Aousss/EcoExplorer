@@ -14,8 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -28,7 +26,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoexplorer.R;
-import com.example.ecoexplorer.databinding.FragmentIdentifyBinding;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.Interpreter;
@@ -48,11 +45,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IdentifyFragment extends Fragment {
-
-    private FragmentIdentifyBinding binding;
-
-    private ImageView imageView;
-    private TextView textResult;
 
     private List<String> labels;
     private Uri imageUri;
@@ -75,8 +67,7 @@ public class IdentifyFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate layout using ViewBinding
-        binding = FragmentIdentifyBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        View root = inflater.inflate(R.layout.identify, container, false);
 
         recyclerViewPlants = root.findViewById(R.id.recycleView_PlantsIdentify);
         plantsData();
@@ -86,8 +77,6 @@ public class IdentifyFragment extends Fragment {
 
         Button btnGallery = root.findViewById(R.id.btnGallery);
         Button btnCamera = root.findViewById(R.id.btnCamera);
-        imageView = root.findViewById(R.id.imageViewIdentify);
-        textResult = root.findViewById(R.id.textResult);
 
         // Load tflite model
         loadModel();
@@ -126,7 +115,6 @@ public class IdentifyFragment extends Fragment {
             }
         }
 
-
         return root;
     }
 
@@ -154,9 +142,15 @@ public class IdentifyFragment extends Fragment {
 
         // Animals Data
         animalsList = new ArrayList<>();
-        animalsList.add(new Animals("Rose", "Rose descriptions", R.drawable.rose));
-        animalsList.add(new Animals("Sunflower","Sunflower descriptions", R.drawable.sunflower));
-        animalsList.add(new Animals("Tulip","Tulip descriptions", R.drawable.tulip));
+        animalsList.add(new Animals("Butterfly","Butterfly descriptions", R.drawable.identify_butterfly));
+        animalsList.add(new Animals("Dragonfly","Dragonfly descriptions", R.drawable.identify_dragonfly));
+        animalsList.add(new Animals("Leafhopper","Leafhopper descriptions", R.drawable.identify_leafhopper));
+        animalsList.add(new Animals("Moths","Moths descriptions", R.drawable.identify_moths));
+        animalsList.add(new Animals("Weevil","Weevil descriptions", R.drawable.identify_weevil));
+        animalsList.add(new Animals("Rhinoceros beetle","Rhizosphere beetle descriptions", R.drawable.identify_rhinoceros));
+        animalsList.add(new Animals("Damselfly","Damselflies descriptions", R.drawable.identify_damselfly));
+        animalsList.add(new Animals("Cicadas","Cicadas descriptions", R.drawable.identify_cicadas));
+        animalsList.add(new Animals("Longhorn beetle","Longhorn beetle descriptions", R.drawable.identify_longhorn));
 
         animalsAdapter = new AnimalsAdapter(animalsList, animals -> {
            Bundle bundle = new Bundle();
@@ -200,8 +194,6 @@ public class IdentifyFragment extends Fragment {
     private void processImageUri(@NonNull Uri uri) {
         try (InputStream is = requireContext().getContentResolver().openInputStream(uri)) {
             Bitmap bitmap = BitmapFactory.decodeStream(is);
-            imageView.setImageBitmap(bitmap);
-            imageView.setVisibility(View.VISIBLE);
 
             // 1) Ask the model what it wants
             int inputIndex = 0;
@@ -255,19 +247,6 @@ public class IdentifyFragment extends Fragment {
                 if (probs[i] > bestScore) { bestScore = probs[i]; bestIdx = i; }
             }
 
-            // Option A: If you know your classes manually
-//            String[] classes = {
-//                    "butterflies",
-//                    "cicadas",
-//                    "damselflies",
-//                    "dragonflies",
-//                    "leafhopper",
-//                    "longhorn beetle",
-//                    "moths",
-//                    "rhinoceros beetle",
-//                    "weevil"
-//            };
-
             // Use labels.txt if available
             String detected;
             if (labels != null && bestIdx < labels.size()) {
@@ -280,7 +259,6 @@ public class IdentifyFragment extends Fragment {
             String label = (labels != null && bestIdx < labels.size()) ? labels.get(bestIdx) : ("Class " + bestIdx);
 
             // After finishing detection
-//            String detected = (bestIdx < classes.length) ? classes[bestIdx] : "Class " + bestIdx;
             String scoreStr = String.format("%.3f", bestScore);
 
             // Create bundle
@@ -295,7 +273,6 @@ public class IdentifyFragment extends Fragment {
 
         } catch (Exception e) {
             e.printStackTrace();
-            textResult.setText("Error: " + e.getMessage());
         }
     }
 
@@ -325,6 +302,5 @@ public class IdentifyFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
     }
 }

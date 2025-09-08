@@ -29,8 +29,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.bumptech.glide.Glide;
 import com.example.ecoexplorer.R;
 import com.example.ecoexplorer.UserViewModel;
-import com.example.ecoexplorer.databinding.FragmentHomeBinding;
-import com.example.ecoexplorer.databinding.FragmentProfileBinding;
+import com.example.ecoexplorer.databinding.HomeBinding;
+import com.example.ecoexplorer.databinding.ProfileBinding;
 import com.example.ecoexplorer.ui.home.UserUtils;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,7 +48,7 @@ import java.util.Objects;
 public class ProfileFragment extends Fragment {
 
     private static final int PICK_IMAGE_REQUEST = 1;
-    private FragmentProfileBinding binding;
+    private ProfileBinding binding;
     private UserViewModel userViewModel;
     private FirebaseAuth mAuth;
     private Uri imageUri;
@@ -62,7 +62,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate layout using ViewBinding
-        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        binding = ProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         /* GET THE USERNAME & DISPLAY */
@@ -82,7 +82,6 @@ public class ProfileFragment extends Fragment {
 
             // finish MainActivity to prevent going back
             requireActivity().finish();
-
         });
 
         return root;
@@ -205,7 +204,6 @@ public class ProfileFragment extends Fragment {
                             .placeholder(R.drawable.ic_person) // default icon
                             .error(R.drawable.ic_close)       // fallback if failed
                             .into(profileImage);
-
                 }
             }
 

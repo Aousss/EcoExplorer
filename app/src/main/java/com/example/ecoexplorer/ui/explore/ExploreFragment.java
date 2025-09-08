@@ -13,11 +13,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.ecoexplorer.R;
-import com.example.ecoexplorer.databinding.FragmentExploreBinding;
 
 public class ExploreFragment extends Fragment {
-
-    private FragmentExploreBinding binding;
 
     private Button viewAR1;
 
@@ -26,7 +23,7 @@ public class ExploreFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate layout using ViewBinding
-        View view = inflater.inflate(R.layout.fragment_explore, container, false);
+        View view = inflater.inflate(R.layout.explore, container, false);
 
         viewAR1 = view.findViewById(R.id.ar1_button);
         viewAR1.setOnClickListener(v -> {

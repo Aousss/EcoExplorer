@@ -345,7 +345,6 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/el_card_outlined"
                     android:orientation="vertical"
-
                     android:padding="16dp">
 
                     <ImageView

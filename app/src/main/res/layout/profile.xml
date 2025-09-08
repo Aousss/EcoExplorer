@@ -139,13 +139,13 @@
             <androidx.cardview.widget.CardView android:id="@+id/user_profile_info_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:backgroundTint="@color/green_primary"
                 app:cardCornerRadius="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardView_to_login"
-                app:layout_goneMarginTop="80dp">
+                app:layout_goneMarginTop="50dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -153,133 +153,96 @@
                     android:layout_margin="20dp"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:id="@+id/profile_username"
+                    <TextView
+                        style="@style/content2"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Username"
+                        android:textSize="12dp"
+                        android:textColor="@color/gray" />
+
+                    <TextView
+                        android:id="@+id/profile_username_text"
+                        style="@style/content2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:text="@string/username"
+                        android:textColor="@color/white" />
 
-                        <TextView
-                            style="@style/content2"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:text="Username"
-                            android:textColor="@color/white" />
+                    <TextView
+                        style="@style/content2"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="Full Name"
+                        android:textSize="12dp"
+                        android:textColor="@color/gray" />
 
-                        <TextView
-                            android:id="@+id/profile_username_text"
-                            style="@style/content2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/username"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/gray" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/profile_fullname"
+                    <TextView
+                        android:id="@+id/profile_fullname_text"
+                        style="@style/content2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:text="Full Name"
+                        android:textColor="@color/white" />
 
-                        <TextView
-                            style="@style/content2"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:text="Full Name"
-                            android:textColor="@color/white" />
+                    <TextView
+                        style="@style/content2"
+                        android:layout_width="100dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_height="wrap_content"
+                        android:text="Age"
+                        android:textSize="12dp"
+                        android:textColor="@color/gray" />
 
-                        <TextView
-                            android:id="@+id/profile_fullname_text"
-                            style="@style/content2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Full Name"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/gray" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/profile_age"
+                    <TextView
+                        android:id="@+id/profile_age_text"
+                        style="@style/content2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:text="age"
+                        android:textColor="@color/white" />
 
-                        <TextView
-                            style="@style/content2"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:text="Age"
-                            android:textColor="@color/white" />
+                    <TextView
+                        style="@style/content2"
+                        android:layout_width="100dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:textSize="12dp"
+                        android:textColor="@color/gray" />
 
-                        <TextView
-                            android:id="@+id/profile_age_text"
-                            style="@style/content2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="26 years old"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/gray" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/profile_email"
+                    <TextView
+                        android:id="@+id/profile_email_text"
+                        style="@style/content2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="50dp"
-                        android:orientation="horizontal">
+                        android:breakStrategy="simple"
+                        android:inputType="textEmailAddress"
+                        android:lineSpacingMultiplier="1"
+                        android:lines="2"
+                        android:maxLines="2"
+                        android:scrollHorizontally="true"
+                        android:scrollbars="none"
+                        android:text="email"
+                        android:textColor="@color/white" />
 
-                        <TextView
-                            style="@style/content2"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:text="Email"
-                            android:textColor="@color/white" />
+                    <TextView
+                        style="@style/content2"
+                        android:layout_width="100dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_height="wrap_content"
+                        android:text="Password"
+                        android:textSize="12dp"
+                        android:textColor="@color/gray" />
 
-                        <TextView
-                            android:id="@+id/profile_email_text"
-                            style="@style/content2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:breakStrategy="simple"
-                            android:inputType="textEmailAddress"
-                            android:lineSpacingMultiplier="1"
-                            android:lines="2"
-                            android:maxLines="2"
-                            android:scrollHorizontally="true"
-                            android:scrollbars="none"
-                            android:text="email"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/gray" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/profile_password"
+                    <TextView
+                        android:id="@+id/profile_password_text"
+                        style="@style/content2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            style="@style/content2"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:text="Password"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:id="@+id/profile_password_text"
-                            style="@style/content2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="password"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/gray" />
-
-                    </LinearLayout>
+                        android:text="password"
+                        android:textColor="@color/white" />
 
                     <Button
                         android:id="@+id/upload_profile_pic"

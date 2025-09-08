@@ -10,7 +10,6 @@ import android.webkit.PermissionRequest;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -26,7 +25,7 @@ public class WebARFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.ar_scene_layout, container, false);
+        View view = inflater.inflate(R.layout.explorer_arscene_layout, container, false);
 
         webView = view.findViewById(R.id.webarWebView);
 

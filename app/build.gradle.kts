@@ -34,7 +34,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
-        mlModelBinding = true   
+        mlModelBinding = true
     }
 
     packagingOptions {

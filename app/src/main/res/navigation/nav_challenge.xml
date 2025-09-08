@@ -9,7 +9,7 @@
         android:id="@+id/navigation_challenge"
         android:name="com.example.ecoexplorer.ui.challenge.ChallengeFragment"
         android:label="@string/challenge_page"
-        tools:layout="@layout/fragment_challenge">
+        tools:layout="@layout/challenge">
         <action
             android:id="@+id/action_navigation_challenge_to_navigation_plants"
             app:destination="@id/navigation_plants" />

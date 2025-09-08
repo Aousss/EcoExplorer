@@ -2,7 +2,6 @@
 package com.example.ecoexplorer.ui.challenge;
 
 import androidx.cardview.widget.CardView;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
@@ -23,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoexplorer.R;
 // Import your custom PlantsCategory model
-import com.example.ecoexplorer.databinding.FragmentChallengeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -53,7 +51,7 @@ public class ChallengeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_challenge, container, false);
+        View view = inflater.inflate(R.layout.challenge, container, false);
 
         /* -------------------
         * CATEGORIES
