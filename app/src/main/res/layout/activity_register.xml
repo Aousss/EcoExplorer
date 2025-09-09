@@ -77,14 +77,16 @@
             <LinearLayout android:id="@+id/username_age_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_weight="2">
 
                 <!-- USERNAME -->
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="290dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="Username"
+                    android:layout_weight="1"
                     app:endIconMode="clear_text">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -95,17 +97,14 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
-
                 <!-- AGE -->
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="100dp"
+                    android:layout_width="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_height="wrap_content"
                     android:hint="Age"
+                    android:layout_weight="1"
                     app:endIconMode="clear_text">
 
                     <com.google.android.material.textfield.TextInputEditText

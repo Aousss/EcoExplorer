@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/fun_facts_detail"
         android:name="com.example.ecoexplorer.ui.home.FunFactsDetailFragment"
-        android:label="@string/identify_page"
+        android:label="FunFacts"
         tools:layout="@layout/home_fun_fact_details"/>
 
 </navigation>

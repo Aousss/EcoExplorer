@@ -1,15 +1,9 @@
 package com.example.ecoexplorer;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -21,7 +15,6 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
@@ -29,7 +22,6 @@ import com.example.ecoexplorer.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+//        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         FirebaseApp.initializeApp(this);
         ActivityMainBinding binding;
@@ -88,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
         navController = navHostFragment.getNavController();
-        NavigationUI.setupWithNavController(binding.navView, navController);
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
         /*----------------------------------
          * BOTTOM MARGIN REMOVED
@@ -123,15 +115,15 @@ public class MainActivity extends AppCompatActivity {
         /*---------------------------
         * HIDE THE BOTTOM NAVIGATION
         * ---------------------------*/
-        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.navigation_camera_identify) {
-                binding.navView.setVisibility(View.GONE);
-                findViewById(R.id.fab_camera).setVisibility(View.GONE); // Optional: hide FAB too
-            } else {
-                binding.navView.setVisibility(View.VISIBLE);
-                findViewById(R.id.fab_camera).setVisibility(View.VISIBLE);
-            }
-        });
+//        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+//            if (destination.getId() == R.id.navigation_camera_identify) {
+//                binding.navView.setVisibility(View.GONE);
+//                findViewById(R.id.fab_camera).setVisibility(View.GONE); // Optional: hide FAB too
+//            } else {
+//                binding.navView.setVisibility(View.VISIBLE);
+//                findViewById(R.id.fab_camera).setVisibility(View.VISIBLE);
+//            }
+//        });
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Integer graphId = graphMap.get(item.getItemId());

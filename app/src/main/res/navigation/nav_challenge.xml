@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_challenge_to_navigation_animals"
             app:destination="@id/navigation_animals" />
+        <action
+            android:id="@+id/action_navigation_challenge_to_login"
+            app:destination="@id/login" />
     </fragment>
 
     <!-- ANIMALS QUIZ -->
@@ -71,5 +74,11 @@
         android:name="com.example.ecoexplorer.ui.challenge.plants.PlantsQuizQuestions"
         android:label="Quiz Questions"
         tools:layout="@layout/challenge_quiz_questions" />
+
+    <activity
+        android:id="@+id/login"
+        android:name="com.example.ecoexplorer.ui.profile.LoginActivity"
+        android:label="@string/login"
+        tools:layout="@layout/activity_login"/>
 
 </navigation>

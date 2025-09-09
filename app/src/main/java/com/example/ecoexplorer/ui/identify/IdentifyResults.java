@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -20,14 +21,13 @@ import com.example.ecoexplorer.R;
 public class IdentifyResults extends Fragment {
 
     private ImageView imageFound;
-    private ImageView imageOriginal;
     private TextView speciesName;
     private TextView speciesSciName;
 
     private TextView errorIdentifyMessage;
     private TextView successIdentifyMessage;
 
-    private Button scanIdentifyAgain;
+    private CardView scanIdentifyAgain;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,7 +36,6 @@ public class IdentifyResults extends Fragment {
         View view = inflater.inflate(R.layout.identify_results, container, false);
 
         imageFound = view.findViewById(R.id.foundImage);
-        imageOriginal = view.findViewById(R.id.originalImage);
         speciesName = view.findViewById(R.id.species_nonSciName);
         speciesSciName = view.findViewById(R.id.species_sciName);
 

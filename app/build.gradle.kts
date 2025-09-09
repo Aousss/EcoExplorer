@@ -58,20 +58,22 @@ dependencies {
     /* ----------------
      * FIREBASE
      * ---------------- */
-    implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.ml.modeldownloader)
-    implementation(libs.google.firebase.analytics)
     implementation(libs.google.firebase.auth)
     implementation(libs.google.firebase.database)
     implementation(libs.google.firebase.firestore)
     implementation(libs.google.firebase.storage)
     implementation(libs.firebase.ui.auth)
 
+    implementation(platform(libs.firebase.bom.v3420))
+    implementation(libs.com.google.firebase.firebase.analytics4)
+
     // Google Sign-In
-    implementation(libs.play.services.auth)
+    implementation ("com.google.android.gms:play-services-auth:21.3.0")
 
     // Glide
     implementation(libs.glide)
+    implementation(libs.googleid)
     annotationProcessor(libs.compiler)
 
     // Google Play Services Base

@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/navigation_camera_identify"
         android:label="@string/camera_identify"
-        tools:layout="@layout/fragment_camera_identify"/>
+        tools:layout="@layout/identify_camera"/>
 
     <fragment
         android:id="@+id/details"

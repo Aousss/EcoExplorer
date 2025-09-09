@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoexplorer.R;
+import com.example.ecoexplorer.databinding.IdentifyBinding;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.Interpreter;
@@ -57,6 +59,8 @@ public class IdentifyFragment extends Fragment {
     private AnimalsAdapter animalsAdapter;
     private List<Animals> animalsList;
 
+    private IdentifyBinding binding;
+
     private final int IMAGE_SIZE = 32;
 
     private ActivityResultLauncher<Intent> cameraLauncher;
@@ -67,7 +71,8 @@ public class IdentifyFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate layout using ViewBinding
-        View root = inflater.inflate(R.layout.identify, container, false);
+        binding = IdentifyBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
         recyclerViewPlants = root.findViewById(R.id.recycleView_PlantsIdentify);
         plantsData();
@@ -75,8 +80,8 @@ public class IdentifyFragment extends Fragment {
         recyclerViewAnimals = root.findViewById(R.id.recycleView_AnimalIdentify);
         animalsData();
 
-        Button btnGallery = root.findViewById(R.id.btnGallery);
-        Button btnCamera = root.findViewById(R.id.btnCamera);
+        CardView btnGallery = root.findViewById(R.id.btnGallery);
+        CardView btnCamera = root.findViewById(R.id.btnCamera);
 
         // Load tflite model
         loadModel();

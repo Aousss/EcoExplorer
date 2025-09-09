@@ -9,7 +9,7 @@
     <ImageView
         android:id="@id/customActionBar"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="190dp"
         android:background="@color/green_primary"
         tools:ignore="MissingConstraints" />
 
@@ -25,27 +25,26 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white" />
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/foundImage"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/gray"
-        android:scaleType="centerCrop"
+    <ImageView
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/el_profile_pic"
+        android:backgroundTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/back_to_identify"
-        app:shapeAppearance="@style/CircleImageStyle" />
+        app:layout_constraintTop_toBottomOf="@id/back_to_identify" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/originalImage"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="32dp"
+        android:id="@+id/foundImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="15dp"
         android:background="@color/gray"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/back_to_identify"
         app:shapeAppearance="@style/CircleImageStyle" />
 
@@ -54,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@id/originalImage">
+        app:layout_constraintTop_toBottomOf="@id/foundImage">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -101,19 +100,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textStyle="italic"
                 android:text="Species Name"
                 android:textColor="@color/green_primary"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="italic" />
 
-            <Button
+            <androidx.cardview.widget.CardView
                 android:id="@+id/scanIdentify_again"
-                style="@style/content1"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:text="Take Another Photo" />
+                android:backgroundTint="@color/green_primary"
+                app:cardCornerRadius="10dp">
+
+                <TextView
+                    style="@style/content2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="5dp"
+                    android:gravity="center"
+                    android:text="Take Another Photo"
+                    android:textColor="@color/white" />
+
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 

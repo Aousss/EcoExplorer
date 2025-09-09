@@ -4,11 +4,13 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home"
+        android:actionLayout="@layout/home"
         android:title="@string/home_page" />
 
     <item
         android:id="@+id/navigation_arexplore"
         android:icon="@drawable/ic_ar"
+        android:actionLayout="@layout/explore"
         android:title="@string/explore_page" />
 
     <item
@@ -20,11 +22,13 @@
     <item
         android:id="@+id/navigation_challenge"
         android:icon="@drawable/ic_challenge"
+        android:actionLayout="@layout/challenge"
         android:title="@string/challenge_page" />
 
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_person"
+        android:actionLayout="@layout/profile"
         android:title="@string/profile_page" />
 
 </menu>

@@ -1,6 +1,7 @@
 // ChallengeFragment.java
 package com.example.ecoexplorer.ui.challenge;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 
 import android.os.Bundle;
@@ -17,12 +18,14 @@ import android.widget.Toast;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoexplorer.R;
-// Import your custom PlantsCategory model
+import com.example.ecoexplorer.databinding.ChallengeBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,6 +47,8 @@ public class ChallengeFragment extends Fragment {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private DatabaseReference databaseReference;
 
+    private ChallengeBinding binding;
+
     public static ChallengeFragment newInstance() {
         return new ChallengeFragment();
     }
@@ -51,7 +56,9 @@ public class ChallengeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.challenge, container, false);
+
+        binding = ChallengeBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
         /* -------------------
         * CATEGORIES
@@ -87,7 +94,13 @@ public class ChallengeFragment extends Fragment {
         resultAdapter = new ResultsAdapter(getContext(), resultLists);
         recyclerView_results.setAdapter(resultAdapter);
 
-        String userID = mAuth.getCurrentUser().getUid();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            showNoAccountState();
+            return;
+        }
+        String userID = currentUser.getUid();
+
         String gameType = "quiz";
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance()
@@ -136,6 +149,30 @@ public class ChallengeFragment extends Fragment {
         });
     }
 
+    private void showNoAccountState() {
+        // Show a message on screen
+        none_results.setVisibility(View.VISIBLE);
+        none_results.setText("⚠ Please log in or check your internet connection.");
+
+        recyclerView_results.setVisibility(View.GONE);
+        seeResult.setVisibility(View.GONE);
+
+        // Disable category clicks
+        animalCategory.setOnClickListener(v -> showErrorState());
+        plantCategory.setOnClickListener(v -> showErrorState());
+    }
+
+    private void showErrorState() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Login Required")
+                .setMessage("You need to log in to continue. \nPlease log in to use this feature.")
+                .setPositiveButton("Login", (dialog, which) -> {
+                    NavController navController = NavHostFragment.findNavController(ChallengeFragment.this);
+                    navController.navigate(R.id.action_navigation_challenge_to_login);
+                })
+                .setNegativeButton("Close", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -145,5 +182,9 @@ public class ChallengeFragment extends Fragment {
         * RESULTS
         * -------*/
         resultAdapter.notifyDataSetChanged(); // already inside onDataChange()
+    }
+
+    public void onCancelled(@NonNull DatabaseError error) {
+        Toast.makeText(getContext(), "Database Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }

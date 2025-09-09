@@ -266,7 +266,7 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@id/user_profile_info_container"
-                app:layout_goneMarginTop="100dp">
+                app:layout_goneMarginTop="50dp">
 
                 <LinearLayout android:id="@+id/help_and_feedback_container"
                     android:layout_width="match_parent"
@@ -396,7 +396,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ActionBar_title"
         android:src="@drawable/ic_person"
-        android:scaleType="centerCrop"
+        android:background="@color/green_primary"
+        android:tint="@color/white"
+        android:scaleType="center"
         app:shapeAppearance="@style/CircleImageStyle"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

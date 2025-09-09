@@ -6,7 +6,10 @@ arsceneviewVersion = "0.10.0"
 cameraCore = "1.4.2"
 compiler = "4.15.1"
 coreKtx = "1.16.0"
+credentials = "1.5.0"
+credentialsPlayServicesAuth = "1.5.0"
 firebaseBom = "34.1.0"
+firebaseBomVersion = "34.2.0"
 firebaseFirestore = "25.1.4"
 firebaseStorage = "21.0.2"
 firebaseUiAuth = "9.0.0"
@@ -26,6 +29,7 @@ cameraView = "1.4.2"
 cameraLifecycle = "1.4.2"
 playServicesAuth = "21.3.0"
 litertSupportApi = "1.4.0"
+playServicesAuthVersion = "21.4.0"
 playServicesBase = "18.7.2"
 recyclerview = "1.4.0"
 tensorflowLite = "2.15.0"
@@ -41,6 +45,7 @@ imageLabelingCommon = "18.1.0"
 core = "1.17.1"
 assets = "1.17.1"
 filamentAndroid = "1.17.1"
+googleid = "1.1.1"
 
 [libraries]
 arcore-sceneview = { module = "io.github.sceneview:arcore-sceneview", version.ref = "arcoreSceneview" }
@@ -50,11 +55,17 @@ camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cam
 camera-core = { module = "androidx.camera:camera-core", version.ref = "cameraCore" }
 camera-extensions = { module = "androidx.camera:camera-extensions", version.ref = "cameraCore" }
 com-google-firebase-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+com-google-firebase-firebase-analytics2 = { module = "com.google.firebase:firebase-analytics" }
+com-google-firebase-firebase-analytics3 = { module = "com.google.firebase:firebase-analytics" }
+com-google-firebase-firebase-analytics4 = { module = "com.google.firebase:firebase-analytics" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
+credentials = { module = "androidx.credentials:credentials", version.ref = "credentials" }
+credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentialsPlayServicesAuth" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-bom-v3420 = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBomVersion" }
 firebase-database = { module = "com.google.firebase:firebase-database" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebaseFirestore" }
 firebase-ml-modeldownloader = { module = "com.google.firebase:firebase-ml-modeldownloader" }
@@ -81,6 +92,7 @@ camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "
 camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "cameraLifecycle" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 litert-support-api = { group = "com.google.ai.edge.litert", name = "litert-support-api", version.ref = "litertSupportApi" }
+play-services-auth-v2140 = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuthVersion" }
 play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "playServicesBase" }
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 tensorflow-lite = { module = "org.tensorflow:tensorflow-lite", version.ref = "tensorflowLite" }
@@ -96,6 +108,7 @@ image-labeling-common = { group = "com.google.mlkit", name = "image-labeling-com
 core = { group = "com.google.ar.sceneform", name = "core", version.ref = "core" }
 assets = { group = "com.google.ar.sceneform", name = "assets", version.ref = "assets" }
 filament-android = { group = "com.google.ar.sceneform", name = "filament-android", version.ref = "filamentAndroid" }
+googleid = { group = "com.google.android.libraries.identity.googleid", name = "googleid", version.ref = "googleid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
