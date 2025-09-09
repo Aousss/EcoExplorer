@@ -1,8 +1,11 @@
 package com.example.ecoexplorer.ui.profile;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -146,6 +149,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             // Fetch username from Realtime Database
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").child(userId);
+
                             ref.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -166,9 +170,19 @@ public class LoginActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onCancelled(DatabaseError databaseError) {
-                                    Toast.makeText(LoginActivity.this, "Database error", Toast.LENGTH_SHORT).show();
+                                    Log.e(TAG, "Database error", databaseError.toException());
                                 }
                             });
+
+                            // Update password in Realtime Database
+                            ref.child("password").setValue(password)
+                                    .addOnCompleteListener(updateTask -> {
+                                        if (updateTask.isSuccessful()) {
+                                            Log.d(TAG, "Password updated in database");
+                                        } else {
+                                            Log.e(TAG, "Error updating password in database", updateTask.getException());
+                                        }
+                                    });
                         }
 
                     } else {
