@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.ecoexplorer.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -143,6 +145,8 @@ public class PlantsQuizQuestions extends Fragment {
     }
 
     private void saveScoreToUser() {
+
+
         String uid = mAuth.getCurrentUser().getUid();
         String gameType = "quiz";
         String category = "plants";
@@ -153,8 +157,15 @@ public class PlantsQuizQuestions extends Fragment {
         resultData.put("date", new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
         resultData.put("time", new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
 
-        DatabaseReference resultsRef = FirebaseDatabase.getInstance().getReference("results");
-        resultsRef.child(gameType).child(category).child(uid)
+        DatabaseReference userResultsRef  = FirebaseDatabase.getInstance()
+                .getReference("users")
+                .child(uid)
+                .child("results")
+                .child(gameType)
+                .child(category);
+
+        userResultsRef.keepSynced(true);
+        userResultsRef
                 .setValue(resultData)
                 .addOnSuccessListener(aVoid ->
                         Toast.makeText(getContext(), "Score saved! You got " + score + "/" + questionList.size(), Toast.LENGTH_LONG).show()
@@ -162,5 +173,9 @@ public class PlantsQuizQuestions extends Fragment {
                 .addOnFailureListener(e ->
                         Toast.makeText(getContext(), "Failed to save score", Toast.LENGTH_SHORT).show()
                 );
+
+        // Navigate to front page
+        NavController navController = NavHostFragment.findNavController(PlantsQuizQuestions.this);
+        navController.navigate(R.id.action_quiz_start_plants_to_quiz_plants);
     }
 }

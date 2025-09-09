@@ -84,12 +84,12 @@ public class ChallengeFragment extends Fragment {
         seeResult = view.findViewById(R.id.cl_results_seeAll);
         recyclerView_results.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        displayRecentResultS();
+        displayRecentResults();
 
         return view;
     }
 
-    private void displayRecentResultS() {
+    private void displayRecentResults() {
         resultLists = new ArrayList<>();
         resultAdapter = new ResultsAdapter(getContext(), resultLists);
         recyclerView_results.setAdapter(resultAdapter);
@@ -100,11 +100,13 @@ public class ChallengeFragment extends Fragment {
             return;
         }
         String userID = currentUser.getUid();
-
         String gameType = "quiz";
 
+        // 🔹 Now point to users → uid → results → gameType
         DatabaseReference databaseReference = FirebaseDatabase.getInstance()
-                .getReference("results")
+                .getReference("users")
+                .child(userID)
+                .child("results")
                 .child(gameType);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -119,21 +121,17 @@ public class ChallengeFragment extends Fragment {
                     return;
                 }
 
-                // Loop through each category
+                // 🔹 Loop through each category under quiz
                 for (DataSnapshot categorySnapshot : snapshot.getChildren()) {
                     String categoryName = categorySnapshot.getKey();
 
-                    // Check if current user has results in this category
-                    DataSnapshot userResultSnapshot = categorySnapshot.child(userID);
-                    if (userResultSnapshot.exists()) {
-                        Integer score = userResultSnapshot.child("score").getValue(Integer.class);
-                        Integer total = userResultSnapshot.child("total").getValue(Integer.class);
-                        String date = userResultSnapshot.child("date").getValue(String.class);
+                    Integer score = categorySnapshot.child("score").getValue(Integer.class);
+                    Integer total = categorySnapshot.child("total").getValue(Integer.class);
+                    String date = categorySnapshot.child("date").getValue(String.class);
 
-                        if (score != null && total != null && date != null) {
-                            Results result = new Results(categoryName, score, total, date);
-                            resultLists.add(result);
-                        }
+                    if (score != null && total != null && date != null) {
+                        Results result = new Results(categoryName, score, total, date);
+                        resultLists.add(result);
                     }
                 }
 

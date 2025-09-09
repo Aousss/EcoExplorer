@@ -39,7 +39,7 @@ public class PlantFragment extends Fragment {
         ImageView backToChallenge = view.findViewById(R.id.back_to_challenge);
         backToChallenge.setOnClickListener(v -> {
             NavController navController = NavHostFragment.findNavController(PlantFragment.this);
-            navController.popBackStack(); // Goes back to previous fragment in nav graph
+            navController.navigate(R.id.action_navigation_plants_to_navigation_challenge);
         });
 
         // NAVIGATE TO QUIZ

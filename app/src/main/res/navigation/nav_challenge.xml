@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_navigation_animals_to_quiz_animal"
             app:destination="@id/quiz_animal" />
+        <action
+            android:id="@+id/action_navigation_animals_to_navigation_challenge"
+            app:destination="@id/navigation_challenge" />
     </fragment>
 
     <fragment
@@ -40,13 +43,20 @@
         <action
             android:id="@+id/action_quiz_animal_to_quiz_start_animal"
             app:destination="@id/quiz_start_animal" />
+        <action
+            android:id="@+id/action_quiz_animal_to_navigation_animals"
+            app:destination="@id/navigation_animals" />
     </fragment>
 
     <fragment
         android:id="@+id/quiz_start_animal"
         android:name="com.example.ecoexplorer.ui.challenge.animals.AnimalsQuizQuestions"
         android:label="Quiz Questions"
-        tools:layout="@layout/challenge_quiz_questions" />
+        tools:layout="@layout/challenge_quiz_questions" >
+        <action
+            android:id="@+id/action_quiz_start_animal_to_quiz_animal"
+            app:destination="@id/quiz_animal" />
+    </fragment>
 
     <!-- PLANTS QUIZ -->
     <fragment
@@ -57,6 +67,9 @@
         <action
             android:id="@+id/action_navigation_plants_to_quiz_plants"
             app:destination="@id/quiz_plants" />
+        <action
+            android:id="@+id/action_navigation_plants_to_navigation_challenge"
+            app:destination="@id/navigation_challenge" />
     </fragment>
 
     <fragment
@@ -67,13 +80,20 @@
         <action
             android:id="@+id/action_quiz_plants_to_quiz_start_plants"
             app:destination="@id/quiz_start_plants" />
+        <action
+            android:id="@+id/action_quiz_plants_to_navigation_plants"
+            app:destination="@id/navigation_plants" />
     </fragment>
 
     <fragment
         android:id="@+id/quiz_start_plants"
         android:name="com.example.ecoexplorer.ui.challenge.plants.PlantsQuizQuestions"
         android:label="Quiz Questions"
-        tools:layout="@layout/challenge_quiz_questions" />
+        tools:layout="@layout/challenge_quiz_questions" >
+        <action
+            android:id="@+id/action_quiz_start_plants_to_quiz_plants"
+            app:destination="@id/quiz_plants" />
+    </fragment>
 
     <activity
         android:id="@+id/login"

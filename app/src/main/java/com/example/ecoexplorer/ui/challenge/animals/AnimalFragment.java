@@ -38,7 +38,7 @@ public class AnimalFragment extends Fragment {
         ImageView backToChallenge = view.findViewById(R.id.back_to_challenge);
         backToChallenge.setOnClickListener(v -> {
             NavController navController = NavHostFragment.findNavController(AnimalFragment.this);
-            navController.popBackStack(); // Goes back to previous fragment in nav graph
+            navController.navigate(R.id.action_navigation_animals_to_navigation_challenge);
         });
 
         // NAVIGATE TO QUIZ

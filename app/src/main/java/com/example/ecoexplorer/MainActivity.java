@@ -115,15 +115,26 @@ public class MainActivity extends AppCompatActivity {
         /*---------------------------
         * HIDE THE BOTTOM NAVIGATION
         * ---------------------------*/
-//        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-//            if (destination.getId() == R.id.navigation_camera_identify) {
-//                binding.navView.setVisibility(View.GONE);
-//                findViewById(R.id.fab_camera).setVisibility(View.GONE); // Optional: hide FAB too
-//            } else {
-//                binding.navView.setVisibility(View.VISIBLE);
-//                findViewById(R.id.fab_camera).setVisibility(View.VISIBLE);
-//            }
-//        });
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.quiz_start_plants) {
+                binding.navView.setVisibility(View.GONE);
+                findViewById(R.id.fab_camera).setVisibility(View.GONE); // Optional: hide FAB too
+            } else {
+                binding.navView.setVisibility(View.VISIBLE);
+                findViewById(R.id.fab_camera).setVisibility(View.VISIBLE);
+            }
+        });
+
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.quiz_start_animal) {
+                binding.navView.setVisibility(View.GONE);
+                findViewById(R.id.fab_camera).setVisibility(View.GONE); // Optional: hide FAB too
+            } else {
+                binding.navView.setVisibility(View.VISIBLE);
+                findViewById(R.id.fab_camera).setVisibility(View.VISIBLE);
+            }
+        });
+
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Integer graphId = graphMap.get(item.getItemId());

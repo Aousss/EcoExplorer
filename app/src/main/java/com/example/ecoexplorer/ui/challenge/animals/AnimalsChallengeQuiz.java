@@ -46,7 +46,7 @@ public class AnimalsChallengeQuiz extends Fragment {
         ImageButton backToChallengeAnimals = view.findViewById(R.id.back_to_quiz);
         backToChallengeAnimals.setOnClickListener(v -> {
             NavController navController = NavHostFragment.findNavController(AnimalsChallengeQuiz.this);
-            navController.popBackStack(); // Goes back to previous fragment in nav graph
+            navController.navigate(R.id.action_quiz_animal_to_navigation_animals); // Goes back to previous fragment in nav graph
         });
 
         // Start PlantsQuiz Button
@@ -70,8 +70,15 @@ public class AnimalsChallengeQuiz extends Fragment {
         String gameType = "quiz";
         String category = "animals";
 
-        DatabaseReference resultsRef = FirebaseDatabase.getInstance().getReference("results");
-        resultsRef.child(gameType).child(category).child(uid)
+        DatabaseReference resultsRef = FirebaseDatabase.getInstance()
+                .getReference("users")
+                .child(uid)
+                .child("results")
+                .child(gameType)
+                .child(category);
+
+        resultsRef.keepSynced(true);
+        resultsRef
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {

@@ -23,22 +23,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageButton
-            android:id="@+id/captureCloseButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/circle_white"
-            android:backgroundTint="@color/full_transparent"
-            android:paddingStart="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_arrow_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/green_primary"
-            tools:ignore="MissingConstraints" />
-
         <TextView
             android:id="@+id/tvQuestionNumber"
             style="@style/actionBar_title"
@@ -46,7 +30,6 @@
             android:layout_height="50dp"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="7dp"
-            android:layout_marginEnd="66dp"
             android:gravity="center"
             android:paddingStart="15dp"
             android:text="Question 1"
