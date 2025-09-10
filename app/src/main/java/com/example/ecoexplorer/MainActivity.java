@@ -136,7 +136,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.ARexplore) {
+            if (destination.getId() == R.id.ARexplore1) {
+                binding.navView.setVisibility(View.GONE);
+                findViewById(R.id.fab_camera).setVisibility(View.GONE); // Optional: hide FAB too
+            } else {
+                binding.navView.setVisibility(View.VISIBLE);
+                findViewById(R.id.fab_camera).setVisibility(View.VISIBLE);
+            }
+        });
+
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.ARexplore2) {
                 binding.navView.setVisibility(View.GONE);
                 findViewById(R.id.fab_camera).setVisibility(View.GONE); // Optional: hide FAB too
             } else {

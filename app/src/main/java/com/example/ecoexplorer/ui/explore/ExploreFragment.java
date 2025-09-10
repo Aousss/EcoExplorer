@@ -30,10 +30,16 @@ public class ExploreFragment extends Fragment {
         binding = ExploreBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        viewAR1 = view.findViewById(R.id.ar1_button);
+        viewAR1 = view.findViewById(R.id.btn_ar_watercycle);
         viewAR1.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.action_navigation_arexplore_to_ARexplore);
+        });
+
+        Button viewARlearn = view.findViewById(R.id.btn_arLearn);
+        viewARlearn.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.action_navigation_arexplore_to_ARexplore2);
         });
 
         return view;

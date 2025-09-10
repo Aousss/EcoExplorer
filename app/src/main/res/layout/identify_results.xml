@@ -95,15 +95,83 @@
                 android:textColor="@color/green_primary"
                 android:textSize="25sp" />
 
-            <TextView
-                android:id="@+id/species_sciName"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Species Name"
-                android:textColor="@color/green_primary"
-                android:textSize="20sp"
-                android:textStyle="italic" />
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/el_card_outlined"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- SCIENTIFIC NAME -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Scientific Name"
+                        style="@style/content2"
+                        android:textColor="@color/gray"
+                        android:textSize="12dp"/>
+
+                    <TextView android:id="@+id/species_sciName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/content2"/>
+
+                    <!-- ECOSYSTEMS -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Ecosystem"
+                        style="@style/content2"
+                        android:textColor="@color/gray"
+                        android:textSize="12dp"/>
+
+                    <TextView android:id="@+id/species_ecosystem"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/content2"/>
+
+                    <!-- HABITATS -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Habitat"
+                        style="@style/content2"
+                        android:textColor="@color/gray"
+                        android:textSize="12dp"/>
+
+                    <TextView android:id="@+id/species_habitat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/content2"/>
+
+                    <!-- ROLES -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Role in Ecosystems"
+                        style="@style/content2"
+                        android:textColor="@color/gray"
+                        android:textSize="12dp"/>
+
+                    <TextView android:id="@+id/species_role"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/content2"/>
+
+                </LinearLayout>
+
+
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/scanIdentify_again"

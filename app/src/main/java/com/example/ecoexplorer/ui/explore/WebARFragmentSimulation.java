@@ -22,7 +22,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.ecoexplorer.R;
 
-public class WebARFragment extends Fragment {
+public class WebARFragmentSimulation extends Fragment {
 
     private static final int CAMERA_PERMISSION_REQUEST = 101;
     private WebView webView;
@@ -44,7 +44,7 @@ public class WebARFragment extends Fragment {
 
         ImageView backButton = view.findViewById(R.id.back_to_explore);
         backButton.setOnClickListener(v -> {
-            NavController navController = NavHostFragment.findNavController(WebARFragment.this);
+            NavController navController = NavHostFragment.findNavController(WebARFragmentSimulation.this);
             navController.navigate(R.id.action_ARexplore_to_navigation_arexplore);
         });
 

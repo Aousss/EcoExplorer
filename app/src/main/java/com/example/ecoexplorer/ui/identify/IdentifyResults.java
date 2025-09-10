@@ -23,6 +23,9 @@ public class IdentifyResults extends Fragment {
     private ImageView imageFound;
     private TextView speciesName;
     private TextView speciesSciName;
+    private TextView speciesEcosystem;
+    private TextView speciesHabitat;
+    private TextView speciesRole;
 
     private TextView errorIdentifyMessage;
     private TextView successIdentifyMessage;
@@ -38,6 +41,9 @@ public class IdentifyResults extends Fragment {
         imageFound = view.findViewById(R.id.foundImage);
         speciesName = view.findViewById(R.id.species_nonSciName);
         speciesSciName = view.findViewById(R.id.species_sciName);
+        speciesEcosystem = view.findViewById(R.id.species_ecosystem);
+        speciesHabitat = view.findViewById(R.id.species_habitat);
+        speciesRole = view.findViewById(R.id.species_role);
 
         errorIdentifyMessage = view.findViewById(R.id.error_identify);
         successIdentifyMessage = view.findViewById(R.id.success_identify);
@@ -61,10 +67,12 @@ public class IdentifyResults extends Fragment {
 
         if (getArguments() !=null) {
             String foundImage = getArguments().getString("image_uri");
-            String originalImage = getArguments().getString("originalImage");
             String speciesNameText = getArguments().getString("detected_name");
             float scoreStr = getArguments().getFloat("detected_score", 0f);
             String speciesSciNameText = getArguments().getString("speciesSciName");
+            String speciesEcosystemText = getArguments().getString("speciesEcosystem");
+            String speciesHabitatText = getArguments().getString("speciesHabitat");
+            String speciesRoleText = getArguments().getString("speciesRole");
 
             errorIdentifyMessage.setVisibility(View.GONE);
             successIdentifyMessage.setVisibility(View.VISIBLE);
@@ -87,7 +95,6 @@ public class IdentifyResults extends Fragment {
                 successIdentifyMessage.setVisibility(View.GONE);
 
                 speciesName.setVisibility(View.GONE);
-                speciesSciName.setVisibility(View.GONE);
 
                 if (foundImage != null) {
                     imageFound.setImageURI(Uri.parse(foundImage));
@@ -100,7 +107,11 @@ public class IdentifyResults extends Fragment {
             successIdentifyMessage.setVisibility(View.VISIBLE);
 
             speciesName.setText(speciesNameText);
-//            speciesSciName.setText((int) scoreStr);
+            speciesSciName.setText(speciesSciNameText);
+            speciesEcosystem.setText(speciesEcosystemText);
+            speciesHabitat.setText(speciesHabitatText);
+            speciesRole.setText(speciesRoleText);
+
             if (foundImage != null) {
                 imageFound.setImageURI(Uri.parse(foundImage));
             }

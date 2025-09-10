@@ -12,12 +12,25 @@
         tools:layout="@layout/explore">
         <action
             android:id="@+id/action_navigation_arexplore_to_ARexplore"
-            app:destination="@id/ARexplore" />
+            app:destination="@id/ARexplore1" />
+        <action
+            android:id="@+id/action_navigation_arexplore_to_ARexplore2"
+            app:destination="@id/ARexplore2" />
     </fragment>
 
     <fragment
-        android:id="@+id/ARexplore"
-        android:name="com.example.ecoexplorer.ui.explore.WebARFragment"
+        android:id="@+id/ARexplore1"
+        android:name="com.example.ecoexplorer.ui.explore.WebARFragmentSimulation"
+        android:label="@string/explore_page"
+        tools:layout="@layout/explorer_arscene_layout">
+        <action
+            android:id="@+id/action_ARexplore_to_navigation_arexplore"
+            app:destination="@id/navigation_arexplore" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ARexplore2"
+        android:name="com.example.ecoexplorer.ui.explore.WebARFragmentSimulation"
         android:label="@string/explore_page"
         tools:layout="@layout/explorer_arscene_layout">
         <action

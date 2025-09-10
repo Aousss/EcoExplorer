@@ -17,7 +17,7 @@ import com.example.ecoexplorer.R;
 
 public class DetailsFragment extends Fragment {
 
-    private TextView speciesName, speciesDesc;
+    private TextView speciesName, speciesDesc, speciesSciName, speciesEcosystem, speciesHabitat, speciesRole;
     private ImageView speciesImage;
 
     @Nullable
@@ -28,15 +28,28 @@ public class DetailsFragment extends Fragment {
         speciesName = view.findViewById(R.id.identify_speciesName);
         speciesImage = view.findViewById(R.id.identify_speciesImage);
         speciesDesc = view.findViewById(R.id.identify_speciesDesc);
+        speciesSciName = view.findViewById(R.id.species_sciName);
+        speciesEcosystem = view.findViewById(R.id.species_ecosystem);
+        speciesHabitat = view.findViewById(R.id.species_habitat);
+        speciesRole = view.findViewById(R.id.species_role);
+
 
         if (getArguments() != null) {
             String name = getArguments().getString("name");
             int image = getArguments().getInt("image");
             String desc = getArguments().getString("desc");
+            String sciName = getArguments().getString("sciName");
+            String ecosystem = getArguments().getString("ecosystem");
+            String habitat = getArguments().getString("habitat");
+            String role = getArguments().getString("role");
 
             speciesName.setText(name);
             speciesImage.setImageResource(image);
             speciesDesc.setText(desc);
+            speciesSciName.setText(sciName);
+            speciesEcosystem.setText(ecosystem);
+            speciesHabitat.setText(habitat);
+            speciesRole.setText(role);
 
         }
 
