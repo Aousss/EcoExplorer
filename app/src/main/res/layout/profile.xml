@@ -227,22 +227,22 @@
                         android:text="email"
                         android:textColor="@color/white" />
 
-                    <TextView
-                        style="@style/content2"
-                        android:layout_width="100dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_height="wrap_content"
-                        android:text="Password"
-                        android:textSize="12dp"
-                        android:textColor="@color/gray" />
+<!--                    <TextView-->
+<!--                        style="@style/content2"-->
+<!--                        android:layout_width="100dp"-->
+<!--                        android:layout_marginTop="15dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Password"-->
+<!--                        android:textSize="12dp"-->
+<!--                        android:textColor="@color/gray" />-->
 
-                    <TextView
-                        android:id="@+id/profile_password_text"
-                        style="@style/content2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="password"
-                        android:textColor="@color/white" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/profile_password_text"-->
+<!--                        style="@style/content2"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="password"-->
+<!--                        android:textColor="@color/white" />-->
 
                     <Button
                         android:id="@+id/upload_profile_pic"
@@ -395,9 +395,8 @@
         android:layout_marginTop="22dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ActionBar_title"
-        android:src="@drawable/ic_person"
+        android:src="@drawable/ic_person_profile"
         android:background="@color/green_primary"
-        android:tint="@color/white"
         android:scaleType="center"
         app:shapeAppearance="@style/CircleImageStyle"/>
 

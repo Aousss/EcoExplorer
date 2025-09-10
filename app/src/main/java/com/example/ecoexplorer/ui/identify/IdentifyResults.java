@@ -63,21 +63,25 @@ public class IdentifyResults extends Fragment {
             String foundImage = getArguments().getString("image_uri");
             String originalImage = getArguments().getString("originalImage");
             String speciesNameText = getArguments().getString("detected_name");
-            String scoreStr = getArguments().getString("detected_score");
+            float scoreStr = getArguments().getFloat("detected_score", 0f);
             String speciesSciNameText = getArguments().getString("speciesSciName");
 
             errorIdentifyMessage.setVisibility(View.GONE);
             successIdentifyMessage.setVisibility(View.VISIBLE);
 
-            float THRESHOLD = 0.5f;
-            float score = 0f;
-            try {
-                score = Float.parseFloat(scoreStr); // convert string to float
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
+//            float THRESHOLD = 50;
+//            float score = 0;
+//            // Null-safe parsing
+//            if (scoreStr != null && !scoreStr.isEmpty()) {
+//                try {
+//                    score = Float.parseFloat(scoreStr.trim());
+//                } catch (NumberFormatException e) {
+//                    e.printStackTrace();
+//                    score = 0f; // fallback
+//                }
+//            }
 
-            if (score < THRESHOLD) {
+            if (scoreStr < 0.5f) {
                 // Show error message
                 errorIdentifyMessage.setVisibility(View.VISIBLE);
                 successIdentifyMessage.setVisibility(View.GONE);
@@ -96,9 +100,11 @@ public class IdentifyResults extends Fragment {
             successIdentifyMessage.setVisibility(View.VISIBLE);
 
             speciesName.setText(speciesNameText);
+//            speciesSciName.setText((int) scoreStr);
             if (foundImage != null) {
                 imageFound.setImageURI(Uri.parse(foundImage));
             }
+
         } else {
             String foundImage = getArguments().getString("image_uri");
             imageFound.setImageURI(Uri.parse(foundImage));
@@ -106,7 +112,6 @@ public class IdentifyResults extends Fragment {
             errorIdentifyMessage.setVisibility(View.VISIBLE);
             successIdentifyMessage.setVisibility(View.GONE);
         }
-
     }
 
     private void identifyAgain() {

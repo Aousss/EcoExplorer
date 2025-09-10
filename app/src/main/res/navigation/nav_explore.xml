@@ -19,6 +19,10 @@
         android:id="@+id/ARexplore"
         android:name="com.example.ecoexplorer.ui.explore.WebARFragment"
         android:label="@string/explore_page"
-        tools:layout="@layout/explorer_arscene_layout"/>
+        tools:layout="@layout/explorer_arscene_layout">
+        <action
+            android:id="@+id/action_ARexplore_to_navigation_arexplore"
+            app:destination="@id/navigation_arexplore" />
+    </fragment>
 
 </navigation>

@@ -221,14 +221,14 @@
                     android:gravity="left"
                     android:text="Resent Results" />
 
-                <TextView
-                    android:id="@+id/cl_results_seeAll"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:text="see all"
-                    android:textColor="@color/green_primary"
-                    android:textStyle="italic" />
+<!--                <TextView-->
+<!--                    android:id="@+id/cl_results_seeAll"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="right"-->
+<!--                    android:text="see all"-->
+<!--                    android:textColor="@color/green_primary"-->
+<!--                    android:textStyle="italic" />-->
 
             </LinearLayout>
 

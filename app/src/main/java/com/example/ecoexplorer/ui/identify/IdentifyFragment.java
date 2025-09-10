@@ -13,7 +13,6 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -27,14 +26,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoexplorer.R;
+import com.example.ecoexplorer.Utils;
 import com.example.ecoexplorer.databinding.IdentifyBinding;
-
-import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.Interpreter;
-import org.tensorflow.lite.support.common.ops.NormalizeOp;
-import org.tensorflow.lite.support.image.TensorImage;
-import org.tensorflow.lite.support.image.ops.ResizeOp;
-import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -46,11 +40,14 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.pytorch.IValue;
+import org.pytorch.Module;
+import org.pytorch.Tensor;
+import org.pytorch.torchvision.TensorImageUtils;
+
 public class IdentifyFragment extends Fragment {
 
-    private List<String> labels;
     private Uri imageUri;
-    private Interpreter tflite;
 
     private RecyclerView recyclerViewPlants, recyclerViewAnimals;
     private PlantsAdapter plantsAdapter;
@@ -61,7 +58,11 @@ public class IdentifyFragment extends Fragment {
 
     private IdentifyBinding binding;
 
-    private final int IMAGE_SIZE = 32;
+    private Module module;
+
+    // Fastai ResNet input size
+    private static final int IMAGE_SIZE = 224;
+    private static final String[] CLASS_LABELS = {"butterflies", "cicadas", "coconut palm", "daisy", "damselflies", "dragonflies", "leafhopper", "longhorn beetles", "moths", "oil palm", "pinang", "rhinoceros beetles", "sunflower", "torch ginger", "tumeric", "weevil"};
 
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<Intent> galleryLauncher;
@@ -85,7 +86,7 @@ public class IdentifyFragment extends Fragment {
 
         // Load tflite model
         loadModel();
-        labels = loadLabels(requireContext(), "mobilenet_label.txt");
+
         btnGallery.setOnClickListener(v -> openGallery());
         btnCamera.setOnClickListener(v -> openCamera());
 
@@ -131,11 +132,23 @@ public class IdentifyFragment extends Fragment {
 
         // Plants Data
         plantList = new ArrayList<>();
-        plantList.add(new Plants("Rose", R.drawable.rose));
-        plantList.add(new Plants("Sunflower", R.drawable.sunflower));
-        plantList.add(new Plants("Tulip", R.drawable.tulip));
+        plantList.add(new Plants("Coconut palm","Coconut palm descriptions", R.drawable.identify_coconut));
+        plantList.add(new Plants("Daisy","Daisy descriptions", R.drawable.identify_daisy));
+        plantList.add(new Plants("Oil palm","Oil palm descriptions", R.drawable.identify_oilpalm));
+        plantList.add(new Plants("Pinang","Pinang descriptions", R.drawable.identify_pinang));
+        plantList.add(new Plants("Sunflower","Sunflower descriptions", R.drawable.identify_sunflower));
+        plantList.add(new Plants("Tumeric","Tumeric descriptions", R.drawable.identify_tumeric));
+        plantList.add(new Plants("Torch ginger","Torch ginger descriptions", R.drawable.identify_torchginger));
 
-        plantsAdapter = new PlantsAdapter(plantList);
+        plantsAdapter = new PlantsAdapter(plantList, plants -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("name", plants.getName());
+            bundle.putString("desc", plants.getDescription());
+            bundle.putInt("image", plants.getImageResId());
+
+            NavController navController = NavHostFragment.findNavController(IdentifyFragment.this);
+            navController.navigate(R.id.action_navigation_identify_to_details, bundle);
+        });
         recyclerViewPlants.setAdapter(plantsAdapter);
     }
 
@@ -171,11 +184,72 @@ public class IdentifyFragment extends Fragment {
     }
 
     private void loadModel() {
+//        try {
+//            tflite = new Interpreter(loadModelFile(requireContext(), "model.pt"));
+//            Toast.makeText(getContext(), "Model SUCCESSFULLY loaded.", Toast.LENGTH_SHORT).show();
+//        } catch (Exception e) {
+//            Toast.makeText(getContext(), "Model FAILED to load.", Toast.LENGTH_SHORT).show();
+//            e.printStackTrace();
+//        }
         try {
-            tflite = new Interpreter(loadModelFile(requireContext(), "mobilenet.tflite"));
-            Toast.makeText(getContext(), "Model SUCCESSFULLY loaded.", Toast.LENGTH_SHORT).show();
+            module = Module.load(Utils.assetFilePath(requireContext(), "model.pt"));
+//            Toast.makeText(getContext(), "Model SUCCESSFULLY loaded.", Toast.LENGTH_SHORT).show();
+
         } catch (Exception e) {
+            e.printStackTrace();
             Toast.makeText(getContext(), "Model FAILED to load.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private Bundle classifyImage(Bitmap bitmap) {
+
+        // Resize bitmap to 224x224
+        Bitmap resized = Bitmap.createScaledBitmap(bitmap, IMAGE_SIZE, IMAGE_SIZE, true);
+
+        // Convert bitmap to Tensor with ImageNet normalization
+        Tensor inputTensor = TensorImageUtils.bitmapToFloat32Tensor(
+                resized,
+                TensorImageUtils.TORCHVISION_NORM_MEAN_RGB,
+                TensorImageUtils.TORCHVISION_NORM_STD_RGB
+        );
+
+        // Run inference
+        Tensor outputTensor = module.forward(IValue.from(inputTensor)).toTensor();
+        float[] scores = outputTensor.getDataAsFloatArray();
+
+        // Find class with highest score
+        int maxIdx = 0;
+        float maxScore = -Float.MAX_VALUE;
+        for (int i = 0; i < scores.length; i++) {
+            if (scores[i] > maxScore) {
+                maxScore = scores[i];
+                maxIdx = i;
+            }
+        }
+
+        String detectedClass = CLASS_LABELS[maxIdx];
+
+        // Put class & score in a bundle
+        Bundle resultBundle = new Bundle();
+        resultBundle.putString("detected_name", detectedClass);
+        resultBundle.putFloat("detected_score", maxScore);
+
+        return resultBundle;
+    }
+
+    @SuppressLint("Unknown")
+    private void processImageUri(@NonNull Uri uri) {
+        try (InputStream is = requireContext().getContentResolver().openInputStream(uri)) {
+            Bitmap bitmap = BitmapFactory.decodeStream(is);
+
+            // Run classification and get bundle
+            Bundle resultBundle = classifyImage(bitmap);
+            resultBundle.putString("image_uri", uri.toString());
+
+            NavController navController = NavHostFragment.findNavController(IdentifyFragment.this);
+            navController.navigate(R.id.action_navigation_identify_to_identify_result, resultBundle);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -195,91 +269,91 @@ public class IdentifyFragment extends Fragment {
         cameraLauncher.launch(intent);
     }
 
-    @SuppressLint("Unknown")
-    private void processImageUri(@NonNull Uri uri) {
-        try (InputStream is = requireContext().getContentResolver().openInputStream(uri)) {
-            Bitmap bitmap = BitmapFactory.decodeStream(is);
-
-            // 1) Ask the model what it wants
-            int inputIndex = 0;
-            int[] inputShape = tflite.getInputTensor(inputIndex).shape();   // e.g. [1, 224, 224, 3]
-            DataType inputType = tflite.getInputTensor(inputIndex).dataType(); // FLOAT32 or UINT8
-
-            int height = inputShape[1];
-            int width  = inputShape[2];
-
-            // 2) Build a TensorImage with the *model’s* input type
-            TensorImage tensorImage = new TensorImage(inputType);
-
-            // 3) Build an image processor:
-            org.tensorflow.lite.support.image.ImageProcessor.Builder procBuilder =
-                    new org.tensorflow.lite.support.image.ImageProcessor.Builder()
-                            .add(new ResizeOp(height, width, ResizeOp.ResizeMethod.BILINEAR));
-
-            if (inputType == DataType.FLOAT32) {
-                procBuilder.add(new NormalizeOp(0.0f, 1.0f / 255.0f));
-            }
-            org.tensorflow.lite.support.image.ImageProcessor imageProcessor = procBuilder.build();
-
-            tensorImage.load(bitmap);
-            tensorImage = imageProcessor.process(tensorImage);
-
-            // 4) Prepare output buffer based on model’s output tensor
-            int outputIndex = 0;
-            int[] outputShape = tflite.getOutputTensor(outputIndex).shape();   // e.g. [1, numClasses]
-            DataType outputType = tflite.getOutputTensor(outputIndex).dataType();
-
-            TensorBuffer outputBuffer = TensorBuffer.createFixedSize(outputShape, outputType);
-
-            // 5) Run inference
-            tflite.run(tensorImage.getBuffer(), outputBuffer.getBuffer().rewind());
-
-            // 6) Read results (handle both FLOAT32 and UINT8)
-            float[] probs;
-            if (outputType == DataType.FLOAT32) {
-                probs = outputBuffer.getFloatArray();
-            } else {
-                // UINT8 -> convert to float probs in [0..1]
-                int[] ints = outputBuffer.getIntArray(); // returns 0..255 for UINT8
-                probs = new float[ints.length];
-                for (int i = 0; i < ints.length; i++) probs[i] = ints[i] / 255.0f;
-            }
-
-            // 7) Argmax
-            int bestIdx = 0;
-            float bestScore = -1f;
-            for (int i = 0; i < probs.length; i++) {
-                if (probs[i] > bestScore) { bestScore = probs[i]; bestIdx = i; }
-            }
-
-            // Use labels.txt if available
-            String detected;
-            if (labels != null && bestIdx < labels.size()) {
-                detected = labels.get(bestIdx);
-            } else {
-                detected = "Class " + bestIdx;
-            }
-
-            // (Optional) Map to label names if you have labels.txt in assets
-            String label = (labels != null && bestIdx < labels.size()) ? labels.get(bestIdx) : ("Class " + bestIdx);
-
-            // After finishing detection
-            String scoreStr = String.format("%.3f", bestScore);
-
-            // Create bundle
-            Bundle bundle = new Bundle();
-            bundle.putString("detected_name", detected);
-            bundle.putString("detected_score", scoreStr);
-            bundle.putString("image_uri", uri.toString()); // send image path
-
-            // Navigate
-            NavController navController = NavHostFragment.findNavController(IdentifyFragment.this);
-            navController.navigate(R.id.action_navigation_identify_to_identify_result, bundle);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    @SuppressLint("Unknown")
+//    private void processImageUri(@NonNull Uri uri) {
+//        try (InputStream is = requireContext().getContentResolver().openInputStream(uri)) {
+//            Bitmap bitmap = BitmapFactory.decodeStream(is);
+//
+//            // 1) Ask the model what it wants
+//            int inputIndex = 0;
+//            int[] inputShape = tflite.getInputTensor(inputIndex).shape();   // e.g. [1, 224, 224, 3]
+//            DataType inputType = tflite.getInputTensor(inputIndex).dataType(); // FLOAT32 or UINT8
+//
+//            int height = inputShape[1];
+//            int width  = inputShape[2];
+//
+//            // 2) Build a TensorImage with the *model’s* input type
+//            TensorImage tensorImage = new TensorImage(inputType);
+//
+//            // 3) Build an image processor:
+//            org.tensorflow.lite.support.image.ImageProcessor.Builder procBuilder =
+//                    new org.tensorflow.lite.support.image.ImageProcessor.Builder()
+//                            .add(new ResizeOp(height, width, ResizeOp.ResizeMethod.BILINEAR));
+//
+//            if (inputType == DataType.FLOAT32) {
+//                procBuilder.add(new NormalizeOp(0.0f, 1.0f / 255.0f));
+//            }
+//            org.tensorflow.lite.support.image.ImageProcessor imageProcessor = procBuilder.build();
+//
+//            tensorImage.load(bitmap);
+//            tensorImage = imageProcessor.process(tensorImage);
+//
+//            // 4) Prepare output buffer based on model’s output tensor
+//            int outputIndex = 0;
+//            int[] outputShape = tflite.getOutputTensor(outputIndex).shape();   // e.g. [1, numClasses]
+//            DataType outputType = tflite.getOutputTensor(outputIndex).dataType();
+//
+//            TensorBuffer outputBuffer = TensorBuffer.createFixedSize(outputShape, outputType);
+//
+//            // 5) Run inference
+//            tflite.run(tensorImage.getBuffer(), outputBuffer.getBuffer().rewind());
+//
+//            // 6) Read results (handle both FLOAT32 and UINT8)
+//            float[] probs;
+//            if (outputType == DataType.FLOAT32) {
+//                probs = outputBuffer.getFloatArray();
+//            } else {
+//                // UINT8 -> convert to float probs in [0..1]
+//                int[] ints = outputBuffer.getIntArray(); // returns 0..255 for UINT8
+//                probs = new float[ints.length];
+//                for (int i = 0; i < ints.length; i++) probs[i] = ints[i] / 255.0f;
+//            }
+//
+//            // 7) Argmax
+//            int bestIdx = 0;
+//            float bestScore = -1f;
+//            for (int i = 0; i < probs.length; i++) {
+//                if (probs[i] > bestScore) { bestScore = probs[i]; bestIdx = i; }
+//            }
+//
+//            // Use labels.txt if available
+//            String detected;
+//            if (labels != null && bestIdx < labels.size()) {
+//                detected = labels.get(bestIdx);
+//            } else {
+//                detected = "Class " + bestIdx;
+//            }
+//
+//            // (Optional) Map to label names if you have labels.txt in assets
+//            String label = (labels != null && bestIdx < labels.size()) ? labels.get(bestIdx) : ("Class " + bestIdx);
+//
+//            // After finishing detection
+//            String scoreStr = String.format("%.3f", bestScore);
+//
+//            // Create bundle
+//            Bundle bundle = new Bundle();
+//            bundle.putString("detected_name", detected);
+//            bundle.putString("detected_score", scoreStr);
+//            bundle.putString("image_uri", uri.toString()); // send image path
+//
+//            // Navigate
+//            NavController navController = NavHostFragment.findNavController(IdentifyFragment.this);
+//            navController.navigate(R.id.action_navigation_identify_to_identify_result, bundle);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private MappedByteBuffer loadModelFile(Context context, String modelFileName) throws IOException {
         FileInputStream inputStream = new FileInputStream(context.getAssets().openFd(modelFileName).getFileDescriptor());
@@ -302,7 +376,6 @@ public class IdentifyFragment extends Fragment {
         }
         return labelList;
     }
-
 
     @Override
     public void onDestroyView() {

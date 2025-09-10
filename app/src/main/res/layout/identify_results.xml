@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingHorizontal="30dp"
-                android:text="ANIMALS SPECIES DETECTED!"
+                android:text="SPECIES DETECTED!"
                 android:textColor="@color/yellow_primary"
                 android:textSize="20sp" />
 

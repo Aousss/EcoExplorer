@@ -113,4 +113,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    // PyTorch
+    implementation ("org.pytorch:pytorch_android:2.1.0")
+    implementation ("org.pytorch:pytorch_android_torchvision:2.1.0")
 }

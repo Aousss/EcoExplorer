@@ -10,11 +10,15 @@ import android.webkit.PermissionRequest;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.ecoexplorer.R;
 
@@ -38,24 +42,41 @@ public class WebARFragment extends Fragment {
             loadWebAR();
         }
 
+        ImageView backButton = view.findViewById(R.id.back_to_explore);
+        backButton.setOnClickListener(v -> {
+            NavController navController = NavHostFragment.findNavController(WebARFragment.this);
+            navController.navigate(R.id.action_ARexplore_to_navigation_arexplore);
+        });
+
         return view;
     }
 
     private void loadWebAR() {
+        // Check camera permission
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(),
+                    new String[]{Manifest.permission.CAMERA}, 1);
+        }
+
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
 
         // Ensure links stay inside WebView
-//        webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
 
         // Needed for camera & WebRTC in WebView
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onPermissionRequest(final PermissionRequest request) {
-                requireActivity().runOnUiThread(() -> request.grant(request.getResources()));
+                requireActivity().runOnUiThread(() ->
+                        request.grant(request.getResources())
+                );
             }
         });
+        WebView.setWebContentsDebuggingEnabled(true);
 
         // Load your 8thWall project
         webView.loadUrl("https://ecoexplorer.8thwall.app/exoexplorer/");

@@ -16,9 +16,15 @@ import java.util.List;
 public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.PlantsViewHolder> {
 
     private List<Plants> plantList;
+    private OnItemClickListener listener;
 
-    public PlantsAdapter(List<Plants> plantList) {
+    public interface OnItemClickListener {
+        void onItemClick(Plants plant);
+    }
+
+    public PlantsAdapter(List<Plants> plantList, OnItemClickListener listener) {
         this.plantList = plantList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -34,6 +40,8 @@ public class PlantsAdapter extends RecyclerView.Adapter<PlantsAdapter.PlantsView
         Plants plant = plantList.get(position);
         holder.textPlantName.setText(plant.getName());
         holder.imagePlant.setImageResource(plant.getImageResId());
+
+        holder.itemView.setOnClickListener(v -> listener.onItemClick(plant));
     }
 
     @Override

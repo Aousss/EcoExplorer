@@ -95,7 +95,7 @@ public class ProfileFragment extends Fragment {
         fullnameText = view.findViewById(R.id.profile_fullname_text);
         ageText = view.findViewById(R.id.profile_age_text);
         emailText = view.findViewById(R.id.profile_email_text);
-        passwordText = view.findViewById(R.id.profile_password_text);
+//        passwordText = view.findViewById(R.id.profile_password_text);
 
         profileImage = view.findViewById(R.id.profile_pic);
         uploadProfilePic = view.findViewById(R.id.upload_profile_pic);
@@ -186,24 +186,25 @@ public class ProfileFragment extends Fragment {
                     String fullname = snapshot.child("fullname").getValue(String.class);
                     String email = snapshot.child("email").getValue(String.class);
                     Long age = snapshot.child("age").getValue(Long.class);
-                    String password = snapshot.child("password").getValue(String.class);
+//                    String password = snapshot.child("password").getValue(String.class);
 
                     usernameText.setText(username);
                     fullnameText.setText(fullname);
                     ageText.setText(String.valueOf(age));
                     emailText.setText(email);
 
-                    if (password != null) {
-                        passwordText.setText(password);
-                        passwordText.setTransformationMethod(new android.text.method.PasswordTransformationMethod());
-                    }
+//                    if (password != null) {
+//                        passwordText.setText(password);
+//                        passwordText.setTransformationMethod(new android.text.method.PasswordTransformationMethod());
+//                    }
 
                     String profileImageUrl = snapshot.child("profileImageUrl").getValue(String.class);
                     Glide.with(requireContext())
                             .load(profileImageUrl)
-                            .placeholder(R.drawable.ic_person) // default icon
+                            .placeholder(R.drawable.ic_person_profile) // default icon
                             .error(R.drawable.ic_close)       // fallback if failed
                             .into(profileImage);
+                    profileImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 }
             }
 

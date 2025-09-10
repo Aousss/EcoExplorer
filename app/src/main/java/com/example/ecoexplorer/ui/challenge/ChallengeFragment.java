@@ -81,7 +81,7 @@ public class ChallengeFragment extends Fragment {
         * -----------------*/
         none_results = view.findViewById(R.id.none_results);
         recyclerView_results = view.findViewById(R.id.recycler_results);
-        seeResult = view.findViewById(R.id.cl_results_seeAll);
+//        seeResult = view.findViewById(R.id.cl_results_seeAll);
         recyclerView_results.setLayoutManager(new LinearLayoutManager(getContext()));
 
         displayRecentResults();
