@@ -11,11 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.ecoexplorer.R;
+import com.example.ecoexplorer.ui.challenge.ChallengeFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -131,6 +133,9 @@ public class PlantsQuizQuestions extends Fragment {
     private void checkAnswerAndSubmit() {
         checkAnswer();
         saveScoreToUser();
+
+        NavController navController = NavHostFragment.findNavController(PlantsQuizQuestions.this);
+        navController.navigate(R.id.action_quiz_start_plants_to_navigation_challenge);
     }
 
     private void checkAnswer() {
@@ -145,7 +150,6 @@ public class PlantsQuizQuestions extends Fragment {
     }
 
     private void saveScoreToUser() {
-
 
         String uid = mAuth.getCurrentUser().getUid();
         String gameType = "quiz";
@@ -173,9 +177,5 @@ public class PlantsQuizQuestions extends Fragment {
                 .addOnFailureListener(e ->
                         Toast.makeText(getContext(), "Failed to save score", Toast.LENGTH_SHORT).show()
                 );
-
-        // Navigate to front page
-        NavController navController = NavHostFragment.findNavController(PlantsQuizQuestions.this);
-        navController.navigate(R.id.action_quiz_start_plants_to_quiz_plants);
     }
 }

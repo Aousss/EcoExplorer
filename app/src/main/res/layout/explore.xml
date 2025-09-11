@@ -96,10 +96,24 @@
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginVertical="10dp"
                         android:fontFamily="@font/poppins_regular"
-                        android:text="Make sure to have a photos of the image to run the AR simulation view"
+                        android:text="Make sure to have a photos of the image to run the AR simulation view\n\nYou can download the image by click at the button 'Download' below"
                         android:textColor="@color/white"
                         android:gravity="center"
                         android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/btnDownload"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/white"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Download"
+                        android:textAllCaps="false"
+                        android:textColor="@color/green_primary"
+                        android:textSize="16sp"
+                        app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Full" />
 
                 </LinearLayout>
 

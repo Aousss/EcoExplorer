@@ -54,8 +54,8 @@
         android:label="Quiz Questions"
         tools:layout="@layout/challenge_quiz_questions" >
         <action
-            android:id="@+id/action_quiz_start_animal_to_quiz_animal"
-            app:destination="@id/quiz_animal" />
+            android:id="@+id/action_quiz_start_animal_to_navigation_challenge"
+            app:destination="@id/navigation_challenge" />
     </fragment>
 
     <!-- PLANTS QUIZ -->
@@ -90,9 +90,10 @@
         android:name="com.example.ecoexplorer.ui.challenge.plants.PlantsQuizQuestions"
         android:label="Quiz Questions"
         tools:layout="@layout/challenge_quiz_questions" >
+
         <action
-            android:id="@+id/action_quiz_start_plants_to_quiz_plants"
-            app:destination="@id/quiz_plants" />
+            android:id="@+id/action_quiz_start_plants_to_navigation_challenge"
+            app:destination="@id/navigation_challenge" />
     </fragment>
 
     <activity

@@ -14,11 +14,8 @@
             android:id="@+id/action_navigation_profile_to_login"
             app:destination="@id/login" />
         <action
-            android:id="@+id/action_navigation_profile_to_helpAndFeedback"
-            app:destination="@id/helpAndFeedback" />
-        <action
-            android:id="@+id/action_navigation_profile_to_devInfo"
-            app:destination="@id/devInfo" />
+            android:id="@+id/action_navigation_profile_to_feedback"
+            app:destination="@id/feedback" />
     </fragment>
 
     <activity
@@ -28,14 +25,13 @@
         tools:layout="@layout/activity_login"/>
 
     <fragment
-        android:id="@+id/helpAndFeedback"
-        android:name="com.example.ecoexplorer.ui.profile.HelpAndFeedback"
+        android:id="@+id/feedback"
+        android:name="com.example.ecoexplorer.ui.profile.Feedback"
         android:label="helpAndFeedback"
-        tools:layout="@layout/profile_help_and_feedback"/>
-
-    <fragment
-        android:id="@+id/devInfo"
-        android:label="devInfo"
-        tools:layout="@layout/profile_developers_info"/>
+        tools:layout="@layout/profile_feedback">
+        <action
+            android:id="@+id/action_feedback_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
 
 </navigation>

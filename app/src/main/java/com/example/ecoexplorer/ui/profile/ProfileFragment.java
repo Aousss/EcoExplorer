@@ -53,7 +53,7 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth mAuth;
     private Uri imageUri;
     private ShapeableImageView profileImage;
-    private Button uploadProfilePic;
+    private CardView uploadProfilePic;
 
     TextView usernameText, fullnameText, ageText, emailText, passwordText;
 
@@ -95,10 +95,9 @@ public class ProfileFragment extends Fragment {
         fullnameText = view.findViewById(R.id.profile_fullname_text);
         ageText = view.findViewById(R.id.profile_age_text);
         emailText = view.findViewById(R.id.profile_email_text);
-//        passwordText = view.findViewById(R.id.profile_password_text);
 
         profileImage = view.findViewById(R.id.profile_pic);
-        uploadProfilePic = view.findViewById(R.id.upload_profile_pic);
+        uploadProfilePic = view.findViewById(R.id.btn_changeProfilePic);
 
         CardView cardViewLogin = view.findViewById(R.id.cardView_to_login);
         CardView profileInfoContainer = view.findViewById(R.id.user_profile_info_container);
@@ -123,12 +122,9 @@ public class ProfileFragment extends Fragment {
             // if guests
             // Set the cardView to login visible
             cardViewLogin.setVisibility(View.VISIBLE);
-
-            // Set the logout button to gone
             logoutLayout.setVisibility(View.GONE);
-
-            // Set the profile info container to gone
             profileInfoContainer.setVisibility(View.GONE);
+            uploadProfilePic.setVisibility(View.GONE);
 
             userViewModel.getUsername().observe(getViewLifecycleOwner(), username -> {
                 binding.username.setText("Guest");
@@ -141,23 +137,10 @@ public class ProfileFragment extends Fragment {
             navController.navigate(R.id.action_navigation_profile_to_login);
         });
 
-        ImageView arrowHelpAndFeedback = view.findViewById(R.id.arrowHelpFeedback);
-        LinearLayout helpAndFeedback = view.findViewById(R.id.help_and_feedback_container);
-        LinearLayout expandHelpAndFeedback = view.findViewById(R.id.expand_help_and_feedback);
-        helpAndFeedback.setOnClickListener(v-> {
-            if (expandHelpAndFeedback.getVisibility() == View.GONE) {
-                expandHelpAndFeedback.setVisibility(View.VISIBLE);
-                arrowHelpAndFeedback.setRotation(90);
-            } else {
-                expandHelpAndFeedback.setVisibility(View.GONE);
-                arrowHelpAndFeedback.setRotation(0);
-            }
-        });
-
-        LinearLayout devInfo = view.findViewById(R.id.dev_info_container);
-        devInfo.setOnClickListener(view1 -> {
+        LinearLayout helpAndFeedback = view.findViewById(R.id.feedback_container);
+        helpAndFeedback.setOnClickListener(view1 -> {
             NavController navController = NavHostFragment.findNavController(ProfileFragment.this);
-            navController.navigate(R.id.action_navigation_profile_to_devInfo);
+            navController.navigate(R.id.action_navigation_profile_to_feedback);
         });
     }
 
@@ -202,9 +185,9 @@ public class ProfileFragment extends Fragment {
                     Glide.with(requireContext())
                             .load(profileImageUrl)
                             .placeholder(R.drawable.ic_person_profile) // default icon
-                            .error(R.drawable.ic_close)       // fallback if failed
+                            .error(R.drawable.ic_close)
                             .into(profileImage);
-                    profileImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
             }
 

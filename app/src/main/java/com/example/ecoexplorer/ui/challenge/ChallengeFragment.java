@@ -81,8 +81,9 @@ public class ChallengeFragment extends Fragment {
         * -----------------*/
         none_results = view.findViewById(R.id.none_results);
         recyclerView_results = view.findViewById(R.id.recycler_results);
-//        seeResult = view.findViewById(R.id.cl_results_seeAll);
-        recyclerView_results.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView_results.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false));
 
         displayRecentResults();
 
@@ -99,6 +100,7 @@ public class ChallengeFragment extends Fragment {
             showNoAccountState();
             return;
         }
+
         String userID = currentUser.getUid();
         String gameType = "quiz";
 
@@ -117,7 +119,6 @@ public class ChallengeFragment extends Fragment {
                 if (!snapshot.exists()) {
                     none_results.setVisibility(View.VISIBLE);
                     recyclerView_results.setVisibility(View.GONE);
-                    seeResult.setVisibility(View.GONE);
                     return;
                 }
 
@@ -126,11 +127,9 @@ public class ChallengeFragment extends Fragment {
                     String categoryName = categorySnapshot.getKey();
 
                     Integer score = categorySnapshot.child("score").getValue(Integer.class);
-                    Integer total = categorySnapshot.child("total").getValue(Integer.class);
-                    String date = categorySnapshot.child("date").getValue(String.class);
 
-                    if (score != null && total != null && date != null) {
-                        Results result = new Results(categoryName, score, total, date);
+                    if (score != null) {
+                        Results result = new Results(categoryName, score);
                         resultLists.add(result);
                     }
                 }
@@ -148,12 +147,12 @@ public class ChallengeFragment extends Fragment {
     }
 
     private void showNoAccountState() {
+
         // Show a message on screen
         none_results.setVisibility(View.VISIBLE);
         none_results.setText("⚠ Please log in or check your internet connection.");
 
         recyclerView_results.setVisibility(View.GONE);
-        seeResult.setVisibility(View.GONE);
 
         // Disable category clicks
         animalCategory.setOnClickListener(v -> showErrorState());
@@ -179,7 +178,7 @@ public class ChallengeFragment extends Fragment {
         /*--------
         * RESULTS
         * -------*/
-        resultAdapter.notifyDataSetChanged(); // already inside onDataChange()
+        resultAdapter.notifyDataSetChanged();
     }
 
     public void onCancelled(@NonNull DatabaseError error) {

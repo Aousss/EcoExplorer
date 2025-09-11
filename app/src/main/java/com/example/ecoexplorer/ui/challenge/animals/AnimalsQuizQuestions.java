@@ -133,6 +133,10 @@ public class AnimalsQuizQuestions extends Fragment {
     private void checkAnswerAndSubmit() {
         checkAnswer();
         saveScoreToUser();
+
+        // Navigate to front page
+        NavController navController = NavHostFragment.findNavController(AnimalsQuizQuestions.this);
+        navController.navigate(R.id.action_quiz_start_animal_to_navigation_challenge);
     }
 
     private void checkAnswer() {
@@ -174,8 +178,5 @@ public class AnimalsQuizQuestions extends Fragment {
                         Toast.makeText(getContext(), "Failed to save score", Toast.LENGTH_SHORT).show()
                 );
 
-        // Navigate to front page
-        NavController navController = NavHostFragment.findNavController(AnimalsQuizQuestions.this);
-        navController.navigate(R.id.action_quiz_start_animal_to_quiz_animal);
     }
 }

@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/ARexplore2"
-        android:name="com.example.ecoexplorer.ui.explore.WebARFragmentSimulation"
+        android:name="com.example.ecoexplorer.ui.explore.WebARFragmentLearn"
         android:label="@string/explore_page"
         tools:layout="@layout/explorer_arscene_layout">
         <action

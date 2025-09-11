@@ -40,8 +40,9 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
         Results result = resultsList.get(position);
 
         holder.quizName.setText(formatQuizName(result.getQuizName()));
-        holder.score.setText(result.getScore() + " / " + result.getTotal());
-        holder.date.setText(result.getDate());
+//        holder.score.setText(result.getScore());
+        holder.score.setText(String.valueOf(result.getScore()));
+
     }
 
     @Override
@@ -50,19 +51,18 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.ResultsV
     }
 
     public static class ResultsViewHolder extends RecyclerView.ViewHolder {
-        TextView quizName, score, date;
+        TextView quizName, score;
 
         public ResultsViewHolder(@NonNull View itemView) {
             super(itemView);
             quizName = itemView.findViewById(R.id.tv_quiz_name);
             score = itemView.findViewById(R.id.tv_score);
-            date = itemView.findViewById(R.id.tv_date);
         }
     }
 
     // Optional: make quiz name more readable
     private String formatQuizName(String rawName) {
         if (rawName == null) return "";
-        return rawName.replace("_", " ").toUpperCase(); // e.g. "animal_quiz" → "ANIMAL QUIZ"
+        return rawName.replace("_", " ").toUpperCase();
     }
 }
