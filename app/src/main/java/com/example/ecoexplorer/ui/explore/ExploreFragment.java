@@ -3,6 +3,7 @@ package com.example.ecoexplorer.ui.explore;
 import static androidx.core.content.ContextCompat.getSystemService;
 
 import android.app.DownloadManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,23 +55,11 @@ public class ExploreFragment extends Fragment {
         Button downloadAssets = view.findViewById(R.id.btnDownload);
         downloadAssets.setOnClickListener(v -> {
             String url = "https://drive.google.com/file/d/18MoffeCKcQU4FO8jeEJWue9o4m_TipO_/view?usp=sharing";
-            downloadFile(url, "image.pdf");
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            v.getContext().startActivity(intent);
         });
 
         return view;
-    }
-
-    private void downloadFile(String url, String fileName) {
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        request.setTitle("Downloading " + fileName);
-        request.setDescription("Please wait...");
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
-
-        Toast.makeText(requireContext(), "Downloading...", Toast.LENGTH_SHORT).show();
-
-        DownloadManager manager = (DownloadManager) requireContext().getSystemService(Context.DOWNLOAD_SERVICE);
-        manager.enqueue(request);
     }
 
     @Override

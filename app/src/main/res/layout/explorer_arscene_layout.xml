@@ -15,12 +15,28 @@
 
         <ImageView
             android:id="@+id/back_to_explore"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:src="@drawable/ic_close"
+            app:tint="@color/white"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/guide"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_help"
             app:tint="@color/white"/>
 
     </LinearLayout>

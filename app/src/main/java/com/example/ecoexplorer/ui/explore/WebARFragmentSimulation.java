@@ -14,6 +14,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.ecoexplorer.R;
+import com.example.ecoexplorer.ui.challenge.ChallengeFragment;
 
 public class WebARFragmentSimulation extends Fragment {
 
@@ -46,6 +48,15 @@ public class WebARFragmentSimulation extends Fragment {
         backButton.setOnClickListener(v -> {
             NavController navController = NavHostFragment.findNavController(WebARFragmentSimulation.this);
             navController.navigate(R.id.action_ARexplore_to_navigation_arexplore);
+        });
+
+        ImageView guideButton = view.findViewById(R.id.guide);
+        guideButton.setOnClickListener(v -> {
+            new AlertDialog.Builder(requireContext())
+                    .setTitle("AR Guide")
+                    .setMessage("Please find the Image downloaded, then point the camera to that image.")
+                    .setNegativeButton("Close", (dialog, which) -> dialog.dismiss())
+                    .show();
         });
 
         return view;
