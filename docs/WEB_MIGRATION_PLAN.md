@@ -563,11 +563,18 @@ npm run build      # production build into web/dist
 - [x] Verified in Edge at 390 px, light and dark: fact loads and changes, Learn More and Back, offline/online toggle, all 3 cards navigate, no overflow
 - ⚠️ Fact 01's image doesn't load: Firebase Storage returns HTTP 402 (see Risks). The image also shows a beetle (`categories/beetle.jpeg`) for a butterfly fact
 
-### Phase 5: Identify
-- [ ] `species.json` holding all 16 species (fixes bug 7)
-- [ ] Plant and insect carousels, plus `/species/:id`
-- [ ] Image capture/upload, Web Worker inference, `/identify/result`
-- [ ] Load the model only when Identify is first opened; show a loading/progress state
+### Phase 5: Identify ✅ (done 2026-10-30)
+- [x] `src/data/species.json`: all 16 species, **generated from `IdentifyFragment.java`** (`plantList`, `animalsList` and `SPECIES_INFO` were checked to be identical), each mapped to its model class index (fixes bug 7)
+- [x] `/identify`: **Take Photo** (opens the camera on phones via `capture="environment"`) and **Select From Gallery**; Plants (7) and Animals (9) carousels → `/species/:id`; a note saying which species it recognises
+- [x] AI runs in a **Web Worker** (`src/ml/`) with onnxruntime-web (WASM, single thread). The model starts downloading when Identify opens, with a progress bar, and is kept in Cache Storage afterwards. Retry if the download fails
+- [x] Preprocessing matches training: centre-crop, high-quality resize to 224, ImageNet normalisation (fixes bug 8); softmax before the 0.5 threshold (fixes bug 4)
+- [x] `/identify/result`: your photo, "Species detected!" with % match, the four info fields, "Read more", other possibilities (≥ 5%), and **Take Another Photo**. If the page is opened directly (no photo), it asks for a new one
+- [x] `/species/:id`: photo, Plant/Animal tag, description and info; unknown ids handled
+- [x] **Verified:**
+  - In Edge, dev and production builds: 16/16 species photos correct (matches the Python test), about 140 ms per photo after loading, upload → result → another photo → read more, carousels, direct-open and unknown-id cases. Light and dark, no overflow, no console errors or warnings.
+  - Production bundle: worker 77 KB, WASM runtime 14.8 MB (3.9 MB gzipped), model 44.7 MB.
+- ⚠️ As expected from Phase 1, non-species photos (rose, tulip, a diagram, the app logo) are still matched at 100% to some species. The real fix is retraining with an "other" class
+- ⚠️ `rhinoceros-beetle.jpg` has a visible **iStock watermark**, and most species photos are small web images with unknown licences. Replace them with licensed photos (e.g. Wikimedia Commons) before publishing
 
 ### Phase 6: Challenge
 - [ ] `/challenge`: categories and recent results (`users/{uid}/results/quiz`)
