@@ -284,6 +284,7 @@ Storage: profile_pictures/{uid}.jpg
 
 | # | Severity | Bug | Location | Web fix |
 |---|---|---|---|---|
+| 0 | 🔴 Critical | **Database rules allow anyone to read `/users`** without logging in (found 2026-10-30). Combined with bug 1, every user's email and password is exposed | Firebase console rules | Deploy [database.rules.json](../database.rules.json) (Phase 0) |
 | 1 | 🔴 High | **Passwords are saved in plain text** to `users/{uid}/password` | [RegisterActivity.java:674](../app/src/main/java/com/example/ecoexplorer/ui/profile/RegisterActivity.java#L674), [LoginActivity.java:330](../app/src/main/java/com/example/ecoexplorer/ui/profile/LoginActivity.java#L330) | Don't write it, delete the existing values, rely on Firebase Auth |
 | 2 | 🟠 Medium | **Quiz score is double-counted.** `checkAnswer()` runs on both Next and Previous | `*QuizQuestions.checkAnswer()` | Store answers in an array and calculate the score once at submit |
 | 3 | 🟠 Medium | **Username uniqueness check doesn't work.** It checks `users/{username}`, but data is keyed by uid | [RegisterActivity.java:657](../app/src/main/java/com/example/ecoexplorer/ui/profile/RegisterActivity.java#L657) | Add a `usernames/{username} → uid` index |
@@ -491,9 +492,17 @@ flowchart LR
 ```
 
 ### Phase 0: Firebase setup
-- [ ] Register a **Web app** in Firebase project `ecoexplorer-u2001264` and copy its config into `web/.env`
-- [ ] Add the hosting domain(s) to **Auth → Settings → Authorized domains**
-- [ ] Review the Realtime Database rules, for example:
+- [x] Register a **Web app** in Firebase project `ecoexplorer-u2001264` and copy its config into `web/.env` (done 2026-10-30; `.env` is git-ignored)
+- [ ] Add the hosting domain(s) to **Auth → Settings → Authorized domains** (`localhost` works by default)
+- [ ] ⚠️ **Urgent: the live database is currently publicly readable.** On 2026-10-30, unauthenticated reads of `/users`, `/funfacts` and `/quizzes` all returned HTTP 200, so anyone with the database URL (it's inside the APK) can download every user's email and plain-text password.
+- [ ] Deploy the prepared rules: [database.rules.json](../database.rules.json) and [storage.rules](../storage.rules). After `firebase login --reauth`, run `firebase deploy --only database,storage`, or paste them into the console. First compare them with the rules currently in the console.
+  - Owners only can read and write `users/{uid}`. Reading a key that **doesn't exist** stays allowed, so the Android app's existing username check (`users/{username}`, made before login) keeps working.
+  - `funfacts` and `quizzes` are public read-only. The new `usernames/{name} → uid` index is public read and claim-once.
+  - Storage: anyone can read profile pictures; only the owner can write `profile_pictures/{uid}.jpg` (image, under 5 MB).
+- [ ] Delete the existing `users/*/password` values. Then update the Android `LoginActivity` and `RegisterActivity` to stop writing them, and add a rule that blocks `password` writes.
+- [ ] Optional: backfill `usernames/` for existing users, so the web uniqueness check also covers accounts created on Android.
+
+Example rules (the deployed version is in `database.rules.json`):
   ```json
   {
     "rules": {
@@ -532,11 +541,16 @@ npm run dev        # http://localhost:5173
 npm run build      # production build into web/dist
 ```
 
-### Phase 3: Auth and Profile
-- [ ] `AuthContext` (user, profile, loading)
-- [ ] `/login`, `/register`, `/forgot-password`, guest mode
-- [ ] `/profile`: info, avatar upload to Storage, logout, feedback link
-- [ ] Fix bugs 1, 3 and 5
+### Phase 3: Auth and Profile ✅ (done 2026-10-30)
+- [x] `src/firebase.ts` (config from `.env`) and `AuthContext` (user, live `users/{uid}` profile, loading)
+- [x] `/login`, `/register`, `/forgot-password`, "Continue as Guest". After login or register, the user goes back to the page that sent them (`state.from`)
+- [x] `/profile`: guest view with a sign-in card; logged-in view with info, profile picture upload to Storage, Help & Feedback and Log out
+- [x] `/feedback`: the Google Form embedded, with an "open in new tab" fallback
+- [x] Bug 1: the web app never writes passwords to the database
+- [x] Bug 3: `usernames/{name}` index; it degrades gracefully until the rules are deployed
+- [x] Bug 5: there's no separate username cache; it comes from the auth state
+- [x] Verified in Edge at 390 px, light and dark: guest profile, login (a wrong password shows "Incorrect email or password." from real Firebase Auth), register validation, forgot password, the feedback form loads. No unexpected console errors
+- [ ] **Not yet tested:** the logged-in profile and picture upload, and a real registration (needs a real account; not done, to avoid writing test data to the live database)
 
 ### Phase 4: Home
 - [ ] Greeting (guest or username), online/offline badge
