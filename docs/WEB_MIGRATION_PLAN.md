@@ -496,6 +496,7 @@ flowchart LR
 - [ ] Add the hosting domain(s) to **Auth → Settings → Authorized domains** (`localhost` works by default)
 - [ ] ⚠️ **Urgent: the live database is currently publicly readable.** On 2026-10-30, unauthenticated reads of `/users`, `/funfacts` and `/quizzes` all returned HTTP 200, so anyone with the database URL (it's inside the APK) can download every user's email and plain-text password.
 - [ ] Deploy the prepared rules in [database.rules.json](../database.rules.json). After `firebase login --reauth`, run `firebase deploy --only database`, or paste them into the console. First compare them with the rules currently in the console.
+  - Tested in the Database emulator (2026-10-30): guests get 401 on `/users` and on writes to `/quizzes`, 200 on `/funfacts`.
   - Owners only can read and write `users/{uid}`. Reading a key that **doesn't exist** stays allowed, so the Android app's existing username check (`users/{username}`, made before login) keeps working.
   - `funfacts` and `quizzes` are public read-only. The new `usernames/{name} → uid` index is public read and claim-once.
   - `users/{uid}/profileImageUrl` must be a string under 150,000 characters (fits the 256 px data-URL pictures).
@@ -576,11 +577,28 @@ npm run build      # production build into web/dist
 - ⚠️ As expected from Phase 1, non-species photos (rose, tulip, a diagram, the app logo) are still matched at 100% to some species. The real fix is retraining with an "other" class
 - ⚠️ `rhinoceros-beetle.jpg` has a visible **iStock watermark**, and most species photos are small web images with unknown licences. Replace them with licensed photos (e.g. Wikimedia Commons) before publishing
 
-### Phase 6: Challenge
-- [ ] `/challenge`: categories and recent results (`users/{uid}/results/quiz`)
-- [ ] `/challenge/:category`: intro and last score
-- [ ] `/challenge/:category/quiz`: one generic `<Quiz>` component (fixes bugs 2 and 6)
-- [ ] Save `{score, total, date, time}` in the same format as Android
+### Phase 6: Challenge ✅ (done 2026-10-30)
+- [x] `/challenge`: Plants and Animals categories (icons converted from `plants_icon.xml` / `bugs_icon.xml`), live **Recent Results** from `users/{uid}/results/quiz`, and a log-in note for guests
+- [x] `/challenge/:category` (login required): the Quiz Challenge card with the recent score and **Start**, which merges `AnimalFragment` with the quiz intro. Image Match, Puzzle and Memory Card are shown as "Coming soon"; they're listed on Android too but were never built
+- [x] `/challenge/:category/quiz` (login required, no bottom nav): one `<Quiz>` for both categories (fixes bug 6)
+  - Answers are kept per question and scored once on submit (fixes bug 2)
+  - Asks before leaving mid-quiz or submitting with blanks
+  - Summary screen with the score, a review of each answer (✓/✗ and the correct answer), Play again and Back to Challenge
+- [x] Saves `{score, total, date: yyyy-MM-dd, time: HH:mm:ss}` to `users/{uid}/results/quiz/{category}`, the same format Android reads
+- [x] `<RequireAuth>` sends guests to `/login` and returns them to the page they wanted
+- [x] **Verified end to end against the Firebase emulators**, with real rules and no live data touched:
+  - Guest gate → register → quiz (Q1 ✓, Q2 ✓, back and forward, Q3 ✗, Q4 ✓, Q5 blank) → **3/5**, saved in the Android format with no password field
+  - Results show on Challenge and category pages; profile picture saved as a 19 KB data URL and shown on Profile and Home
+  - Duplicate username rejected; logging in returns to the protected quiz
+  - No console errors
+
+**Local testing with the Firebase emulators** (fake Auth and Database on your PC; needs Java, which is installed):
+```
+firebase emulators:start --only "auth,database"   # repo root; keep this terminal open
+node tools/seed-emulator.mjs                      # repo root, second terminal: loads quizzes + fun facts
+cd web && npm run dev:emulator                    # third terminal: app at http://localhost:5173
+```
+Emulator UI (see the test users and data): http://127.0.0.1:4000. Data is wiped when the emulators stop. Use the quotes around `"auth,database"` in PowerShell.
 
 ### Phase 7: Explore (AR)
 - [ ] Two AR cards that open the 8th Wall URLs
