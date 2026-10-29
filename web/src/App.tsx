@@ -6,6 +6,9 @@ import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import FunFactDetail from './pages/home/FunFactDetail'
 import Home from './pages/home/Home'
+import Identify from './pages/identify/Identify'
+import IdentifyResult from './pages/identify/IdentifyResult'
+import SpeciesDetail from './pages/identify/SpeciesDetail'
 import Feedback from './pages/profile/Feedback'
 import Profile from './pages/profile/Profile'
 
@@ -28,27 +31,9 @@ export default function App() {
         />
 
         {/* Identify – nav_identify.xml */}
-        <Route
-          path="identify"
-          element={
-            <Placeholder title="Identify" phase={5} replaces="IdentifyFragment"
-              features={['Plant and insect lists', 'Take photo or choose from gallery', 'AI identification in the browser']} />
-          }
-        />
-        <Route
-          path="identify/result"
-          element={
-            <Placeholder title="Result" phase={5} replaces="IdentifyResults" back
-              features={['Detected species and confidence', 'Identify again']} />
-          }
-        />
-        <Route
-          path="species/:id"
-          element={
-            <Placeholder title="Species" phase={5} replaces="DetailsFragment" back
-              features={['Description, scientific name, ecosystem, habitat, role']} />
-          }
-        />
+        <Route path="identify" element={<Identify />} />
+        <Route path="identify/result" element={<IdentifyResult />} />
+        <Route path="species/:id" element={<SpeciesDetail />} />
 
         {/* Challenge – nav_challenge.xml */}
         <Route
