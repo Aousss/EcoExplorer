@@ -1,6 +1,11 @@
 import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
 import Placeholder from './pages/Placeholder'
+import ForgotPassword from './pages/auth/ForgotPassword'
+import Login from './pages/auth/Login'
+import Register from './pages/auth/Register'
+import Feedback from './pages/profile/Feedback'
+import Profile from './pages/profile/Profile'
 
 // Route map from docs/WEB_MIGRATION_PLAN.md §8. Each Placeholder is replaced by its real page in a later phase.
 export default function App() {
@@ -83,35 +88,11 @@ export default function App() {
         />
 
         {/* Profile & auth – nav_profile.xml + auth activities */}
-        <Route
-          path="profile"
-          element={
-            <Placeholder title="Profile" phase={3} replaces="ProfileFragment"
-              features={['User info and profile picture', 'Help & feedback', 'Log out']} />
-          }
-        />
-        <Route
-          path="feedback"
-          element={<Placeholder title="Help & Feedback" phase={3} replaces="Feedback" back features={['Feedback form']} />}
-        />
-        <Route
-          path="login"
-          element={
-            <Placeholder title="Log in" phase={3} replaces="LoginActivity" back
-              features={['Email and password', 'Continue as guest']} />
-          }
-        />
-        <Route
-          path="register"
-          element={<Placeholder title="Register" phase={3} replaces="RegisterActivity" back features={['Create an account']} />}
-        />
-        <Route
-          path="forgot-password"
-          element={
-            <Placeholder title="Forgot password" phase={3} replaces="ForgotPasswordActivity" back
-              features={['Send password reset email']} />
-          }
-        />
+        <Route path="profile" element={<Profile />} />
+        <Route path="feedback" element={<Feedback />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
 
         <Route
           path="*"

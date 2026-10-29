@@ -1,0 +1,21 @@
+.form {
+  display: block;
+  width: calc(100% - 32px);
+  height: 70dvh;
+  margin: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.fallback {
+  margin: 0 16px;
+  color: var(--text-muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.fallback a {
+  color: var(--green-tertiary);
+  font-weight: 600;
+}
