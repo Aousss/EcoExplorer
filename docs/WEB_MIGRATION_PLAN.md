@@ -513,12 +513,24 @@ flowchart LR
 - [x] Predictions match: identical top-1 on 19 test images, max logit difference 6e-5. All 17 in-class images were classified correctly (they may be training images, so this isn't a true accuracy figure)
 - [x] Decide whether the model outputs logits or probabilities: **logits** (no softmax in `model.pt`), so the web app must apply softmax
 
-### Phase 2: Scaffold and app shell
-- [ ] `npm create vite@latest web -- --template react-ts`
-- [ ] Add `react-router-dom`, `firebase`, `onnxruntime-web`
-- [ ] Layout: header, `<BottomNav>` with the centre camera button, hide the nav on quiz/AR pages
-- [ ] Theme tokens from `colors.xml` (`#01331a`, `#1b3f23`, `#58761c`, `#f8b711`, …)
-- [ ] Copy images (`identify_*.jpg`, `ar_*.png`, logo) to `web/public/`
+### Phase 2: Scaffold and app shell ✅ (done 2026-10-29)
+- [x] Vite 8 + React 19 + TypeScript 7 project in `web/`
+- [x] Added `react-router-dom` 7, `firebase` 13, `onnxruntime-web` 1.31
+- [x] Layout: phone-width column (max 480 px, centred on desktop), `<BottomNav>` with the centre camera button, nav hidden on the quiz and auth screens, `<PageHeader>` with back arrow
+- [x] Theme tokens from `colors.xml`, with dark mode from the night colours (follows the system setting)
+- [x] Icons converted from the Android vector drawables; app icons (192/512/maskable/Apple) and `logo.svg` generated from the mipmaps and `ecoecplorer_full_logo.xml`
+- [x] Images copied to `web/public/images/species/` (16, renamed by species) and `web/public/images/ar/`
+- [x] Every route from §8 exists, with a placeholder page that says which phase builds it
+- [x] `web/.env.example` with the Firebase values known from `google-services.json` (API key and App ID still needed, see Phase 0)
+- [x] Verified: `npm run build` passes; at 390 px wide there's no horizontal overflow in light or dark mode; tabs, active state and the camera button navigate correctly
+
+**Run it:**
+```
+cd web
+npm install        # first time only
+npm run dev        # http://localhost:5173
+npm run build      # production build into web/dist
+```
 
 ### Phase 3: Auth and Profile
 - [ ] `AuthContext` (user, profile, loading)
