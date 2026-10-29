@@ -13,3 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Python tooling (model conversion)
+/tools/.venv
+__pycache__/
