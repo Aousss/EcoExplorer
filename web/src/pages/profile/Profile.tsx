@@ -1,7 +1,7 @@
 import { useRef, useState, type ChangeEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import Avatar from '../../components/Avatar'
 import PageHeader from '../../components/PageHeader'
-import { PersonIcon } from '../../components/icons'
 import { useAuth } from '../../context/AuthContext'
 import { errorMessage, logout, uploadProfilePicture } from '../../lib/account'
 import styles from './Profile.module.css'
@@ -43,9 +43,7 @@ export default function Profile() {
       <PageHeader title="Profile" />
 
       <section className={styles.identity}>
-        <div className={styles.avatar}>
-          {profile?.profileImageUrl ? <img src={profile.profileImageUrl} alt="" /> : <PersonIcon />}
-        </div>
+        <Avatar src={profile?.profileImageUrl} className={styles.avatar} />
         <p className={styles.name}>{displayName}</p>
 
         {user && (

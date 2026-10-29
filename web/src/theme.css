@@ -83,6 +83,10 @@ img {
   display: block;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 button {
   font: inherit;
   color: inherit;
