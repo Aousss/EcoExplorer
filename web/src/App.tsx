@@ -4,6 +4,8 @@ import Placeholder from './pages/Placeholder'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
+import FunFactDetail from './pages/home/FunFactDetail'
+import Home from './pages/home/Home'
 import Feedback from './pages/profile/Feedback'
 import Profile from './pages/profile/Profile'
 
@@ -13,24 +15,8 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         {/* Home – nav_home.xml */}
-        <Route
-          index
-          element={
-            <Placeholder
-              title="EcoExplorer"
-              phase={4}
-              replaces="HomeFragment"
-              features={['Greeting (guest or username)', 'Online / offline badge', 'Random fun fact', 'Shortcut cards']}
-            />
-          }
-        />
-        <Route
-          path="funfacts/:id"
-          element={
-            <Placeholder title="Fun Fact" phase={4} replaces="FunFactsDetailFragment" back
-              features={['Fact text, description, image and source']} />
-          }
-        />
+        <Route index element={<Home />} />
+        <Route path="funfacts/:id" element={<FunFactDetail />} />
 
         {/* Explore – nav_explore.xml */}
         <Route
