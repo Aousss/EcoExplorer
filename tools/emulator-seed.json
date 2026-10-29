@@ -1,0 +1,134 @@
+{
+  "quizzes": {
+    "animals": {
+      "q1": {
+        "answer": "Bat",
+        "choices": [
+          "Bat",
+          "Flying squirrel",
+          "Eagle",
+          "Penguin"
+        ],
+        "questionText": "Which mammal is capable of true flight?"
+      },
+      "q2": {
+        "answer": "Cheetah",
+        "choices": [
+          "Lion",
+          "Cheetah",
+          "Horse",
+          "Tiger"
+        ],
+        "questionText": "What is the fastest land animal?"
+      },
+      "q3": {
+        "answer": "Camel",
+        "choices": [
+          "Horse",
+          "Camel",
+          "Donkey",
+          "Goat"
+        ],
+        "questionText": "Which animal is known as the \"ship of the desert\"?"
+      },
+      "q4": {
+        "answer": "Reptile",
+        "choices": [
+          "Mammals",
+          "Amphibian",
+          "Reptile",
+          "Fish"
+        ],
+        "questionText": "What type of animal is a Komodo dragon?"
+      },
+      "q5": {
+        "answer": "Ostrich",
+        "choices": [
+          "Ostrich",
+          "Eagle",
+          "Emu",
+          "Parrot"
+        ],
+        "questionText": "Which bird is the largest in the world?"
+      }
+    },
+    "plants": {
+      "q1": {
+        "answer": "Hibiscus",
+        "choices": [
+          "Rose",
+          "Bourgenvilla",
+          "Hibiscus",
+          "Potato"
+        ],
+        "questionText": "What is Malaysia national flower?"
+      },
+      "q2": {
+        "answer": "Mimosa pudica",
+        "choices": [
+          "Aloe vera",
+          "Mimosa pudica",
+          "Cactus",
+          "Sunflower"
+        ],
+        "questionText": "Which plant is known as the \"touch-me-not\" because its leaves fold when touched?"
+      },
+      "q3": {
+        "answer": "Merbau",
+        "choices": [
+          "Teak",
+          "Bamboo",
+          "Rubber tree",
+          "Merbau"
+        ],
+        "questionText": "Which tree is the national tree of Malaysia?"
+      },
+      "q4": {
+        "answer": "Rafflesia",
+        "choices": [
+          "Rafflesia",
+          "Hibiscus",
+          "Lotus",
+          "Orchid"
+        ],
+        "questionText": "Which plant is famous for its giant flower, the largest in the world?"
+      },
+      "q5": {
+        "answer": "Africa",
+        "choices": [
+          "Asia",
+          "Africa",
+          "Europe",
+          "South America"
+        ],
+        "questionText": "The baobab tree is mainly found on which continent?"
+      }
+    }
+  },
+  "funfacts": {
+    "01": {
+      "description": "Butterflies have special sensors on their feet that allow them to taste plants and detect if they are safe for laying eggs.",
+      "imageUrl": "https://firebasestorage.googleapis.com/v0/b/ecoexplorer-u2001264.firebasestorage.app/o/categories%2Fbeetle.jpeg?alt=media&token=06612a2b-4316-4b40-84b8-8f18e76c76ed",
+      "source": "https://www.nationalgeographic.com/animals/invertebrates/facts/butterflies",
+      "text": "Butterflies taste with their feet."
+    },
+    "02": {
+      "text": "Some moths don’t have mouths and live only to reproduce."
+    },
+    "03": {
+      "text": "The Amazon rainforest produces about 20% of the world’s oxygen."
+    },
+    "04": {
+      "text": "A group of flamingos is called a “flamboyance.”"
+    },
+    "05": {
+      "text": "Sloths can hold their breath longer than dolphins—up to 40 minutes!"
+    },
+    "06": {
+      "text": "Bamboo can grow up to 91 cm (about 3 feet) in a single day."
+    },
+    "07": {
+      "text": "Sea otters hold hands while sleeping to avoid drifting apart."
+    }
+  }
+}

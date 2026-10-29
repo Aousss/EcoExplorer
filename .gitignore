@@ -17,3 +17,6 @@ local.properties
 # Python tooling (model conversion)
 /tools/.venv
 __pycache__/
+
+# Firebase CLI / emulator logs
+*-debug.log

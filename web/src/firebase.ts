@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-import { getDatabase } from 'firebase/database'
+import { connectAuthEmulator, getAuth } from 'firebase/auth'
+import { connectDatabaseEmulator, getDatabase } from 'firebase/database'
 
 // Same Firebase project as the Android app (see web/.env.example)
 const app = initializeApp({
@@ -16,3 +16,9 @@ const app = initializeApp({
 
 export const auth = getAuth(app)
 export const db = getDatabase(app)
+
+// `npm run dev:emulator` uses local test data instead of the live project (see firebase.json)
+if (import.meta.env.VITE_USE_EMULATORS === 'true') {
+  connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true })
+  connectDatabaseEmulator(db, '127.0.0.1', 9000)
+}
