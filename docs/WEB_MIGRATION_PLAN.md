@@ -552,10 +552,15 @@ npm run build      # production build into web/dist
 - [x] Verified in Edge at 390 px, light and dark: guest profile, login (a wrong password shows "Incorrect email or password." from real Firebase Auth), register validation, forgot password, the feedback form loads. No unexpected console errors
 - [ ] **Not yet tested:** the logged-in profile and picture upload, and a real registration (needs a real account; not done, to avoid writing test data to the live database)
 
-### Phase 4: Home
-- [ ] Greeting (guest or username), online/offline badge
-- [ ] Random fun fact from `/funfacts` and a detail route
-- [ ] Shortcut cards
+### Phase 4: Home ✅ (done 2026-10-30)
+- [x] Greeting: guest sees "Welcome to EcoExplorer" with the leaf mark; logged-in users see "Welcome, {username}" with their picture
+- [x] Online/offline badge that updates live (`navigator.onLine` events)
+- [x] Random fun fact from `/funfacts` (7 facts) with **Learn More** → `/funfacts/:id`, plus an extra **Another fact** button
+- [x] The fact detail page loads by id, so shared links work. Unknown ids show "doesn't exist". Source links show the website name
+- [x] Discover cards (AR Explore, Identify, Challenge), same wording as `home.xml`
+- [x] Shared `<Avatar>`: falls back to the person icon if a picture is missing or fails to load. Broken fact images are hidden
+- [x] Verified in Edge at 390 px, light and dark: fact loads and changes, Learn More and Back, offline/online toggle, all 3 cards navigate, no overflow
+- ⚠️ Fact 01's image doesn't load: Firebase Storage returns HTTP 402 (see Risks). The image also shows a beetle (`categories/beetle.jpeg`) for a butterfly fact
 
 ### Phase 5: Identify
 - [ ] `species.json` holding all 16 species (fixes bug 7)
@@ -645,6 +650,7 @@ EcoExplorer/
 |---|---|---|
 | **8th Wall shutdown.** 8th Wall announced in 2025 that the platform is being discontinued. | AR module may stop working | Check that `ecoexplorer.8thwall.app` still works. Alternatives: MindAR (image-tracking WebAR), or a `<model-viewer>` 3D view without AR |
 | **TorchScript → ONNX export fails** | Identify blocked | Re-export from the original fastai notebook, or run the model on a small Python server (FastAPI) |
+| **Firebase Storage is unavailable.** Since 2026, Google returns HTTP 402 *"Cloud Storage for Firebase no longer supports Firebase projects that are on the no-cost Spark pricing plan"* for the default `*.firebasestorage.app` bucket (found 2026-10-30) | Profile pictures (upload and display, **on Android too**) and the fun-fact image don't work | Option A: upgrade to the **Blaze** plan (pay-as-you-go; needs a billing card; Storage keeps a no-cost quota). Option B (free): store a small resized profile picture (about 256 px JPEG, under 30 KB) as a data URL in `users/{uid}/profileImageUrl` (Glide on Android can display data URLs too), and serve fun-fact images from Firebase Hosting |
 | **Model is overconfident on unknown species.** `rose.jpg` and `tulip.jpg` (not among the 16 classes) were both predicted as *Torch Ginger* with 100% probability | The "could not identify" message will almost never appear, so users get confident wrong answers | Short term: state on the Identify page which 16 species it recognises. Long term: retrain with an extra "other" class (dataset is on Drive) |
 | **Model download size** (12–47 MB) | Slow first use of Identify | Quantize; load only when Identify is first opened; cached by the Service Worker after that |
 | **Camera on desktop** | No `capture` support | Falls back to the file picker (fine for a showcase) |
