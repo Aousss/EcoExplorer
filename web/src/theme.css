@@ -1,0 +1,93 @@
+/* Colour tokens taken from app/src/main/res/values/colors.xml */
+:root {
+  --green-primary: #01331a;
+  --green-secondary: #1b3f23;
+  --green-tertiary: #58761c;
+  --yellow-primary: #f8b711;
+  --yellow-secondary: #d99202;
+  --yellow-tertiary: #905a00;
+  --gray: #757575;
+  --gray-light: #d9d9d9;
+  --white: #ffffff;
+
+  /* Semantic tokens */
+  --bg: #f4f6f2;
+  --surface: #ffffff;
+  --text: #13201a;
+  --text-muted: #5f6b63;
+  --border: #dfe4dc;
+  --header-bg: var(--green-primary);
+  --header-text: var(--white);
+  --nav-bg: var(--green-primary);
+  --nav-item: #9aa79f;
+  --nav-item-active: var(--white);
+  --accent: var(--yellow-primary);
+  --accent-text: var(--green-primary);
+  --backdrop: #e3e8df;
+
+  --radius: 16px;
+  --app-max-width: 480px;
+  --nav-height: 72px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  color-scheme: light;
+}
+
+/* Night colours from colors.xml (green_night_*, dark_background, dark_surface) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121212;
+    --surface: #1e1e1e;
+    --text: #e8ece9;
+    --text-muted: #a3ada6;
+    --border: #2c2f2d;
+    --header-bg: #0f2a18;
+    --nav-bg: #0f2a18;
+    --accent: #fbc02d;
+    --backdrop: #0a0a0a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121212;
+  --surface: #1e1e1e;
+  --text: #e8ece9;
+  --text-muted: #a3ada6;
+  --border: #2c2f2d;
+  --header-bg: #0f2a18;
+  --nav-bg: #0f2a18;
+  --accent: #fbc02d;
+  --backdrop: #0a0a0a;
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--backdrop);
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+}

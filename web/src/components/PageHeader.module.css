@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: calc(20px + env(safe-area-inset-top)) 16px 24px;
+  background: var(--header-bg);
+  color: var(--header-text);
+  border-radius: 0 0 24px 24px;
+}
+
+.back {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.12);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.back:hover {
+  background: rgb(255 255 255 / 0.2);
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  font-size: 14px;
+  opacity: 0.8;
+}

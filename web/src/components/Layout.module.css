@@ -1,0 +1,13 @@
+/* Phone-width column, centred on larger screens */
+.app {
+  position: relative;
+  max-width: var(--app-max-width);
+  min-height: 100dvh;
+  margin: 0 auto;
+  background: var(--bg);
+  box-shadow: 0 0 40px rgb(0 0 0 / 0.08);
+}
+
+.withNav {
+  padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom) + 24px);
+}
