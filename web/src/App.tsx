@@ -1,5 +1,9 @@
 import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
+import RequireAuth from './components/RequireAuth'
+import Challenge from './pages/challenge/Challenge'
+import ChallengeCategory from './pages/challenge/ChallengeCategory'
+import Quiz from './pages/challenge/Quiz'
 import Placeholder from './pages/Placeholder'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import Login from './pages/auth/Login'
@@ -36,27 +40,9 @@ export default function App() {
         <Route path="species/:id" element={<SpeciesDetail />} />
 
         {/* Challenge – nav_challenge.xml */}
-        <Route
-          path="challenge"
-          element={
-            <Placeholder title="Challenge" phase={6} replaces="ChallengeFragment"
-              features={['Animals and Plants categories', 'Recent results']} />
-          }
-        />
-        <Route
-          path="challenge/:category"
-          element={
-            <Placeholder title="Quiz" phase={6} replaces="AnimalFragment / PlantFragment, *ChallengeQuiz" back
-              features={['Quiz intro and last score', 'Start quiz']} />
-          }
-        />
-        <Route
-          path="challenge/:category/quiz"
-          element={
-            <Placeholder title="Quiz" phase={6} replaces="AnimalsQuizQuestions / PlantsQuizQuestions" back
-              features={['Multiple-choice questions', 'Score saved to your profile']} />
-          }
-        />
+        <Route path="challenge" element={<Challenge />} />
+        <Route path="challenge/:category" element={<RequireAuth><ChallengeCategory /></RequireAuth>} />
+        <Route path="challenge/:category/quiz" element={<RequireAuth><Quiz /></RequireAuth>} />
 
         {/* Profile & auth – nav_profile.xml + auth activities */}
         <Route path="profile" element={<Profile />} />
