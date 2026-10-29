@@ -6,7 +6,8 @@ import { useAuth } from '../../context/AuthContext'
 import { errorMessage, logout, uploadProfilePicture } from '../../lib/account'
 import styles from './Profile.module.css'
 
-const MAX_PICTURE_BYTES = 5 * 1024 * 1024
+// Large phone photos are fine: they're resized to 256 px before saving
+const MAX_PICTURE_BYTES = 20 * 1024 * 1024
 
 // Replaces ProfileFragment
 export default function Profile() {
@@ -20,7 +21,7 @@ export default function Profile() {
     event.target.value = '' // allow choosing the same file again
     if (!file || !user) return
     if (!file.type.startsWith('image/')) return setUploadStatus('Please choose an image file.')
-    if (file.size > MAX_PICTURE_BYTES) return setUploadStatus('Please choose an image under 5 MB.')
+    if (file.size > MAX_PICTURE_BYTES) return setUploadStatus('Please choose an image under 20 MB.')
 
     setUploadStatus('Uploading…')
     try {

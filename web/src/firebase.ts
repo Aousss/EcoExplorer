@@ -1,7 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getDatabase } from 'firebase/database'
-import { getStorage } from 'firebase/storage'
 
 // Same Firebase project as the Android app (see web/.env.example)
 const app = initializeApp({
@@ -17,4 +16,3 @@ const app = initializeApp({
 
 export const auth = getAuth(app)
 export const db = getDatabase(app)
-export const storage = getStorage(app)

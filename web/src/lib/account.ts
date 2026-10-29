@@ -7,9 +7,9 @@ import {
   signOut,
 } from 'firebase/auth'
 import { get, ref, set, type DatabaseReference } from 'firebase/database'
-import { getDownloadURL, ref as storageRef, uploadBytes } from 'firebase/storage'
 import { FirebaseError } from 'firebase/app'
-import { auth, db, storage } from '../firebase'
+import { auth, db } from '../firebase'
+import { toSquareJpegDataUrl } from './image'
 
 export type UserProfile = {
   uid: string
@@ -57,12 +57,11 @@ export function logout() {
 }
 
 export async function uploadProfilePicture(uid: string, file: File) {
-  // Same path as ProfileFragment.uploadImageToFirebase()
-  const fileRef = storageRef(storage, `profile_pictures/${uid}.jpg`)
-  await uploadBytes(fileRef, file, { contentType: file.type })
-  const url = await getDownloadURL(fileRef)
-  await set(ref(db, `users/${uid}/profileImageUrl`), url)
-  return url
+  // Firebase Storage needs the paid Blaze plan, so the picture is stored as a small data URL in the
+  // same field the Android app reads (Glide can display data URLs too).
+  const dataUrl = await toSquareJpegDataUrl(file)
+  await set(ref(db, `users/${uid}/profileImageUrl`), dataUrl)
+  return dataUrl
 }
 
 export class AccountError extends Error {}
@@ -86,8 +85,6 @@ export function errorMessage(error: unknown): string {
         return 'Too many attempts. Please wait a moment and try again.'
       case 'auth/network-request-failed':
         return 'No internet connection. Please check your network.'
-      case 'storage/unauthorized':
-        return 'You do not have permission to do that.'
     }
   }
   return 'Something went wrong. Please try again.'
