@@ -600,10 +600,15 @@ cd web && npm run dev:emulator                    # third terminal: app at http:
 ```
 Emulator UI (see the test users and data): http://127.0.0.1:4000. Data is wiped when the emulators stop. Use the quotes around `"auth,database"` in PowerShell.
 
-### Phase 7: Explore (AR)
-- [ ] Two AR cards that open the 8th Wall URLs
-- [ ] Marker image download and a "how to use" dialog
-- [ ] On desktop, show a QR code: "Scan to open on your phone"
+### Phase 7: Explore (AR) ✅ (done 2026-10-30)
+- [x] Checked on 2026-10-30: both 8th Wall projects still respond (`/exoexplorer/` and `/animals/` return HTTP 200)
+- [x] `/explore`: **Water Cycle Process** and **AR Learning** cards, same wording and images as `explore.xml`. On phones, **View in AR** opens the 8th Wall page in a new tab, and the browser asks for the camera itself. This replaces the WebView and permission code in `WebARFragment*`
+- [x] Marker sheet: the Drive file is a 2-page PDF with three markers (Water Cycle, Hercules Beetle, Hibiscus). It's now served with the app at `/ar/EcoExplorer_ARimage.pdf`, so the Drive link isn't needed. Each card names its marker. Beetle and Hibiscus → AR Learning is inferred from the card text and the cover image; it couldn't be read from the 8th Wall bundle
+- [x] **How to use** dialog (replaces the "AR Guide" `AlertDialog`), using a shared native `<dialog>` component: Esc, backdrop click and Close all work
+- [x] On desktop (mouse pointer), **View in AR** shows a QR code ("Scan to open it on your phone"), a link to open the marker sheet on screen, and "Open on this computer anyway". The QR is drawn as an SVG by `uqr` (no network call)
+- [x] New `--text-green` theme token: `green-tertiary` text and icons were hard to read on dark surfaces, so dark mode now uses `#9ccc65` for them on every page
+- [x] **Verified** in Edge (production build), 390 px phone and 1280 px desktop, light and dark: phone gets links with `target=_blank`, desktop gets buttons, both QR codes decode to the right URLs, the PDF is served as `application/pdf`, no overflow, no console errors
+- ⚠️ The AR itself wasn't tested on a real phone (needs a camera and the printed marker)
 
 ### Phase 8: PWA and deploy
 - [ ] `vite-plugin-pwa`: manifest, icons (from `mipmap-*`), offline cache for the app files and the model
@@ -674,7 +679,7 @@ EcoExplorer/
 
 | Risk | Impact | Mitigation |
 |---|---|---|
-| **8th Wall shutdown.** 8th Wall announced in 2025 that the platform is being discontinued. | AR module may stop working | Check that `ecoexplorer.8thwall.app` still works. Alternatives: MindAR (image-tracking WebAR), or a `<model-viewer>` 3D view without AR |
+| **8th Wall shutdown.** 8th Wall announced in 2025 that the platform is being discontinued. | AR module may stop working | Still live on 2026-10-30 (both projects return HTTP 200). Check again before a release. Alternatives: MindAR (image-tracking WebAR), or a `<model-viewer>` 3D view without AR |
 | **TorchScript → ONNX export fails** | Identify blocked | Re-export from the original fastai notebook, or run the model on a small Python server (FastAPI) |
 | **Firebase Storage is unavailable.** Since 2026, Google returns HTTP 402 *"Cloud Storage for Firebase no longer supports Firebase projects that are on the no-cost Spark pricing plan"* for the default `*.firebasestorage.app` bucket (found 2026-10-30) | Profile pictures (upload and display, **on Android too**) and the fun-fact image don't work | **Chose Option B (free), 2026-10-30.** Option A would be the Blaze plan (pay-as-you-go, needs a billing card).<br>✅ **Web:** profile pictures are centre-cropped to a 256 px JPEG in the browser (about 15–30 KB) and saved as a data URL in `users/{uid}/profileImageUrl`. Storage was removed from the web app.<br>⬜ **Android:** `ProfileFragment.uploadImageToFirebase()` still uses Storage, so it needs the same change. Glide can already *display* data URLs.<br>⬜ **Fun fact 01:** replace its `imageUrl` with an image served from Firebase Hosting (`web/public/images/`) |
 | **Model is overconfident on unknown species.** `rose.jpg` and `tulip.jpg` (not among the 16 classes) were both predicted as *Torch Ginger* with 100% probability | The "could not identify" message will almost never appear, so users get confident wrong answers | Short term: state on the Identify page which 16 species it recognises. Long term: retrain with an extra "other" class (dataset is on Drive) |
@@ -706,4 +711,4 @@ EcoExplorer/
      1. Run `model.pt` on a small Python API (FastAPI on Hugging Face Spaces or Render, free tier). The web app uploads the photo and gets the result back.
      2. Retrain in Colab if the training images still exist.
 3. **Framework:** React + Vite + TypeScript (reasons in the conversation; Vue is an equally valid alternative).
-4. **Still open:** is `ecoexplorer.8thwall.app` still live?
+4. **Is `ecoexplorer.8thwall.app` still live?** Yes, as of 2026-10-30 (see Phase 7).
