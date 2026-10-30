@@ -5,9 +5,10 @@ import wasmModuleUrl from 'onnxruntime-web/ort-wasm-simd-threaded.mjs?url'
 import { IMAGE_SIZE, imageToTensorData, softmax } from './preprocess'
 import type { WorkerRequest, WorkerResponse } from './messages'
 
-const MODEL_URL = '/models/model.onnx'
-// Bump when model.onnx changes so browsers download the new one
-const MODEL_CACHE = 'ecoexplorer-model-v1'
+// 8-bit version of model.pt, made by tools/quantize_model.py
+const MODEL_URL = '/models/model.int8.onnx'
+// Bump when the model changes so browsers download the new one
+const MODEL_CACHE = 'ecoexplorer-model-v2'
 
 ort.env.wasm.wasmPaths = { wasm: wasmUrl, mjs: wasmModuleUrl }
 // Multi-threading needs cross-origin isolation headers, which the site doesn't use
@@ -17,7 +18,14 @@ let session: Promise<ort.InferenceSession> | null = null
 
 const post = (message: WorkerResponse) => self.postMessage(message)
 
+// Frees the space taken by earlier model versions
+async function deleteOldModels() {
+  const names = await caches.keys()
+  await Promise.all(names.filter((n) => n.startsWith('ecoexplorer-model-') && n !== MODEL_CACHE).map((n) => caches.delete(n)))
+}
+
 async function downloadModel(): Promise<Uint8Array> {
+  if ('caches' in self) deleteOldModels().catch(() => undefined)
   const cache = 'caches' in self ? await caches.open(MODEL_CACHE).catch(() => null) : null
   let response = await cache?.match(MODEL_URL)
   if (!response) {
