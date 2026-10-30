@@ -25,7 +25,7 @@ function ModelStatusBar({ status }: { status: ModelStatus }) {
       <div className={styles.progressTrack}>
         <div className={styles.progressFill} style={{ width: `${percent ?? 15}%` }} />
       </div>
-      <small>First time only (about 45 MB)</small>
+      <small>First time only (about 12 MB)</small>
     </div>
   )
 }
