@@ -24,14 +24,43 @@
 
 ## Overview
 
-EcoExplorer is an educational app about local biodiversity. It began as a native **Android** app and has been rebuilt as a **web app (PWA)** that runs in any modern browser and can be installed on a phone's home screen. Both versions share the same Firebase backend, so accounts, quiz results and content are the same on each.
+EcoExplorer is an educational app about local biodiversity. It was first built as a native **Android** app for a Final Year Project. It has since been rebuilt as a **web app (PWA)** that runs in any modern browser and can be installed on a phone's home screen. Both versions share the same Firebase backend, so accounts, quiz results and content are the same on each.
 
-| | Android app | Web app |
+## Versions
+
+### v2.0: Web app (latest), October 2026
+
+The current version. The Android app was rebuilt for the web so that anyone can use it on any phone or computer, without installing it from an app store. It has the same features and data as v1.0, plus:
+
+- **Runs everywhere**: Android, iPhone and desktop browsers, and can be installed on the home screen. Like the Android app, Identify still works offline (after the first use)
+- **More accurate Identify**: photos are cropped the same way as the training images, and the match percentage is now a real probability
+- **4× smaller AI model** (47 MB → 12 MB), so the one-time download is quick
+- **Better quizzes**: you can go back and change answers, the score is counted once when you submit, and a review shows each correct answer
+- **AR from a computer**: a QR code opens the AR experience on your phone, and the marker sheet is built into the app
+- **Profile pictures on the free Firebase plan**: pictures are resized in the browser instead of uploaded to Cloud Storage
+
+Source: [`web/`](web/) · Live: [ecoexplorer-u2001264.web.app](https://ecoexplorer-u2001264.web.app)
+
+### v1.0: Native Android app (Final Year Project), June – September 2025
+
+The original version, designed and built as a native Android app for a Final Year Project.
+
+- Java app for Android 11 and newer, built with Fragments and the Navigation Component
+- Identify runs the ResNet-18 model on the phone with PyTorch Mobile
+- AR Explore opens the 8th Wall experiences inside the app (WebView)
+- Firebase Authentication, Realtime Database and Cloud Storage
+
+Source: [`app/`](app/) · The code as it was at the end of the project is tagged [`v1.0`](https://github.com/Aousss/EcoExplorer/tree/v1.0)
+
+### At a glance
+
+| | v1.0 Android app | v2.0 Web app |
 |---|---|---|
-| Folder | [`app/`](app/) | [`web/`](web/) |
+| Platform | Android 11+ | Any modern browser (phone, tablet, desktop) |
 | Stack | Java, Fragments, Navigation Component | React, TypeScript, Vite |
-| AI model | PyTorch Mobile | ONNX Runtime Web (WebAssembly) |
+| AI model | PyTorch Mobile, 47 MB | ONNX Runtime Web (WebAssembly), 12 MB |
 | AR | 8th Wall inside a WebView | 8th Wall in the browser, with a QR code on desktop |
+| Offline Identify | Yes (model bundled in the app) | Yes, after the first use (cached by the PWA) |
 | Get it | Build with Android Studio | [ecoexplorer-u2001264.web.app](https://ecoexplorer-u2001264.web.app) |
 
 ## Features
