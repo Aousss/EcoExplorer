@@ -14,6 +14,13 @@
 </p>
 
 <p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="web/public/images/logo.svg" />
+    <img src="docs/images/logo-green.svg" alt="EcoExplorer: explore, learn, play" width="360" />
+  </picture>
+</p>
+
+<p align="center">
   <img src="docs/screenshots/home.png" alt="Home screen with a fun fact and shortcuts" width="200" />
   <img src="docs/screenshots/identify.png" alt="Identify screen with the species it recognises" width="200" />
   <img src="docs/screenshots/identify-result.png" alt="Result screen showing a sunflower identified with 100% match" width="200" />
@@ -72,6 +79,15 @@ Source: [`app/`](app/) · The code as it was at the end of the project is tagged
 - **Accounts**: sign up with email and password, reset a forgotten password, and set a profile picture. Guests can use everything except the quizzes.
 - **Installable and works offline**: add it to your home screen like a native app. After the first use, the app and the AI model are cached, so Identify works without a connection. Fun facts, quizzes and AR still need the internet.
 - **Light and dark mode**: follows your device setting.
+
+### AR experiences
+
+| Water Cycle Process | AR Learning |
+|---|---|
+| <img src="web/public/images/ar/water-cycle.png" alt="3D water cycle scene with sun, clouds, rain, a hill and a river" width="380" /> | <img src="web/public/images/ar/learn-animals.png" alt="3D Hercules beetle and hibiscus flower standing on their printed markers" width="380" /> |
+| See the sun, clouds, rain, hills and rivers of the water cycle in 3D. Uses the **Water Cycle** marker. | Learn about animals and plants with 3D models. Uses the **Hercules Beetle** and **Hibiscus** markers. |
+
+Print the [marker sheet](web/public/ar/EcoExplorer_ARimage.pdf) (or open it on another screen), tap **View in AR** in the app, and point your phone's camera at a marker.
 
 ### Species it recognises
 
