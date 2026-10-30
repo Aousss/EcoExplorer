@@ -255,7 +255,7 @@
 .moreLink {
   display: inline-block;
   margin-top: 18px;
-  color: var(--green-tertiary);
+  color: var(--text-green);
   font-weight: 700;
   text-decoration: none;
 }
@@ -268,7 +268,7 @@
 }
 
 .muted a {
-  color: var(--green-tertiary);
+  color: var(--text-green);
   font-weight: 600;
 }
 

@@ -16,6 +16,6 @@
 }
 
 .fallback a {
-  color: var(--green-tertiary);
+  color: var(--text-green);
   font-weight: 600;
 }

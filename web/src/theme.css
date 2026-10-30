@@ -15,6 +15,8 @@
   --surface: #ffffff;
   --text: #13201a;
   --text-muted: #5f6b63;
+  /* Green for text and icons on --surface; green-tertiary is too dark to read in dark mode */
+  --text-green: var(--green-tertiary);
   --border: #dfe4dc;
   --header-bg: var(--green-primary);
   --header-text: var(--white);
@@ -40,6 +42,7 @@
     --surface: #1e1e1e;
     --text: #e8ece9;
     --text-muted: #a3ada6;
+    --text-green: #9ccc65;
     --border: #2c2f2d;
     --header-bg: #0f2a18;
     --nav-bg: #0f2a18;
@@ -53,6 +56,7 @@
   --surface: #1e1e1e;
   --text: #e8ece9;
   --text-muted: #a3ada6;
+  --text-green: #9ccc65;
   --border: #2c2f2d;
   --header-bg: #0f2a18;
   --nav-bg: #0f2a18;
