@@ -20,3 +20,6 @@ __pycache__/
 
 # Firebase CLI / emulator logs
 *-debug.log
+
+# Firebase Hosting deploy cache
+.firebase/
