@@ -1,0 +1,146 @@
+.guide {
+  margin: 20px 16px 0;
+  padding: 20px;
+  border-radius: var(--radius);
+  background: var(--green-secondary);
+  color: var(--white);
+}
+
+.guide h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.guide p {
+  margin: 8px 0 0;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.guideActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.download,
+.howTo {
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.download {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.howTo {
+  border: 1px solid rgb(255 255 255 / 0.5);
+  background: transparent;
+  color: var(--white);
+}
+
+.howTo:hover {
+  border-color: var(--white);
+}
+
+.section {
+  display: grid;
+  gap: 16px;
+  margin: 24px 16px 0;
+}
+
+.card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.cardTitle {
+  margin: 0;
+  padding: 14px 16px;
+  font-size: 18px;
+}
+
+.cardImage {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--backdrop);
+}
+
+.cardBody {
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px 16px;
+}
+
+.cardBody p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.cardBody small {
+  color: var(--text-muted);
+}
+
+.viewAr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.viewAr svg {
+  font-size: 22px;
+}
+
+/* Dialog content */
+.steps {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.5;
+}
+
+.steps a,
+.tip a {
+  color: var(--text-green);
+  font-weight: 700;
+}
+
+.tip {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.qr {
+  justify-self: center;
+  width: min(220px, 100%);
+  border-radius: 8px;
+}
+
+.openAnyway {
+  justify-self: center;
+  color: var(--text-green);
+  font-size: 14px;
+  font-weight: 600;
+}

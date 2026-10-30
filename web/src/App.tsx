@@ -4,6 +4,7 @@ import RequireAuth from './components/RequireAuth'
 import Challenge from './pages/challenge/Challenge'
 import ChallengeCategory from './pages/challenge/ChallengeCategory'
 import Quiz from './pages/challenge/Quiz'
+import Explore from './pages/explore/Explore'
 import Placeholder from './pages/Placeholder'
 import ForgotPassword from './pages/auth/ForgotPassword'
 import Login from './pages/auth/Login'
@@ -26,13 +27,7 @@ export default function App() {
         <Route path="funfacts/:id" element={<FunFactDetail />} />
 
         {/* Explore – nav_explore.xml */}
-        <Route
-          path="explore"
-          element={
-            <Placeholder title="Explore" phase={7} replaces="ExploreFragment, WebARFragment*"
-              features={['AR: Water Cycle and Learn Animals (8th Wall)', 'Download marker image', 'QR code on desktop']} />
-          }
-        />
+        <Route path="explore" element={<Explore />} />
 
         {/* Identify – nav_identify.xml */}
         <Route path="identify" element={<Identify />} />
