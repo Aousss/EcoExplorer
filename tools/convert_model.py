@@ -1,9 +1,11 @@
 """
-Convert the Android TorchScript model (model.pt) to ONNX for the web app,
+Convert the Android TorchScript model (model.pt) to ONNX (tools/models/model.onnx),
 then verify the ONNX model gives the same predictions as the original.
 
 Usage (from the repo root):
     tools\.venv\Scripts\python.exe tools\convert_model.py
+
+Then run quantize_model.py to make the web app's model.
 """
 from pathlib import Path
 
@@ -14,7 +16,8 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
 MODEL_PT = ROOT / "app/src/main/assets/model.pt"
-OUT_DIR = ROOT / "web/public/models"
+# Full-precision model; quantize_model.py makes the smaller one the web app loads
+OUT_DIR = ROOT / "tools/models"
 MODEL_ONNX = OUT_DIR / "model.onnx"
 TEST_IMAGES = ROOT / "app/src/main/res/drawable"
 
