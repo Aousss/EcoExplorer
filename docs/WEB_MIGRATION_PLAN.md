@@ -519,8 +519,8 @@ Example rules (the deployed version is in `database.rules.json`):
 - [ ] Review the Storage rules: `profile_pictures/{uid}.jpg` writable only by that uid
 
 ### Phase 1: Model conversion ✅ (done 2026-10-29)
-- [x] Convert `model.pt` to ONNX with [tools/convert_model.py](../tools/convert_model.py) → `web/public/models/model.onnx` (44.7 MB, opset 17, input `[1,3,224,224]`, output `logits [1,16]`; only standard ops, all supported by onnxruntime-web)
-- [ ] Optionally quantize to about 12 MB (deferred to Phase 8; needs calibration images from the Drive dataset)
+- [x] Convert `model.pt` to ONNX with [tools/convert_model.py](../tools/convert_model.py) → `tools/models/model.onnx` (was in `web/public/models/` until Phase 8; 44.7 MB, opset 17, input `[1,3,224,224]`, output `logits [1,16]`; only standard ops, all supported by onnxruntime-web)
+- [x] Quantized to 11.8 MB in Phase 8 (dynamic int8, which needs no calibration images; see Phase 8)
 - [x] Predictions match: identical top-1 on 19 test images, max logit difference 6e-5. All 17 in-class images were classified correctly (they may be training images, so this isn't a true accuracy figure)
 - [x] Decide whether the model outputs logits or probabilities: **logits** (no softmax in `model.pt`), so the web app must apply softmax
 
@@ -610,11 +610,34 @@ Emulator UI (see the test users and data): http://127.0.0.1:4000. Data is wiped 
 - [x] **Verified** in Edge (production build), 390 px phone and 1280 px desktop, light and dark: phone gets links with `target=_blank`, desktop gets buttons, both QR codes decode to the right URLs, the PDF is served as `application/pdf`, no overflow, no console errors
 - ⚠️ The AR itself wasn't tested on a real phone (needs a camera and the printed marker)
 
-### Phase 8: PWA and deploy
-- [ ] `vite-plugin-pwa`: manifest, icons (from `mipmap-*`), offline cache for the app files and the model
-- [ ] `firebase init hosting` (public dir `web/dist`, SPA rewrite to `/index.html`)
-- [ ] `npm run build && firebase deploy --only hosting`
-- [ ] Live at `https://ecoexplorer-u2001264.web.app`
+### Phase 8: PWA and deploy (built and tested 2026-10-30; **not deployed yet**)
+- [x] **Smaller model.** The Spark plan allows **360 MB of Hosting transfer per day**. The first Identify used to download about 49 MB (model plus WASM), so only about 7 new users a day could use it. [tools/quantize_model.py](../tools/quantize_model.py) makes `web/public/models/model.int8.onnx`: **11.8 MB instead of 46.9 MB**, about 16 MB per first Identify (about 22 new users a day). The float32 model moved to `tools/models/` so it isn't deployed
+  - Same top-1 as float32 on all 34 test images (Android drawables plus the web species photos)
+  - On 480 randomly cropped, rotated, blurred and recoloured variants: accuracy 60.0% vs 60.8% for float32. The answer differs on about 10%, all ambiguous images where both models are often wrong
+  - Rejected alternatives: per-channel int8 (no better) and float16 weights (lossless, but 23.5 MB)
+  - In Edge, onnxruntime-web runs it (it uses `ConvInteger`): 15/15 species photos correct (the damselfly `.jpeg` was skipped by the test script), 92–368 ms per photo
+  - The worker's model cache is now `ecoexplorer-model-v2`, and it deletes older `ecoexplorer-model-*` caches
+- [x] `vite-plugin-pwa` 2 (`registerType: 'autoUpdate'`): a manifest with the existing icons (192, 512, maskable), standalone, portrait, theme `#01331a`, and shortcuts to Identify, AR Explore and Challenge
+  - Precache: the app shell plus icons and images (32 files, about 1.8 MB)
+  - Cached on first use: the WASM runtime (`CacheFirst`), the marker PDF, and the model (in the worker's own cache)
+  - SPA fallback to `/index.html`, except Firebase's reserved `/__/*` URLs
+  - Not active in `npm run dev`
+- [x] Hosting config in [firebase.json](../firebase.json): `web/dist`, SPA rewrite, `immutable` caching for hashed `/assets/**`, `no-cache` for `index.html`, `sw.js` and the manifest, and an explicit `Content-Type` for `.onnx`. There's also a Hosting emulator on port 5000
+- [x] **Verified on the Hosting emulator** in Edge:
+  - Deep links (`/explore`, `/challenge/plants/quiz`) return the app; the PDF and model are served
+  - The service worker controls the page, and Edge reports no installability or manifest errors
+  - After one online Identify, these all work **offline**: `/explore`, `/identify`, `/species/daisy` and `/challenge`, plus a fresh Identify (Weevil), with no console errors
+  - ⚠️ The Hosting emulator ignores the `headers` section (tested with a catch-all test header), so check the cache headers after the first real deploy: `curl -I https://ecoexplorer-u2001264.web.app/sw.js`
+- [ ] Deploy: `cd web && npm run build`, then `firebase deploy --only hosting` from the repo root. The Firebase CLI login works again (2026-10-30). Before going public:
+  - Deploy the database rules first (Phase 0)
+  - Replace the unlicensed species photos (Risks)
+- [ ] Live at `https://ecoexplorer-u2001264.web.app` (the `web.app` and `firebaseapp.com` domains are authorised for Auth by default)
+
+**Test the production build with the Hosting emulator:**
+```
+cd web && npm run build
+cd .. && firebase emulators:start --only hosting   # http://127.0.0.1:5000
+```
 
 ### Quiz design (fixes bug 2)
 
@@ -638,14 +661,15 @@ EcoExplorer/
 ├── docs/
 │   └── WEB_MIGRATION_PLAN.md    ← this file
 ├── tools/
-│   └── convert_model.py         ← model.pt → model.onnx
+│   ├── convert_model.py         ← model.pt → models/model.onnx (float32)
+│   └── quantize_model.py        ← → web/public/models/model.int8.onnx
 ├── firebase.json                ← hosting config
 └── web/
     ├── index.html
     ├── vite.config.ts
     ├── .env                     ← Firebase web config (VITE_FIREBASE_*)
     ├── public/
-    │   ├── models/model.onnx
+    │   ├── models/model.int8.onnx
     │   ├── images/species/*.jpg
     │   └── icons/
     └── src/
@@ -683,7 +707,7 @@ EcoExplorer/
 | **TorchScript → ONNX export fails** | Identify blocked | Re-export from the original fastai notebook, or run the model on a small Python server (FastAPI) |
 | **Firebase Storage is unavailable.** Since 2026, Google returns HTTP 402 *"Cloud Storage for Firebase no longer supports Firebase projects that are on the no-cost Spark pricing plan"* for the default `*.firebasestorage.app` bucket (found 2026-10-30) | Profile pictures (upload and display, **on Android too**) and the fun-fact image don't work | **Chose Option B (free), 2026-10-30.** Option A would be the Blaze plan (pay-as-you-go, needs a billing card).<br>✅ **Web:** profile pictures are centre-cropped to a 256 px JPEG in the browser (about 15–30 KB) and saved as a data URL in `users/{uid}/profileImageUrl`. Storage was removed from the web app.<br>⬜ **Android:** `ProfileFragment.uploadImageToFirebase()` still uses Storage, so it needs the same change. Glide can already *display* data URLs.<br>⬜ **Fun fact 01:** replace its `imageUrl` with an image served from Firebase Hosting (`web/public/images/`) |
 | **Model is overconfident on unknown species.** `rose.jpg` and `tulip.jpg` (not among the 16 classes) were both predicted as *Torch Ginger* with 100% probability | The "could not identify" message will almost never appear, so users get confident wrong answers | Short term: state on the Identify page which 16 species it recognises. Long term: retrain with an extra "other" class (dataset is on Drive) |
-| **Model download size** (12–47 MB) | Slow first use of Identify | Quantize; load only when Identify is first opened; cached by the Service Worker after that |
+| **Model download size** and the **Spark Hosting limit** (360 MB/day transfer) | Slow first use of Identify; Hosting stops serving for the day once the quota runs out | ✅ Quantized to 11.8 MB (Phase 8). It's downloaded only when Identify opens, then cached, so repeat visits cost nothing. If the quota is still too small, host the model elsewhere (e.g. a GitHub release or Hugging Face) or move to Blaze |
 | **Camera on desktop** | No `capture` support | Falls back to the file picker (fine for a showcase) |
 | **Firebase config is public on the web** | Anyone can call the DB | Normal for Firebase; security comes from the **rules** (Phase 0) |
 
